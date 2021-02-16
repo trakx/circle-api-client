@@ -6,7 +6,6 @@ using Microsoft.Extensions.Options;
 using Polly;
 using Serilog;
 using Trakx.Circle.ApiClient.Utils;
-using Trakx.Utils.Apis;
 using Trakx.Utils.DateTimeHelpers;
 
 namespace Trakx.Circle.ApiClient
