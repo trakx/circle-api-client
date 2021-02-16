@@ -17,7 +17,6 @@ env:
   PROJECT_PATH: "src/Trakx.Circle.ApiClient/Trakx.Circle.ApiClient.csproj"
   TEST_PROJECT_PATH: "src/Trakx.Circle.ApiClient.Tests/Trakx.Circle.ApiClient.Tests.csproj"
   CircleApiConfiguration__ApiKey: ${{secrets.CIRCLE_API_KEY}}
-  CircleApiConfiguration__ApiSecret: ${{secrets.CIRCLE_API_SECRET}}
 
 jobs:
   

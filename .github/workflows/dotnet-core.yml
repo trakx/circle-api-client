@@ -9,7 +9,6 @@ on:
 env:
   SOLUTION_PATH: "src/Trakx.Circle.ApiClient.sln"
   CircleApiConfiguration__ApiKey: ${{secrets.CIRCLE_API_KEY}}
-  CircleApiConfiguration__ApiSecret: ${{secrets.CIRCLE_API_SECRET}}
   
 jobs:
   build:
