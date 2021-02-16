@@ -1,0 +1,31 @@
+parameters:
+- name: id
+  description: "Unique identifier of the chargeback."
+  in: path
+  required: true
+  schema:
+    type: string
+    format: uuid
+get:
+  security:
+  - bearerAuth: []
+  summary: Get a chargeback.
+  operationId: getChargeback
+  tags:
+  - Chargebacks
+  responses:
+    '200':
+      description: Successfully retrieved a chargeback.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/BasicChargeback.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../responses/NotFound.yml"

@@ -1,0 +1,41 @@
+parameters:
+  - name: id
+    description: "Unique identifier for the payment."
+    in: path
+    required: true
+    schema:
+      type: string
+post:
+  security:
+    - bearerAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/CancelCreationRequest.yml"
+  summary: Cancel a payment.
+  description: |
+    The payment will be voided if possible meaning the payment source will not be charged & the payment will never settle.
+    Otherwise, the payment will be refunded meaning the payment source will be charged & the payment will be refunded from deductions of future settlements.
+    Not all payments are eligible to be cancelled.
+
+    A successful response does *not* mean the payment has been cancelled; it only means the cancellation request is sucessfully submitted.
+  operationId: cancelPayment
+  tags:
+  - Payments
+  responses:
+    '200':
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      description: Payment cancellation successfully initiated.
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/DetailedCancel.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../responses/NotFound.yml"

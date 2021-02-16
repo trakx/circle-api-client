@@ -1,0 +1,41 @@
+openapi: 3.0.2
+
+servers:
+  - url: api-sandbox.circle.com
+
+info:
+  version: ${version}
+  title: API Overview
+  description: Common endpoints shared across all Circle APIs.
+
+tags:
+  - name: Health
+    description: "Inspect the health of the API."
+  - name: Management
+    description: "General account and management information."
+  - name: Encryption
+    description: "Encrypt sensitive data."
+  - name: Subscriptions
+    description: "Manage subscriptions to notifications."
+
+paths:
+  /ping:
+    $ref: './paths/ping.yml'
+
+  /v1/configuration:
+    $ref: './paths/configuration.yml'
+
+  /v1/encryption/public:
+    $ref: './paths/encryption-public.yml'
+
+  /v1/notifications/subscriptions:
+    $ref: './paths/notifications/subscriptions.yml'
+
+  /v1/notifications/subscriptions/{id}:
+    $ref: './paths/notifications/subscriptions-id.yml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

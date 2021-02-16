@@ -1,0 +1,73 @@
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: destination
+      description: "Unique identifier for the destination bank account. Filters the results to fetch all payouts made to a destination bank account."
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: type
+      description: "Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types."
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - wire
+        example: "wire"
+    - $ref: "../../../parameters/daterange/From.yml#/From"
+    - $ref: "../../../parameters/daterange/To.yml#/To"
+    - $ref: "../../../parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of payouts.
+  operationId: getPayouts
+  tags:
+    - Payouts
+  responses:
+    '200':
+      description: Successfully retrieved a list of payouts.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../schemas/Payout.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a payout.
+  operationId: createPayout
+  tags:
+    - Payouts
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/businessAccount/PayoutCreationRequest.yml"
+  responses:
+    '201':
+      description: Successfully created a payout.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/Payout.yml"
+    '400':
+      $ref: "../../../responses/BadRequest.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"

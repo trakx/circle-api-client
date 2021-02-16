@@ -1,0 +1,53 @@
+# Card with no sensitive fields
+type: object
+required:
+  - id
+  - fingerprint
+  - billingDetails
+  - expMonth
+  - expYear
+  - network
+  - verification
+  - createDate
+  - updateDate
+properties:
+  id:
+    description: "Unique system generated identifier for the card."
+    type: string
+    example: "1e38dcef-a947-493a-a674-f623e4418ace"
+  billingDetails:
+    description: "Billing details of the card holder."
+    $ref: "./SimpleBillingDetails.yml"
+  expMonth:
+    description: "Two digit number representing the card's expiration month."
+    type: integer
+    example: 01
+  expYear:
+    description: "Four digit number representing the card's expiration year."
+    type: integer
+    example: 2020
+  network:
+    description: "The network of the card."
+    type: string
+    example: "VISA"
+  fingerprint:
+    description: "A UUID that uniquely identifies the card number. If the same card is used more than once, each card object will have a different id, but the fingerprint will stay the same."
+    type: string
+    example: "eb170539-9e1c-4e92-bf4f-1d09534fdca2"
+  verification:
+    description: "Indicates the status of the card for verification purposes."
+    $ref: "./VerificationResponse.yml"
+  riskEvaluation:
+    description: "Results of risk evaluation. Only present if the card is denied by Circle's risk service."
+    nullable: true
+    $ref: "./RiskEvaluation.yml"
+  createDate:
+    description: "Datetime when the card was created. ISO-8601."
+    type: string
+    format: date-time
+    example: "2019-09-18T19:19:01Z"
+  updateDate:
+    description: "Datetime when the card was created. ISO-8601."
+    type: string
+    format: date-time
+    example: "2019-09-18T19:20:00Z"

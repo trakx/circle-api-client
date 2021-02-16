@@ -1,0 +1,12 @@
+type: string
+description: "Indicates the failure reason of a payout. Only present for payouts in failed state. Possible values are `insufficient_funds`, `transaction_denied`, `transaction_failed` and `transaction_returned`"
+enum:
+  - insufficient_funds
+  - transaction_denied
+  - transaction_failed
+  - transaction_returned
+  - bank_transaction_error
+  - fiat_account_limit_exceeded
+  - invalid_bank_account_number
+  - invalid_ach_rtn
+  - invalid_wire_rtn

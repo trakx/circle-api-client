@@ -1,0 +1,25 @@
+type: object
+required:
+  - keyId
+  - encryptedData
+  - expMonth
+  - expYear
+properties:
+  keyId:
+    description: "Unique identifier of the public key used in encryption."
+    type: string
+    example: "fe57d4b1-9b8e-4606-a869-827eb4ac5bdf"
+  encryptedData:
+    $ref: "./EncryptedCardUpdateData.yml"
+  expMonth:
+    description: "Two digit number representing the card's expiration month."
+    type: integer
+    minimum: 1
+    maximum: 12
+    example: 01
+  expYear:
+    description: "Four digit number representing the card's expiration year."
+    type: integer
+    minimum: 2020
+    maximum: 9999
+    example: 2020

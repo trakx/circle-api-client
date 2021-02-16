@@ -1,32 +1,17 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Trakx.Utils.Apis;
+﻿using Microsoft.Extensions.Options;
+using Trakx.Circle.ApiClient.Utils;
 
 namespace Trakx.Circle.ApiClient
 {
     internal class ClientConfigurator
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public ClientConfigurator(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-            ApiConfiguration = serviceProvider.GetService<IOptions<CircleApiConfiguration>>()!.Value;
-        }
-
+        public ICircleCredentialsProvider CredentialsProvider { get; }
         public CircleApiConfiguration ApiConfiguration { get; }
-
-        public ICredentialsProvider GetCredentialProvider(Type clientType)
+        
+        public ClientConfigurator(IOptions<CircleApiConfiguration> configuration, ICircleCredentialsProvider credentialsProvider)
         {
-            switch (clientType.Name)
-            {
-                case nameof(MarketDataClient):
-                //case nameof(ExchangesClient):
-                    return new NoCredentialsProvider();
-                default:
-                    return _serviceProvider.GetService<ICredentialsProvider>()!;
-            }
+            CredentialsProvider = credentialsProvider;
+            ApiConfiguration = configuration.Value;
         }
     }
 }

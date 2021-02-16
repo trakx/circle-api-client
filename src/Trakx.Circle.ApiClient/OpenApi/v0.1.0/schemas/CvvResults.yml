@@ -1,0 +1,5 @@
+description: "Enumerated status of the check. `not_requested` indicates check was not
+made. `pass` indicates value is correct. `fail` indicates value is incorrect. `unavailable`
+indicates card issuer did not do the provided check. `pending` indicates check is pending/processing."
+type: string
+enum: ["not_requested", "pass", "fail", "unavailable", "pending"]

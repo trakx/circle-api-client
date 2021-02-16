@@ -1,0 +1,38 @@
+type: object
+required:
+  - id
+  - paymentId
+  - amount
+  - description
+  - status
+  - reason
+  - fees
+  - createDate
+  - updateDate
+properties:
+  id:
+    description: "Unique system generated identifier for the reversal item."
+    type: string
+    format: uuid
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  paymentId:
+    description: "Unique system generated identifier for the payment that is being reversed."
+    format: uuid
+    type: string
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  amount:
+    $ref: "./Money.yml"
+  description:
+    description: "Enumerated description of the payment."
+    type: string
+    example: "Merchant Payment Reversal"
+  status:
+    $ref: "./PaymentStatus.yml"
+  reason:
+    $ref: "./ReversalReason.yml"
+  fees:
+    $ref: "./Money.yml"
+  createDate:
+    $ref: "./UTCTimestamp.yml"
+  updateDate:
+    $ref: "./UTCTimestamp.yml"

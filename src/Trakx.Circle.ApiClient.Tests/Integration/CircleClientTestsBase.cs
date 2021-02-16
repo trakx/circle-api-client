@@ -38,8 +38,7 @@ namespace Trakx.Circle.ApiClient.Tests.Integration
             var configuration = new CircleApiConfiguration
             {
                 ApiKey = secrets.CircleApiKey,
-                ApiSecret = secrets.CircleApiSecret,
-                BaseUrl = "https://api.circle.io"
+                BaseUrl = "https://api-sandbox.circle.com"
             };
 
             var serviceCollection = new ServiceCollection();

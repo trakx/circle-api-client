@@ -1,0 +1,16 @@
+RecipientAddressCreationRequest:
+  type: object
+  required:
+    - idempotencyKey
+    - address
+    - chain
+    - description
+  properties:
+    idempotencyKey:
+      $ref: "../IdempotencyKey.yml"
+    address:
+      $ref: "../Address.yml"
+    chain:
+      $ref: "../Chain.yml"
+    description:
+      $ref: "./Description.yml"

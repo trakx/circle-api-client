@@ -1,0 +1,17 @@
+WalletId:
+  name: walletId
+  description: Queries items with the specified wallet involved in the settlement.
+  in: query
+  required: false
+  schema:
+    type: string
+    example: "12345"
+
+MerchantWalletId:
+  name: merchantWalletId
+  description: Queries items with the specified merchant wallet (master wallet) to which settlement funds were deposited.
+  in: query
+  required: false
+  schema:
+    type: string
+    example: "12345"

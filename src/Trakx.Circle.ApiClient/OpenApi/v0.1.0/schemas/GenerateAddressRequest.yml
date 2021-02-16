@@ -1,0 +1,13 @@
+GenerateAddressRequest:
+  type: object
+  required:
+    - idempotencyKey
+    - currency
+    - chain
+  properties:
+    idempotencyKey:
+      $ref: "./IdempotencyKey.yml"
+    currency:
+      $ref: "./Currency.yml"
+    chain:
+      $ref: "./Chain.yml"

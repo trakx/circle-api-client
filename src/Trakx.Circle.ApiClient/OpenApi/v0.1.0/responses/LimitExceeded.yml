@@ -1,0 +1,15 @@
+description: Limit exceeded. See error message for more details.
+headers:
+  X-Request-Id:
+    $ref: "../headers/XRequestId.yml"
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        $ref: "../schemas/Error.yml#/required"
+      properties:
+        $ref: "../schemas/Error.yml#/properties"
+      example:
+        code: 429
+        example: "Too many requests."

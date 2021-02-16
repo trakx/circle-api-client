@@ -12,22 +12,27 @@ using Polly.Contrib.WaitAndRetry;
 using Polly.Extensions.Http;
 using Serilog;
 
+<# 
+var nameSpace = "Trakx.Circle.ApiClient";
+#>
 
-namespace Trakx.Circle.ApiClient
+namespace <#= nameSpace #>
 {
     public static partial class AddCircleClientExtension
     {
-        private static void AddClients(this IServiceCollection services)
+        private static void AddClients(this IServiceCollection services, CircleApiConfiguration configuration)
         {
-            var delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromMilliseconds(100), retryCount: 10, fastFirst: true);
+            var delay = Backoff.DecorrelatedJitterBackoffV2(
+                medianFirstRetryDelay: TimeSpan.FromMilliseconds(configuration.InitialRetryDelayInMilliseconds ?? 100), 
+                retryCount: configuration.MaxRetryCount ?? 3, fastFirst: true);
             <# 
-            var clientNames = new [] { /*"ExchangesClient",*/ "MarketDataClient", "AccountsClient" };
+            var clientNames = new [] { "AccountsClient" };
 
             foreach(var name in clientNames)
             {
             #>
                         
-            services.AddHttpClient<I<#= name #>, <#= name #>>()
+            services.AddHttpClient<I<#= name #>, <#= name #>>("<#= nameSpace #>.<#= name #>")
                 .AddPolicyHandler((s, request) => 
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()
@@ -39,7 +44,7 @@ namespace Trakx.Circle.ApiClient
                             var logger = Log.Logger.ForContext<<#= name #>>();
                             LogFailure(logger, result, timeSpan, retryCount, context);
                         })
-                    .WithPolicyKey("<#= name #>"));
+                    .WithPolicyKey("<#= nameSpace #>.<#= name #>"));
 
         <#
         }

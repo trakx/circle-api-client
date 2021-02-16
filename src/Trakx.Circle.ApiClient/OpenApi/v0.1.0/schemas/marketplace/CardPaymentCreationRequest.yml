@@ -1,0 +1,34 @@
+type: object
+required:
+  - idempotencyKey
+  - amount
+  - verification
+  - source
+  - marketplaceInfo
+  - metadata
+properties:
+  idempotencyKey:
+    $ref: "../IdempotencyKey.yml"
+  keyId:
+    description: "Unique identifier of the public key used in encryption. Only required if request object includes encrypted data."
+    type: string
+    example: "fe57d4b1-9b8e-4606-a869-827eb4ac5bdf"
+  metadata:
+    $ref: "../MetadataPayment.yml"
+  amount:
+    $ref: "../Money.yml"
+  verification:
+    description: "Indicates the verification method for this payment."
+    type: string
+    enum: ["none", "cvv"]
+  source:
+    description: "The payment source."
+    $ref: "./Source.yml"
+  description:
+    description: "Description of the payment with length restriction of 240 characters."
+    type: string
+    example: "Payment"
+  encryptedData:
+    $ref: "../EncryptedCardPaymentData.yml"
+  marketplaceInfo:
+    $ref: "../MarketplaceInfo.yml"

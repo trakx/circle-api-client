@@ -1,0 +1,4 @@
+type: string
+enum: [ETH, ALGO, SOL]
+description: "A blockchain that a given currency is available on."
+example: "ETH"

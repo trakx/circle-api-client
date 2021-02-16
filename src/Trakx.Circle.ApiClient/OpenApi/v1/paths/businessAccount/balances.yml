@@ -1,0 +1,22 @@
+get:
+  security:
+    - bearerAuth: []
+  summary: Get balance.
+  description: Retrieves the balance of funds that are available for use.
+  operationId: getBalances
+  tags:
+    - Balances
+  responses:
+    '200':
+      description: Successfully retrieved balances.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/Balances.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"

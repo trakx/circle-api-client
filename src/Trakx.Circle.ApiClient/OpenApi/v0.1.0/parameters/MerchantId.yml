@@ -1,0 +1,10 @@
+MerchantId:
+  name: merchantId
+  description: Queries items with the specified merchant id(s). Matches any merchant id if unspecified.
+  in: query
+  required: false
+  schema:
+    type: array
+    items:
+      type: string
+      format: uuid

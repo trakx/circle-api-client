@@ -1,0 +1,8 @@
+type: "object"
+required:
+  - endpoint
+properties:
+  endpoint:
+    type: "string"
+    description: "URL of the subscriber endpoint. Must be publicly accessible and utilize HTTPS."
+    example: "https://example.org/handler/for/notifications"

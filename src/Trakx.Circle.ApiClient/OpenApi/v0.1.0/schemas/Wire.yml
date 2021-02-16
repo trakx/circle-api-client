@@ -1,0 +1,28 @@
+type: object
+properties:
+  id:
+    description: "Unique system generated identifier for the bank account (wires)."
+    type: string
+    format: uuid
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  description:
+    description: "Bank name plus last four digits of the bank account number or IBAN."
+    type: string
+    example: "WELLS FARGO BANK, NA ****0010"
+  trackingRef:
+    description: "Wire tracking ref that needs to be set in the wire reference to beneficiary field."
+    type: string
+    example: "CIR13FB13A"
+  fingerprint:
+    description: "A UUID that uniquely identifies the bank account. If the same bank account is used more than once, each account object will have a different id, but the fingerprint will stay the same."
+    type: string
+    example: "eb170539-9e1c-4e92-bf4f-1d09534fdca2"
+  billingDetails:
+    $ref: "./BillingDetails.yml"
+  bankAddress:
+    description: "The address details for the bank, as provided during bank account creation."
+    $ref: "./BankAddress.yml"
+  createDate:
+    $ref: "./UTCTimestamp.yml"
+  updateDate:
+    $ref: "./UTCTimestamp.yml"

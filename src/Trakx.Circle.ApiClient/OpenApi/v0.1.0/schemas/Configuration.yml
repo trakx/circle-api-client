@@ -1,0 +1,9 @@
+type: object
+properties:
+  payments:
+    type: object
+    properties:
+      masterWalletId:
+        type: string
+        description: "Identifier of the wallet to which settlement funds from payment transactions (such as credit card purchases) are deposited."
+        example: "434000"

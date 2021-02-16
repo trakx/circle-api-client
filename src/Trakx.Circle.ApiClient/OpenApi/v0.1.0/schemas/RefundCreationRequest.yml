@@ -1,0 +1,11 @@
+type: object
+required:
+  - idempotencyKey
+  - amount
+properties:
+  idempotencyKey:
+    $ref: "./IdempotencyKey.yml"
+  amount:
+    $ref: "./Money.yml"
+  reason:
+    $ref: "./ReversalReason.yml"

@@ -1,0 +1,67 @@
+openapi: 3.0.2
+servers:
+  - url: api-sandbox.circle.com
+
+info:
+  version: ${version}
+  title: Circle Business Accounts API
+  description: "<u>Glossary</u>: \n
+    - <b>Address</b>: a blockchain address used to send either send or receive funds \n
+    - <b>Chain</b>: the blockchain network on which to send or receive funds  \n
+    - <b>Payout</b>: the act of burning a certain amount of stablecoin from a wallet and transferring the associated fiat funds to a payment method \n
+    - <b>Transfer</b>: represents a transfer of funds to a crypto address \n
+  "
+
+tags:
+  - name: Balances
+    description: "Retrieve settled and unsettled balances."
+  - name: Bank accounts (wires)
+    description: "Create and manage wire bank accounts"
+  - name: Payouts
+    description: "Create and manage payouts."
+  - name: Addresses
+    description: "Create and manage blockchain addresses."
+  - name: Transfers
+    description: "Create an on-chain transfer from your business account."
+  - name: Deposits
+    description: "Retrieve deposits sent into your business account."
+
+paths:
+  /v1/businessAccount/balances:
+    $ref: './paths/v1/businessAccount/balances.yml'
+
+  /v1/businessAccount/banks/wires:
+    $ref: './paths/v1/businessAccount/wires.yml'
+
+  /v1/businessAccount/banks/wires/{id}:
+    $ref: './paths/v1/businessAccount/wires-id.yml'
+
+  /v1/businessAccount/banks/wires/{id}/instructions:
+    $ref: './paths/v1/businessAccount/wires-id-instructions.yml'
+
+  /v1/businessAccount/payouts:
+    $ref: './paths/v1/businessAccount/payouts.yml'
+
+  /v1/businessAccount/payouts/{id}:
+    $ref: './paths/v1/businessAccount/payouts-id.yml'
+
+  /v1/businessAccount/transfers:
+    $ref: './paths/v1/businessAccount/businessTransfers.yml'
+
+  /v1/businessAccount/transfers/{id}:
+    $ref: './paths/v1/businessAccount/businessTransfer-id.yml'
+
+  /v1/businessAccount/wallets/addresses/deposit:
+    $ref: './paths/v1/businessAccount/addresses-deposit.yml'
+
+  /v1/businessAccount/wallets/addresses/recipient:
+    $ref: './paths/v1/businessAccount/addresses-recipient.yml'
+
+  /v1/businessAccount/deposits:
+    $ref: './paths/v1/businessAccount/deposits.yml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

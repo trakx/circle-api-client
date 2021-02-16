@@ -1,0 +1,73 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a transfer.
+  description: A transfer can be made from an existing funded wallet to a blockchain address or another wallet.
+  operationId: createTransfer
+  tags:
+    - Transfers
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../v0.1.0/schemas/transfer/TransferCreationRequest.yml"
+  responses:
+    '201':
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      description: Successfully created a transfer.
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/transfer/Transfer.yml"
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: walletId
+      description: "Unique identifier for the source or destination wallet of transfers, if any. May not be used in conjunction with destinationWalletId or sourceWalletId. Useful for fetching all transfers related to a wallet."
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: sourceWalletId
+      description: "Unique identifier for the source wallet of transfers, if any."
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: destinationWalletId
+      description: "Unique identifier for the destination wallet of transfers, if any."
+      in: query
+      required: false
+      schema:
+        type: string
+    - $ref: "../../../v0.1.0/parameters/daterange/From.yml#/From"
+    - $ref: "../../../v0.1.0/parameters/daterange/To.yml#/To"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of transfers.
+  description: Searches for transfers involving the provided wallets. If no wallet ids are provided, searches all wallets associated with your Circle API account. If the date parameters are omitted, returns the most recent transfers. This endpoint returns up to 50 transfers in descending chronological order or pageSize, if provided.
+  operationId: searchTransfers
+  tags:
+    - Transfers
+  responses:
+    '200':
+      description: Successfully retrieved a list of transfers.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../v0.1.0/schemas/transfer/Transfer.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"

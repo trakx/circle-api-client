@@ -1,0 +1,30 @@
+parameters:
+  - name: id
+    description: "Unique identifier for the payment."
+    in: path
+    required: true
+    schema:
+      type: string
+get:
+  security:
+    - bearerAuth: []
+  summary: Get a payment.
+  operationId: getPayment
+  tags:
+  - Payments
+  responses:
+    '200':
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      description: Successfully retrieved a payment.
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/DetailedPaymentPolymorphic.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../responses/NotFound.yml"

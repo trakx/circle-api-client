@@ -1,0 +1,61 @@
+get:
+  parameters:
+    - name: id
+      description: "Unique identifier of the card."
+      in: path
+      required: true
+      schema:
+        type: string
+  security:
+    - bearerAuth: []
+  summary: Get a card.
+  operationId: getCard
+  tags:
+    - Cards
+  responses:
+    '200':
+      description: Successfully retrieved a card.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/Card.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../v0.1.0/responses/NotFound.yml"
+put:
+  parameters:
+    - name: id
+      description: "Unique identifier of the card."
+      in: path
+      required: true
+      schema:
+        type: string
+  security:
+    - bearerAuth: []
+  summary: Update a card.
+  operationId: UpdateCard
+  tags:
+    - Cards
+  requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "../../../v0.1.0/schemas/CardUpdate.yml"
+  responses:
+    '200':
+      description: Succesfully modified a card.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/Card.yml"

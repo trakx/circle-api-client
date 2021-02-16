@@ -1,0 +1,14 @@
+type: object
+properties:
+  name:
+    description: "Name of the beneficiary."
+    type: string
+    example: "CIRCLE INTERNET FINANCIAL INC"
+  address1:
+    description: "Address line 1 of the beneficiary's address."
+    type: string
+    example: "99 HIGH STREET"
+  address2:
+    description: "Address line 2 of the beneficiary's address."
+    type: string
+    example: "BOSTON MA 02110"

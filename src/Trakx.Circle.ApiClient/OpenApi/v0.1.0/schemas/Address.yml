@@ -1,0 +1,3 @@
+type: string
+description: "An alphanumeric string representing a blockchain address. Will be in different formats for different chains. It is important to preserve the exact formatting and capitalization of the address."
+example: "0x8381470ED67C3802402dbbFa0058E8871F017A6F"

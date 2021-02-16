@@ -7,8 +7,6 @@ namespace Trakx.Circle.ApiClient.Tests
     {
         [SecretEnvironmentVariable(nameof(CircleApiConfiguration), nameof(CircleApiConfiguration.ApiKey))]
         public string? CircleApiKey { get; init; }
-        [SecretEnvironmentVariable(nameof(CircleApiConfiguration), nameof(CircleApiConfiguration.ApiSecret))]
-        public string? CircleApiSecret { get; init; }
     }
     
 }

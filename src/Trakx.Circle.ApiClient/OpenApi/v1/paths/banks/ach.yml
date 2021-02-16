@@ -1,0 +1,30 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a bank account (ACH).
+  description: ACH is currently only available in the sandbox environment.
+  operationId: createACHBankAccount
+  tags:
+    - "Bank accounts"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../v0.1.0/schemas/ACHCreationRequest.yml#/ACHCreationRequest"
+
+  responses:
+    '201':
+      description: Successfully created a bank account for ACH transfers.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/ACH.yml"
+    '400':
+      $ref: "../../../v0.1.0/responses/BadRequest.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"

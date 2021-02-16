@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Trakx.Utils.Attributes;
 
 namespace Trakx.Circle.ApiClient
 {
@@ -6,9 +6,10 @@ namespace Trakx.Circle.ApiClient
     {
 #nullable disable
         public string BaseUrl { get; init; }
+        [SecretEnvironmentVariable]
         public string ApiKey { get; init; }
-        public string ApiSecret { get; init; }
-        public List<string> FavouriteExchanges { get; init; }
+        public double? InitialRetryDelayInMilliseconds { get; init; }
+        public int? MaxRetryCount { get; init; }
 #nullable restore
     }
 }

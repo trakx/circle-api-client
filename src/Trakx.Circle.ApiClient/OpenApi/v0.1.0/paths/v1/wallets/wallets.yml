@@ -1,0 +1,56 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a wallet.
+  description: Creates an end user wallet.
+  operationId: createWallet
+  tags:
+    - Wallets
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/WalletCreationRequest.yml#/WalletCreationRequest"
+  responses:
+    '201':
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      description: Successfully created a wallet.
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/Wallet.yml"
+
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - $ref: "../../../parameters/daterange/From.yml#/From"
+    - $ref: "../../../parameters/daterange/To.yml#/To"
+    - $ref: "../../../parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of wallets.
+  description: Retrieves a list of a user's wallets.
+  operationId: getWallets
+  tags:
+    - Wallets
+  responses:
+    '200':
+      description: Successfully retrieved a list of wallets.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../schemas/Wallet.yml"
+    '400':
+      $ref: "../../../responses/BadRequest.yml"

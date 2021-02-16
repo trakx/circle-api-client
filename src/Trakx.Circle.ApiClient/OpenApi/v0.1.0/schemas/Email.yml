@@ -1,0 +1,4 @@
+description: "Email of the user"
+type: string
+maxLength: 1024
+example: "satoshi@circle.com"

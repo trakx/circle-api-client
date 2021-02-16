@@ -1,0 +1,35 @@
+CardCreationRequest:
+  type: object
+  required:
+    - idempotencyKey
+    - expMonth
+    - expYear
+    - encryptedData
+    - billingDetails
+    - metadata
+  properties:
+    idempotencyKey:
+      $ref: "./IdempotencyKey.yml"
+    keyId:
+      description: "Unique identifier of the public key used in encryption."
+      type: string
+      example: "fe57d4b1-9b8e-4606-a869-827eb4ac5bdf"
+    encryptedData:
+      $ref: "./EncryptedCardCreateData.yml"
+    billingDetails:
+      description: "Billing details of the card holder."
+      $ref: "./BillingDetails.yml"
+    expMonth:
+      description: "Two digit number representing the card's expiration month."
+      type: integer
+      minimum: 1
+      maximum: 12
+      example: 01
+    expYear:
+      description: "Four digit number representing the card's expiration year."
+      type: integer
+      minimum: 1
+      maximum: 9999
+      example: 2020
+    metadata:
+      $ref: "./MetadataCard.yml"

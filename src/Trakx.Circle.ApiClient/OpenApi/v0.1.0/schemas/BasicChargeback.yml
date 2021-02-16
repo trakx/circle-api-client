@@ -1,0 +1,28 @@
+type: object
+required:
+  - id
+  - paymentId
+  - merchantId
+  - history
+properties:
+  id:
+    description: "Unique system generated identifier for the chargeback item."
+    type: string
+    format: uuid
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  paymentId:
+    description: "Unique system generated identifier for the payment that is associated to the chargeback item."
+    format: uuid
+    type: string
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  merchantId:
+    description: "Unique system generated identifier for the merchant."
+    format: uuid
+    type: string
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  history:
+    description: "The chargeback item's history list will be sorted by create date descending: more recent chargeback statuses will be at the beginning of the list."
+    type: array
+    minItems: 1
+    items:
+      $ref: "./BasicChargebackHistory.yml" 

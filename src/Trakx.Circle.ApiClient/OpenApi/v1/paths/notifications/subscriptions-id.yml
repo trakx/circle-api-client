@@ -1,0 +1,34 @@
+delete:
+  parameters:
+    - name: id
+      description: Unique identifier for the subscription.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: "uuid"
+  security:
+    - bearerAuth: []
+  summary: Remove a subscription.
+  description: To remove a subscription, all its subscription requests' statuses must be either 'confirmed', 'deleted' or a combination of those. A subscription with at least one 'pending' subscription request cannot be removed.
+  operationId: unsubscribe
+  tags:
+  - Subscriptions
+  responses:
+    '200':
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      description: Successfully removed a subscription.
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/UnsubscribeResponse.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"
+    '400':
+      $ref: "../../../v0.1.0/responses/BadRequest.yml"
+    '404':
+      $ref: "../../../v0.1.0/responses/NotFound.yml"

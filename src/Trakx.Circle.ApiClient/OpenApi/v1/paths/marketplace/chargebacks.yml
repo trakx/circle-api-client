@@ -1,0 +1,33 @@
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - $ref: "../../../v0.1.0/parameters/MerchantId.yml#/MerchantId"
+    - $ref: "../../../v0.1.0/parameters/daterange/From.yml#/From"
+    - $ref: "../../../v0.1.0/parameters/daterange/To.yml#/To"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of chargebacks.
+  description: "Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list."
+  operationId: getChargebacks
+  tags:
+  - Chargebacks
+  responses:
+    '200':
+      description: Successfully retrieved a list of chargebacks.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../v0.1.0/schemas/BasicChargeback.yml"
+    '400':
+      $ref: "../../../v0.1.0/responses/BadRequest.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"

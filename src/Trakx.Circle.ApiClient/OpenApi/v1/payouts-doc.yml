@@ -1,0 +1,53 @@
+openapi: 3.0.2
+
+servers:
+  - url: api-sandbox.circle.com
+
+info:
+  version: ${version}
+  title: Payouts API
+  description: "<u>Glossary</u>: \n
+    - <b>Customer</b>: this is the entity that signs / enter an agreement with Circle (a business entity) \n
+    - <b>End user</b>: this is the entity that owns a payment method used throughout our flows \n
+    - <b>Payment Method</b>: a card, bank account, etc. \n
+    - <b>Payment</b>: the act of collecting fiat funds from a payment method, and depositing an associated amount of stablecoin on a wallet \n
+    - <b>Payout</b>: the act of burning a certain amount of stablecoin from a wallet and transferring the associated fiat funds to a payment method \n
+  "
+
+tags:
+  - name: Payouts
+    description: "Create and manage payouts."
+
+paths:
+  /v1/payouts:
+    $ref: './paths/payouts/payouts.yml'
+
+  /v1/payouts/{id}:
+    $ref: './paths/payouts/payouts-id.yml'
+
+  /v1/banks/wires:
+    $ref: './paths/banks/wires.yml'
+
+  /v1/banks/wires/{id}:
+    $ref: './paths/banks/wires-id.yml'
+
+  /v1/banks/ach:
+    $ref: './paths/banks/ach.yml'
+
+  /v1/banks/ach/{id}:
+    $ref: './paths/banks/ach-id.yml'
+
+  /v1/mocks/ach/accounts:
+    $ref: './paths/banks/ach-accounts-mock.yml'
+
+  /v1/transfers:
+    $ref: './paths/transfers/transfers.yml'
+
+  /v1/transfers/{id}:
+    $ref: './paths/transfers/transfer-id.yml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

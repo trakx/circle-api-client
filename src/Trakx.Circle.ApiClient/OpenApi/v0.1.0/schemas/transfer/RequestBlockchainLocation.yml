@@ -1,0 +1,16 @@
+type: object
+required:
+  - type
+  - address
+  - chain
+properties:
+  type:
+    type: string
+    enum:
+      - "blockchain"
+  address:
+    description: "The blockchain address."
+    type: string
+  chain:
+    $ref: "./../Chain.yml"
+

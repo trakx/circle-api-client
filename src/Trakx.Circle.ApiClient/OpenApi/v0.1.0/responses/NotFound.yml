@@ -1,0 +1,15 @@
+description: The specified resource was not found.
+headers:
+  X-Request-Id:
+    $ref: "../headers/XRequestId.yml"
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        $ref: "../schemas/Error.yml#/required"
+      properties:
+        $ref: "../schemas/Error.yml#/properties"
+      example:
+        code: 404
+        example: "Not found."

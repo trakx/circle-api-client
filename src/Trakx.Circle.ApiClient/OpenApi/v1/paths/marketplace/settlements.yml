@@ -1,0 +1,33 @@
+# This is a copy of the normal merchants settlements documentation, but with the added marketplace-related
+# parameters documented.  It's the same endpoint underneath.
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - $ref: "../../../v0.1.0/parameters/WalletIds.yml#/MerchantWalletId"
+    - $ref: "../../../v0.1.0/parameters/WalletIds.yml#/WalletId"
+    - $ref: "../../../v0.1.0/parameters/daterange/From.yml#/From"
+    - $ref: "../../../v0.1.0/parameters/daterange/To.yml#/To"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of settlements.
+  operationId: getSettlements
+  tags:
+  - Settlements
+  responses:
+    '200':
+      description: Successfully retrieved a list of settlements.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../v0.1.0/schemas/Settlement.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"

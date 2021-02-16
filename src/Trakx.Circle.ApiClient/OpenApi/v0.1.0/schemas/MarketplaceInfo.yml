@@ -1,0 +1,20 @@
+type: object
+required:
+  - walletId
+  - merchantId
+  - merchantWalletId
+properties:
+  walletId:
+    description: "Wallet identifier."
+    type: string
+    maxLength: 36
+    example: "434000"
+  merchantId:
+    description: "Unique identifier of the merchant."
+    type: string
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  merchantWalletId:
+    description: "Merchant wallet identifier."
+    type: string
+    maxLength: 36
+    example: "212000"

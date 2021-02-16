@@ -1,0 +1,9 @@
+type: object
+required:
+  - paymentId
+properties:
+  paymentId:
+    description: "The id of the payment to be charged back.  Each payment can only be charged back once."
+    format: uuid
+    type: string
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"

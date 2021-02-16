@@ -1,0 +1,39 @@
+parameters:
+  - name: id
+    description: "Unique identifier for the payment."
+    in: path
+    required: true
+    schema:
+      type: string
+post:
+  security:
+    - bearerAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/RefundCreationRequest.yml"
+  summary: Refund a payment.
+  description: |
+    The payment source will be refunded if possible. Not all payments are eligible to be cancelled.
+
+    A successful response does *not* mean the payment has been refunded; it only means the refund request is sucessfully submitted.
+  operationId: refundPayment
+  tags:
+  - Payments
+  responses:
+    '200':
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      description: Payment refund successfully initiated.
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/DetailedRefund.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../responses/NotFound.yml"

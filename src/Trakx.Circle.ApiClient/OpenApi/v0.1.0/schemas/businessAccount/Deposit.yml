@@ -1,0 +1,42 @@
+type: object
+description: "A deposit"
+required:
+  - id
+  - destination
+  - amount
+  - status
+  - createDate
+properties:
+  id:
+    description: "Unique identifier for this deposit."
+    type: string
+    format: uuid
+    example: "b8627ae8-732b-4d25-b947-1df8f4007a29"
+  destination:
+    oneOf:
+      - $ref: "./../transfer/SourceWalletLocation.yml"
+  amount:
+    $ref: "./../Money.yml"
+  fee:
+    $ref: "./../Money.yml"
+  status:
+    description: "Status of the deposit. Status `pending` indicates that the deposit is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed."
+    type: string
+    enum:
+      - pending
+      - complete
+      - failed
+  riskEvaluation:
+    description: "Results of risk evaluation. Only present if the payment is denied by Circle's risk service."
+    nullable: true
+    $ref: "./../RiskEvaluation.yml"
+  createDate:
+    description: "The create date of the deposit."
+    type: string
+    format: date-time
+    example: "2019-09-18T19:20:00Z"
+  updateDate:
+    description: "Timestamp when the deposit was last updated"
+    type: string
+    format: date-time
+    example: "2019-09-18T19:20:00Z"

@@ -1,0 +1,4 @@
+description: "Status of the AVS check. Raw AVS response, expressed as an upper-case letter. `not_requested` indicates check was not
+made. `pending` is pending/processing."
+type: string
+example: "D"

@@ -1,0 +1,26 @@
+type: object
+properties:
+  walletId:
+    description: "Wallet identifier. Numeric value but should be treated as a string as format may change in the future"
+    type: string
+    example: "434000"
+  entityId:
+    description: "Unique identifier of the entity that owns the wallet"
+    type: string
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  type:
+    description: "Wallet type."
+    type: string
+    enum: [end_user_wallet]
+    example: "end_user_wallet"
+  description:
+    description: "A human-friendly, non-unique identifier for a wallet."
+    type: string
+    example: "Treasury Wallet"
+    maxLength: 255
+  balances:
+    description: "A list of balances for currencies owned by the wallet."
+    type: array
+    items:
+      $ref: "./Money.yml"
+

@@ -17,9 +17,11 @@ namespace Trakx.Circle.ApiClient
             this IServiceCollection services, IConfiguration configuration)
         {
             services.AddOptions();
+            var apiConfig = configuration.GetSection(nameof(CircleApiConfiguration))
+                .Get<CircleApiConfiguration>()!;
             services.Configure<CircleApiConfiguration>(
                 configuration.GetSection(nameof(CircleApiConfiguration)));
-            AddCommonDependencies(services);
+            AddCommonDependencies(services, apiConfig);
 
             return services;
         }
@@ -30,17 +32,17 @@ namespace Trakx.Circle.ApiClient
             var options = Options.Create(apiConfiguration);
             services.AddSingleton(options);
             
-            AddCommonDependencies(services);
+            AddCommonDependencies(services, apiConfiguration);
 
             return services;
         }
 
-        private static void AddCommonDependencies(IServiceCollection services)
+        private static void AddCommonDependencies(IServiceCollection services, CircleApiConfiguration apiConfiguration)
         {
-            services.AddSingleton(s => new ClientConfigurator(s));
-            services.AddSingleton<ICredentialsProvider, ApiKeyCredentialsProvider>();
+            services.AddSingleton<ClientConfigurator>();
+            services.AddSingleton<ICircleCredentialsProvider, ApiKeyCredentialsProvider>();
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-            AddClients(services);
+            AddClients(services, apiConfiguration);
         }
 
         private static void LogFailure(ILogger logger, DelegateResult<HttpResponseMessage> result, TimeSpan timeSpan, int retryCount, Context context)

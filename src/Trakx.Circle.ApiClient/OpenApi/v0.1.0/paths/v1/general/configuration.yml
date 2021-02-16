@@ -1,0 +1,20 @@
+get:
+  security:
+    - bearerAuth: []
+  summary: Get configuration information.
+  description: Retrieves general configuration information.
+  operationId: getConfig
+  tags:
+    - Management
+  responses:
+    '200':
+      description: Successfully retrieved configuration information.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/Configuration.yml"

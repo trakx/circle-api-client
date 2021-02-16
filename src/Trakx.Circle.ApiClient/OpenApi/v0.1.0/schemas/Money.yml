@@ -1,0 +1,13 @@
+type: object
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    description: "Magnitude of the amount, in units of the currency, with a `.` decimal."
+    type: string
+    example: "3.14"
+  currency:
+    description: "Currency code."
+    type: string
+    example: "USD"

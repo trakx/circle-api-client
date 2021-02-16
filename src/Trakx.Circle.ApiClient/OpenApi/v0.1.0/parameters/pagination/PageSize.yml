@@ -1,0 +1,14 @@
+PageSize:
+  name: pageSize
+  description: |
+    Limits the number of items to be returned.
+
+    Some collections have a strict upper bound that will disregard this value. In case the specified value is higher
+    than the allowed limit, the collection limit will be used.
+
+    If avoided, the collection will determine the page size itself.
+  in: query
+  required: false
+  schema:
+    type: integer
+    minimum: 1

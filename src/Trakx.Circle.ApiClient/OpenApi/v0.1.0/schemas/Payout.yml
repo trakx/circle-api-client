@@ -1,0 +1,46 @@
+type: object
+properties:
+  id:
+    description: "Unique system generated identifier for the payout item."
+    type: string
+    format: uuid
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  sourceWalletId:
+    description: "The identifier of the source wallet used to fund a payout."
+    type: string
+    example: "53535335"
+  destination:
+    description: "The destination bank account."
+    $ref: "./WireDestinationResponse.yml"
+  amount:
+    $ref: "./Money.yml"
+  fees:
+    description: "Fees associated with the payout."
+    nullable: true
+    $ref: "./Money.yml"
+  status:
+    description: "Status of the payout. Status `pending` indicates that the payout is in process; `complete` indicates it finished successfully; `failed` indicates it failed."
+    type: string
+    enum:
+      - pending
+      - complete
+      - failed
+  trackingRef:
+    description: "A payout tracking reference. Will be present once known."
+    nullable: true
+    example: "CIR-6ESOQANEP3NAO"
+  errorCode:
+    $ref: "./PayoutErrorCode.yml"
+    nullable: true
+  riskEvaluation:
+    description: "Results of risk evaluation. Only present if the payout is denied by Circle's risk service."
+    nullable: true
+    $ref: "./RiskEvaluation.yml"
+  return:
+    description: "Return information if the payout is returned by bank. Only present if `errorCode` of payout is `transaction_returned`."
+    nullable: true
+    $ref: "./UnwithdrawalObject.yml"
+  createDate:
+    $ref: "./UTCTimestamp.yml"
+  updateDate:
+    $ref: "./UTCTimestamp.yml"

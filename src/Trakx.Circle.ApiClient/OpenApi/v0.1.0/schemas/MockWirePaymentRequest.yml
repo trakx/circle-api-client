@@ -1,0 +1,11 @@
+type: object
+required:
+  - trackingRef
+  - amount
+properties:
+  trackingRef:
+    description: "Wire tracking reference that needs to be set in the wire reference to beneficiary field. This field is retrievable through the response during wire creation or via the bank instruction endpoint."
+    type: string
+    example: "CIR13FB13A" 
+  amount:
+    $ref: "./Money.yml"

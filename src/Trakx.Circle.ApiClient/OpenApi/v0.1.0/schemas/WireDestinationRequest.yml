@@ -1,0 +1,15 @@
+type: object
+required:
+  - type
+  - id
+properties:
+  type:
+    type: string
+    enum:
+      - "wire"
+      - "ach"
+  id:
+    type: string
+    description: "The id of the bank account."
+    example: "3f3aa55a-3977-3be7-9ad5-6dc702cc82a3"
+

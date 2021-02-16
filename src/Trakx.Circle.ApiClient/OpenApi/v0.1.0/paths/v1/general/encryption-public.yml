@@ -1,0 +1,20 @@
+get:
+  security:
+    - bearerAuth: []
+  summary: Get public key.
+  description: Retrieves an RSA public key to be used in encrypting data sent to the API. Your public keys change infrequently, so we encourage you to cache this response value locally for a duration of 24 hours or more.
+  operationId: getPublicKey
+  tags:
+    - Encryption
+  responses:
+    '200':
+      description: Successfully retrieved the RSA public key.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/PublicKey.yml"

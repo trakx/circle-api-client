@@ -1,0 +1,43 @@
+type: object
+required:
+  - name
+  - city
+  - country
+  - line1
+  - postalCode
+properties:
+  name:
+    description: "Full name of the card or bank account holder."
+    type: string
+    maxLength: 1024
+    example: "Satoshi Nakamoto"
+  city:
+    description: "City portion of the address."
+    type: "string"
+    maxLength: 1024
+    example: "Boston"
+  country:
+    description: "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2."
+    type: "string"
+    maxLength: 2
+    example: "US"
+  line1:
+    description: "Line one of the street address."
+    type: "string"
+    maxLength: 1024
+    example: "100 Money Street"
+  line2:
+    description: "Line two of the street address."
+    type: "string"
+    maxLength: 1024
+    example: "Suite 1"
+  district:
+    description: "State / County / Province / Region portion of the address. If the country is US or Canada district is required and should use the two-letter code for the subdivision."
+    type: "string"
+    maxLength: 16
+    example: "MA"
+  postalCode:
+    description: "Postal / ZIP code of the address."
+    type: "string"
+    maxLength: 16
+    example: "01234"

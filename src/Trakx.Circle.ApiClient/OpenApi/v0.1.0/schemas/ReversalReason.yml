@@ -1,0 +1,16 @@
+type: string
+enum:
+  - duplicate
+  - fraudulent
+  - requested_by_customer
+  - bank_transaction_error
+  - invalid_account_number
+  - insufficient_funds
+  - payment_stopped_by_issuer
+  - payment_returned
+  - bank_account_ineligible
+  - invalid_account_number
+  - invalid_ach_rtn
+  - unauthorized_transaction
+  - payment_failed
+description: "Enumerated reason for a returned payment. Providing this reason in the request is recommended (to improve risk evaluation) but not required."

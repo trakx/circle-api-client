@@ -1,0 +1,20 @@
+type: object
+properties:
+  id:
+    description: "Unique system generated identifier for the item."
+    type: string
+    format: uuid
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  type:
+    description: "Type of the payment object."
+    type: string
+    enum: ["cancel"]
+  description:
+    description: "Enumerated description of the payment item."
+    type: string
+    nullable: true
+    enum: ["Payment"]
+  status:
+    $ref: "./PaymentStatus.yml"
+  createDate:
+    $ref: "./UTCTimestamp.yml"

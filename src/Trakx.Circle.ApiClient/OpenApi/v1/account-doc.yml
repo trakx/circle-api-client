@@ -1,0 +1,49 @@
+openapi: 3.0.2
+
+servers:
+  - url: api-sandbox.circle.com
+
+info:
+  version: ${version}
+  title: Core Functionality
+  description: APIs for managing your account balance. These endpoints are available with all Circle APIs.
+
+paths:
+  /v1/businessAccount/balances:
+    $ref: './paths/businessAccount/balances.yml'
+
+  /v1/businessAccount/payouts:
+    $ref: './paths/businessAccount/payouts.yml'
+
+  /v1/businessAccount/payouts/{id}:
+    $ref: './paths/businessAccount/payouts-id.yml'
+
+  /v1/businessAccount/banks/wires:
+    $ref: './paths/businessAccount/wires.yml'
+
+  /v1/businessAccount/banks/wires/{id}:
+    $ref: './paths/businessAccount/wires-id.yml'
+
+  /v1/businessAccount/transfers:
+    $ref: './paths/businessAccount/businessTransfers.yml'
+
+  /v1/businessAccount/transfers/{id}:
+    $ref: './paths/businessAccount/businessTransfer-id.yml'
+
+  /v1/businessAccount/banks/wires/{id}/instructions:
+    $ref: './paths/businessAccount/wires-id-instructions.yml'
+
+  /v1/businessAccount/wallets/addresses/deposit:
+    $ref: './paths/businessAccount/addresses-deposit.yml'
+
+  /v1/businessAccount/wallets/addresses/recipient:
+    $ref: './paths/businessAccount/addresses-recipient.yml'
+
+  /v1/businessAccount/deposits:
+    $ref: './paths/businessAccount/deposits.yml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

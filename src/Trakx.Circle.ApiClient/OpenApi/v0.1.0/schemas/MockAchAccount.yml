@@ -1,0 +1,21 @@
+type: object
+required:
+  - accountNumber
+  - routingNumber
+  - description
+properties:
+  accountNumber:
+    description: "The account number of the ACH account."
+    type: string
+    example: "123456789"
+  routingNumber:
+    description: |
+      The routing number of the ACH account.
+
+      For sandbox testing, valid routing numbers include `011000028`, `011201762`, `011500120`, `021214862`, `121000248`, `121140399`, `211073473`, `221172610`, and `011000138`.
+    type: string
+    example: "011000028"
+  description:
+    type: string
+    description: "A description for the ACH account."
+    example: "My ACH account"

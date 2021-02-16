@@ -1,0 +1,12 @@
+type: object
+properties:
+  trackingRef:
+    description: "Wire tracking reference that needs to be set in the wire reference to beneficiary field. This field is retrievable through the response during wire creation or via the bank instruction endpoint."
+    type: string
+    example: "CIR13FB13A" 
+  amount:
+    $ref: "./Money.yml"
+  status:
+    description: "Enumerated status of the wire payment. Status `pending` indicates that the wire payment is in process; `complete` indicates it finished successfully; `failed` indicates it failed."
+    type: string
+    example: "pending"

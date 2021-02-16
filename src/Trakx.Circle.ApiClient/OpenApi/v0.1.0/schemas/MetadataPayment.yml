@@ -1,0 +1,14 @@
+type: object
+required:
+  - email
+  - sessionId
+  - ipAddress
+properties:
+  email:
+    $ref: "./Email.yml"
+  phoneNumber:
+    $ref: "./PhoneNumber.yml"
+  sessionId:
+    $ref: "./SessionId.yml"
+  ipAddress:
+    $ref: "./IpAddress.yml"

@@ -1,0 +1,22 @@
+get:
+  security:
+    - bearerAuth: []
+  summary: Get balance.
+  description: Retrieves the balance of merchant funds that have settled and also of funds that have been sent for processing but have not yet settled.
+  operationId: getBalances
+  tags:
+    - Balances
+  responses:
+    '200':
+      description: Successfully retrieved balances.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/Balances.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"

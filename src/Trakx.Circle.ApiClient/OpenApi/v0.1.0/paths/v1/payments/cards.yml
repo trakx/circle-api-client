@@ -1,0 +1,55 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a card.
+  operationId: createCard
+  tags:
+    - Cards
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/CardCreationRequest.yml#/CardCreationRequest"
+  responses:
+    '201':
+      description: Successfully created a card.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/Card.yml"
+    '400':
+      $ref: "../../../responses/BadRequest.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+get:
+  security:
+    - bearerAuth: []
+  summary: Get a list of cards.
+  operationId: getCards
+  tags:
+  - Cards
+  parameters:
+    - $ref: "../../../parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../parameters/pagination/PageSize.yml#/PageSize"
+  responses:
+    '200':
+      description: Successfully retrieved a list of cards.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../schemas/SimpleCard.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"

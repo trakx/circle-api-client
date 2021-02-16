@@ -1,0 +1,10 @@
+type: object
+properties:
+  trackingRef:
+    description: "Wire tracking ref that needs to be set in the wire reference field."
+    type: string
+    example: "CIR13FB13A"
+  beneficiary:
+    $ref: "./WireInstructionBeneficiary.yml"
+  beneficiaryBank:
+    $ref: "./WireInstructionBeneficiaryBank.yml"

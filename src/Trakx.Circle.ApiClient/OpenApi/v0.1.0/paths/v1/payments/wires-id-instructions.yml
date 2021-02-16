@@ -1,0 +1,31 @@
+parameters:
+  - name: id
+    description: "Unique identifier of the bank account for wire transfers."
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+get:
+  security:
+    - bearerAuth: []
+  summary: Get the wire transfer instructions into the Circle bank account given your bank account id
+  operationId: getWireInstructionsBankAccount
+  tags:
+    - "Bank accounts (wires)"
+  responses:
+    '200':
+      description: Successfully retrieved wire transfer instructions for the bank account.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/WireInstruction.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../responses/NotFound.yml"

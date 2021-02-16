@@ -1,0 +1,12 @@
+WalletCreationRequest:
+  type: object
+  required:
+    - idempotencyKey
+  properties:
+    idempotencyKey:
+      $ref: "./IdempotencyKey.yml"
+    description:
+        description: "A human-friendly, non-unique identifier for a wallet."
+        type: string
+        example: "Treasury Wallet"
+        maxLength: 255

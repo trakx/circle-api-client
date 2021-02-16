@@ -1,0 +1,18 @@
+type: object
+required:
+  - idempotencyKey
+  - source
+  - destination
+  - amount
+properties:
+  idempotencyKey:
+    $ref: "./../IdempotencyKey.yml"
+  source:
+    $ref: './RequestWalletLocation.yml'
+  destination:
+    oneOf:
+      - $ref: './RequestBlockchainLocation.yml'
+      - $ref: './RequestWalletLocation.yml'
+  amount:
+    $ref: "./../Money.yml"
+

@@ -1,0 +1,8 @@
+SettlementId:
+  name: settlementId
+  description: Queries items with the specified settlement id. Matches any settlement id if unspecified.
+  in: query
+  required: false
+  schema:
+    type: string
+    format: uuid

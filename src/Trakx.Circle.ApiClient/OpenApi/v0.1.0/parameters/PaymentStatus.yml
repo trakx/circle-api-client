@@ -1,0 +1,13 @@
+PaymentStatus:
+  name: status
+  description: Queries items with the specified status. Matches any status if unspecified.
+  in: query
+  required: false
+  schema:
+    type: string
+    enum:
+      - pending
+      - confirmed
+      - paid
+      - failed
+    example: "pending"

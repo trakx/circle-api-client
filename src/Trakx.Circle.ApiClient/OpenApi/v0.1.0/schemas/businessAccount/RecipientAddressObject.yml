@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    description: "Unique system generated identifier for the recipient address."
+    type: string
+    format: uuid
+    example: "f1f36b85-cafe-484e-a46b-02340bfdb927"
+  address:
+    $ref: "../Address.yml"
+  chain:
+    $ref: "../Chain.yml"
+  description:
+    $ref: "./Description.yml"

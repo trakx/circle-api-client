@@ -13,7 +13,7 @@
       "configurationClass": "ClientConfigurator",
       "generateClientClasses": true,
       "generateClientInterfaces": true,
-      "clientBaseInterface": "IFavouriteExchangesClient",
+      "clientBaseInterface": "",
       "injectHttpClient": true,
       "disposeHttpClient": true,
       "protectedMethods": [],

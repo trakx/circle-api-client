@@ -1,0 +1,34 @@
+type: object
+properties:
+  name:
+    description: "Name of the beneficiary's bank."
+    type: string
+    example: "SILVERGATE BANK"
+  swiftCode:
+    description: "SWIFT code of the beneficiary's bank account."
+    type: string
+    example: "SIVGUS66XXX"
+  routingNumber:
+    description: "ABA Routing number of the beneficiary's bank account."
+    type: string
+    example: "322286803"
+  accountNumber:
+    description: "Account number of the beneficiary's bank account."
+    type: string
+    example: "****7427"
+  address:
+    description: "Address of the beneficiary's bank."
+    type: string
+    example: "4250 EXECUTIVE SQUARE SUITE 300"
+  city:
+    description: "City of the beneficiary's bank."
+    type: string
+    example: "LA JOLLA"
+  postalCode:
+    description: "Postal code of the beneficiary's bank."
+    type: string
+    example: "02110"
+  country:
+    description: "Country code of the beneficiary's bank"
+    type: string
+    example: "US"

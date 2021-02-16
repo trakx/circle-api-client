@@ -1,0 +1,101 @@
+openapi: 3.0.2
+
+servers:
+  - url: api-sandbox.circle.com
+
+info:
+  version: ${version}
+  title: Payments API
+  description: "<u>Glossary</u>: \n
+    - <b>Customer</b>: this is the entity that signs / enter an agreement with Circle (a business entity) \n
+    - <b>End user</b>: this is the entity that owns a payment method used throughout our flows \n
+    - <b>Payment Method</b>: a card, bank account, etc. \n
+    - <b>Payment</b>: the act of collecting fiat funds from a payment method, and depositing an associated amount of stablecoin on a wallet \n
+    - <b>Payout</b>: the act of burning a certain amount of stablecoin from a wallet and transferring the associated fiat funds to a payment method \n
+  "
+
+tags:
+  - name: Payments
+    description: "Create and manage payments."
+  #  - name: Balances
+  #    description: "Retrieve settled and unsettled balances."
+  - name: Cards
+    description: "Create and manage cards."
+  - name: "Bank accounts"
+    description: "Link external bank accounts."
+
+paths:
+  /v1/payments:
+    $ref: './paths/payments/payments.yml'
+
+  /v1/payments/{id}:
+    $ref: './paths/payments/payments-id.yml'
+
+  /v1/payments/{id}/cancel:
+    $ref: './paths/payments/payments-id-cancel.yml'
+
+  /v1/payments/{id}/refund:
+    $ref: './paths/payments/payments-id-refund.yml'
+
+  /v1/mocks/payments/wire:
+    $ref: './paths/payments/wires-payments-mock.yml'
+
+  /v1/cards:
+    $ref: './paths/cards/cards.yml'
+
+  /v1/cards/{id}:
+    $ref: './paths/cards/cards-id.yml'
+
+  /v1/banks/wires:
+    $ref: './paths/banks/wires.yml'
+
+  /v1/banks/wires/{id}:
+    $ref: './paths/banks/wires-id.yml'
+
+  /v1/banks/wires/{id}/instructions:
+    $ref: './paths/banks/wires-id-instructions.yml'
+
+  /v1/banks/ach:
+    $ref: './paths/banks/ach.yml'
+
+  /v1/banks/ach/{id}:
+    $ref: './paths/banks/ach-id.yml'
+
+  /v1/mocks/ach/accounts:
+    $ref: './paths/banks/ach-accounts-mock.yml'
+
+  /v1/wallets:
+    $ref: './paths/wallet-payments/wallets.yml'
+
+  /v1/wallets/{id}:
+    $ref: './paths/wallet-payments/wallets-id.yml'
+
+  /v1/wallets/{id}/addresses:
+    $ref: './paths/wallet-payments/wallets-id-addresses.yml'
+
+  /v1/settlements:
+    $ref: './paths/payments/settlements.yml'
+
+  /v1/settlements/{id}:
+    $ref: './paths/payments/settlements-id.yml'
+
+  /v1/chargebacks:
+    $ref: './paths/payments/chargebacks.yml'
+
+  /v1/chargebacks/{id}:
+    $ref: './paths/payments/chargebacks-id.yml'
+
+  /v1/mocks/cards/chargebacks:
+    $ref: './paths/payments/chargebacks-mock.yml'
+
+  /v1/reversals:
+    $ref: './paths/payments/reversals.yml'
+
+  /v1/balances:
+    $ref: './paths/balances.yml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

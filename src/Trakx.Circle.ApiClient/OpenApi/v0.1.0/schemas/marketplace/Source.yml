@@ -1,0 +1,10 @@
+type: object
+properties:
+  id:
+    description: "Unique identifier for the source."
+    type: string
+    example: "58c93589-911f-4bcb-a918-87c593296791"
+  type:
+    description: "Type of the source."
+    type: string
+    enum: ["card"]

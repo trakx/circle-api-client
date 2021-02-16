@@ -1,0 +1,29 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a mock ACH account.
+  description: In the sandbox environment, create a mock ACH account and retrieve a processor token that can be used to link an ACH account.
+  operationId: createAchAccount
+  tags:
+    - "Bank accounts"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../v0.1.0/schemas/MockAchAccountCreationRequest.yml"
+  responses:
+    '201':
+      description: Successfully created a mock ach payment.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/MockAchAccountResponse.yml"
+    '400':
+      $ref: "../../../v0.1.0/responses/BadRequest.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"

@@ -1,0 +1,44 @@
+openapi: 3.0.2
+
+servers:
+  - url: api-sandbox.circle.com
+
+info:
+  version: ${version}
+  title: Digital Dollar Accounts API
+  description: "<u>Glossary</u>: \n
+    - <b>Address</b>: a blockchain address used to send either send or receive funds \n
+    - <b>Chain</b>: the blockchain network on which to send or receive funds  \n
+    - <b>Payout</b>: the act of burning a certain amount of stablecoin from a wallet and transferring the associated fiat funds to a payment method \n
+    - <b>Transfer</b>: represents a transfer of funds to a crypto address \n
+  "
+
+tags:
+  - name: Wallets
+    description: "Create end user wallets."
+  - name: Addresses
+    description: "Manage blockchain addresses."
+  - name: Transfers
+    description: "Manage transfers."
+
+paths:
+  /v1/wallets:
+    $ref: './paths/wallets/wallets.yml'
+
+  /v1/wallets/{id}:
+    $ref: './paths/wallets/wallets-id.yml'
+
+  /v1/wallets/{id}/addresses:
+    $ref: './paths/wallets/wallets-id-addresses.yml'
+
+  /v1/transfers:
+    $ref: './paths/transfers/transfers.yml'
+
+  /v1/transfers/{id}:
+    $ref: './paths/transfers/transfer-id.yml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

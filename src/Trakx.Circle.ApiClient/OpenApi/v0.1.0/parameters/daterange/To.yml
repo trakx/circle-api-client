@@ -1,0 +1,8 @@
+To:
+  name: to
+  description: Queries items created before the specified date-time (inclusive).
+  in: query
+  required: false
+  schema:
+    type: string
+    format: date-time

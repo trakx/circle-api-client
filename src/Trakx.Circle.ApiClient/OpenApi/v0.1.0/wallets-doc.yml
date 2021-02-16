@@ -1,0 +1,43 @@
+openapi: 3.0.2
+servers:
+  - url: api-sandbox.circle.com
+
+info:
+  version: ${version}
+  title: Circle Wallets API
+  description: "<u>Glossary</u>: \n
+    - <b>Address</b>: a blockchain address used to send and receive funds \n
+    - <b>Chain</b>: the blockchain network used to record the transactions of a wallet  \n
+    - <b>Currency</b>: the currency of the tokens used for a wallet \n
+    - <b>Wallet</b>: an object used to transfer funds and manage addresses and balances \n
+    - <b>Transfer</b>: represents a transfer of funds between wallets and addresses \n
+  "
+
+tags:
+  - name: Wallets
+    description: "Create end user wallets."
+  - name: Addresses
+    description: "Manage blockchain addresses."
+  - name: Transfers
+    description: "Manage transfers."
+paths:
+  /v1/wallets:
+    $ref: './paths/v1/wallets/wallets.yml'
+
+  /v1/wallets/{walletId}:
+    $ref: './paths/v1/wallets/wallets-id.yml'
+
+  /v1/wallets/{walletId}/addresses:
+    $ref: './paths/v1/wallets/wallets-id-addresses.yml'
+
+  /v1/transfers:
+    $ref: './paths/v1/transfers/transfers.yml'
+
+  /v1/transfers/{transferId}:
+    $ref: './paths/v1/transfers/transfer-id.yml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

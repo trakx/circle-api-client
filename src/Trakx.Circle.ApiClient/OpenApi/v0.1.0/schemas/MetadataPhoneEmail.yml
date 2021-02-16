@@ -1,0 +1,9 @@
+# a separate schema from MetadataPayment since we do not expose all metadata fields in public responses
+type: object
+required:
+  - email
+properties:
+  email:
+    $ref: "./Email.yml"
+  phoneNumber:
+    $ref: "./PhoneNumber.yml"

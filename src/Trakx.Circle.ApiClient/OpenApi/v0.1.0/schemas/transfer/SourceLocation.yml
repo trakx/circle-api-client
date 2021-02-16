@@ -1,0 +1,7 @@
+description: "A source of funds."
+oneOf:
+  # It's important to do SourceWalletLocation.yml first so that it's used as the example.
+  - $ref: "./SourceWalletLocation.yml"
+  - $ref: "./SourceBlockchainLocation.yml"
+discriminator:
+  propertyName: type

@@ -1,0 +1,15 @@
+description: The request has not been applied because it lacks valid authentication credentials.
+headers:
+  X-Request-Id:
+    $ref: "../headers/XRequestId.yml"
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        $ref: "../schemas/Error.yml#/required"
+      properties:
+        $ref: "../schemas/Error.yml#/properties"
+      example:
+        code: 401
+        example: "Malformed authorization."

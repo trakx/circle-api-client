@@ -1,0 +1,8 @@
+type: object
+properties:
+  address:
+    $ref: "./Address.yml"
+  currency:
+    $ref: "./Currency.yml"
+  chain:
+    $ref: "./Chain.yml"

@@ -1,0 +1,4 @@
+type: string
+description: "Unique idempotency key. This key is utilized to ensure exactly-once execution of mutating requests."
+format: uuid
+example: ba943ff1-ca16-49b2-ba55-1057e70ca5c7

@@ -1,0 +1,31 @@
+get:
+  parameters:
+    - name: id
+      description: "Unique identifier of the payout."
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  security:
+    - bearerAuth: []
+  summary: Get a payout.
+  operationId: getPayout
+  tags:
+    - Payouts
+  responses:
+    '200':
+      description: Successfully retrieved a payout.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/Payout.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../v0.1.0/responses/NotFound.yml"

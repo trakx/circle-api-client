@@ -1,0 +1,13 @@
+get:
+  summary: Ping.
+  description: Checks that the service is running.
+  operationId: rootPing
+  tags:
+    - Health
+  responses:
+    '200':
+      description: Successful ping.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Ping.yml'

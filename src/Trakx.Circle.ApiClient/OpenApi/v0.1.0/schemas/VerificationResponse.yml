@@ -1,0 +1,11 @@
+type: object
+required:
+  - avs
+  - cvv
+properties:
+  avs:
+    description: "Check result of AVS"
+    $ref: "./AvsResults.yml"
+  cvv:
+    description: "Check result of CVV"
+    $ref: "./CvvResults.yml"

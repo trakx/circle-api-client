@@ -1,0 +1,14 @@
+type: object
+description: PGP encrypted json string. The object format given here needs to be stringified and PGP encrypted before it is sent to the server, so `encryptedData` will end up as a string, rather than an object.
+required:
+- number
+- cvv
+properties:
+  number:
+    description: "Card number. No spaces or other separators."
+    type: string
+    example: "4111111111111111"
+  cvv:
+    description: "Card Verification Number. Three or four digit security code."
+    type: string
+    example: "123"

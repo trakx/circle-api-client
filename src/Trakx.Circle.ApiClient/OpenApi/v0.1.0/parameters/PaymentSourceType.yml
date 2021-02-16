@@ -1,0 +1,14 @@
+PaymentSourceType:
+  name: type
+  description: Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
+  in: query
+  required: false
+  schema:
+    type: array
+    items:
+      type: string
+      enum:
+        - card
+        - wire
+        - ach
+      example: "card"

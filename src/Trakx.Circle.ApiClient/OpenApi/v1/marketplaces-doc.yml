@@ -1,0 +1,74 @@
+openapi: 3.0.2
+
+servers:
+  - url: api-sandbox.circle.com
+
+info:
+  version: ${version}
+  title: Marketplaces API
+  description: "<u>Glossary</u>: \n
+    - <b>Marketplace</b>: this is the entity that administers the marketplace \n
+    - <b>Merchant</b>: this is an entity that sells goods or services and accepts payments associated with the Marketplace \n
+    - <b>End user</b>: this is the entity that owns a payment method used throughout the flows \n
+    - <b>Payment Method</b>: a card, bank account, etc. \n
+    - <b>Payment</b>: the act of collecting fiat funds from a payment method, and depositing an associated amount of stablecoin on a wallet \n
+    - <b>Payout</b>: the act of burning a certain amount of stablecoin from a wallet and transferring the associated fiat funds to a payment method \n
+  "
+
+paths:
+  /v1/marketplace/merchants:
+    $ref: './paths/marketplace/merchants.yml'
+
+  /v1/marketplace/payments:
+    $ref: './paths/marketplace/payments.yml'
+
+  /v1/marketplace/payments/{id}:
+    $ref: './paths/payments/payments-id.yml'
+
+  /v1/marketplace/payments/{id}/cancel:
+    $ref: './paths/payments/payments-id-cancel.yml'
+
+  /v1/marketplace/payments/{id}/refund:
+    $ref: './paths/payments/payments-id-refund.yml'
+
+  /v1/cards:
+    $ref: './paths/cards/cards.yml'
+
+  /v1/cards/{id}:
+    $ref: './paths/cards/cards-id.yml'
+
+  /v1/banks/wires:
+    $ref: './paths/banks/wires.yml'
+
+  /v1/banks/wires/{id}:
+    $ref: './paths/banks/wires-id.yml'
+
+  /v1/banks/wires/{id}/instructions:
+    $ref: './paths/banks/wires-id-instructions.yml'
+
+  /v1/settlements:
+    $ref: './paths/marketplace/settlements.yml'
+
+  /v1/settlements/{id}:
+    $ref: './paths/payments/settlements-id.yml'
+
+  /v1/chargebacks:
+    $ref: './paths/marketplace/chargebacks.yml'
+
+  /v1/chargebacks/{id}:
+    $ref: './paths/payments/chargebacks-id.yml'
+
+  /v1/mocks/cards/chargebacks:
+    $ref: './paths/payments/chargebacks-mock.yml'
+
+  /v1/payouts:
+    $ref: './paths/payouts/payouts.yml'
+
+  /v1/payouts/{id}:
+    $ref: './paths/payouts/payouts-id.yml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

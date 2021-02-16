@@ -1,0 +1,28 @@
+parameters:
+  - name: walletId
+    description: "Unique identifier for the wallet."
+    in: path
+    required: true
+    schema:
+      type: string
+get:
+  security:
+    - bearerAuth: []
+  summary: Get a wallet.
+  operationId: getWallet
+  tags:
+    - Wallets
+  responses:
+    '200':
+      description: Successfully retrieved a wallet.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/Wallet.yml"
+    '404':
+      $ref: "../../../responses/NotFound.yml"

@@ -1,0 +1,19 @@
+type: string
+description: "Indicates the failure reason of the card verification. Only present on cards with failed verification. Possible values are [verification_failed, verification_fraud_detected, verification_denied, verification_not_supported_by_issuer, verification_stopped_by_issuer, card_failed, card_invalid, card_address_mismatch, card_zip_mismatch, card_cvv_invalid, card_expired, card_limit_violated, card_not_honored, card_cvv_required, credit_card_not_allowed, card_account_ineligible]"
+enum:
+  - verification_failed
+  - verification_fraud_detected
+  - verification_denied
+  - verification_not_supported_by_issuer
+  - verification_stopped_by_issuer
+  - card_failed
+  - card_invalid
+  - card_address_mismatch
+  - card_zip_mismatch
+  - card_cvv_invalid
+  - card_expired
+  - card_limit_violated
+  - card_not_honored
+  - card_cvv_required
+  - credit_card_not_allowed
+  - card_account_ineligible

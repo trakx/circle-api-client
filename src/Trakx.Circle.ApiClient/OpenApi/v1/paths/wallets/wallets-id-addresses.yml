@@ -1,0 +1,77 @@
+post:
+  parameters:
+    - name: id
+      description: "Unique id of a wallet."
+      in: path
+      required: true
+      schema:
+        type: string
+  security:
+    - bearerAuth: []
+  summary: Generate a blockchain address.
+  description: |
+    Generates a new blockchain address for a wallet. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.
+  operationId: generateAddress
+  tags:
+    - Wallets
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../v0.1.0/schemas/GenerateAddressRequest.yml#/GenerateAddressRequest"
+  responses:
+    '201':
+      description: Successfully generated a new address.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/AddressObject.yml"
+    '400':
+      $ref: "../../../v0.1.0/responses/BadRequest.yml"
+    '409':
+      $ref: "../../../v0.1.0/responses/Conflict.yml"
+    '404':
+      $ref: "../../../v0.1.0/responses/NotFound.yml"
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: id
+      description: "Unique id of a wallet."
+      in: path
+      required: true
+      schema:
+        type: string
+    - $ref: "../../../v0.1.0/parameters/daterange/From.yml#/From"
+    - $ref: "../../../v0.1.0/parameters/daterange/To.yml#/To"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of addresses.
+  description: Retrieves a list of addresses associated with a wallet.
+  operationId: getAddresses
+  tags:
+  - Wallets
+  responses:
+    '200':
+      description: Successfully retrieved a list of addresses.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../v0.1.0/schemas/AddressObject.yml"
+    '400':
+      $ref: "../../../v0.1.0/responses/BadRequest.yml"
+    '404':
+      $ref: "../../../v0.1.0/responses/NotFound.yml"

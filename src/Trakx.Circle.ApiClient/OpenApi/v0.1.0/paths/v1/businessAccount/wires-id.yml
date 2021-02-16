@@ -1,0 +1,31 @@
+parameters:
+  - name: id
+    description: "Unique identifier of the bank account for wire transfers."
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+get:
+  security:
+    - bearerAuth: []
+  summary: Get a bank account (wires).
+  operationId: getWireBankAccount
+  tags:
+    - "Bank accounts (wires)"
+  responses:
+    '200':
+      description: Successfully retrieved a bank account for wire transfers.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/Wire.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../responses/NotFound.yml"

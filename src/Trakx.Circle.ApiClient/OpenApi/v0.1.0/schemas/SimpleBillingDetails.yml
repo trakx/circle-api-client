@@ -1,0 +1,16 @@
+# BillingDetails with no sensitive fields
+type: object
+required:
+  - country
+  - district
+properties:
+  country:
+    description: "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2."
+    type: "string"
+    maxLength: 2
+    example: "US"
+  district:
+    description: "State / County / Province / Region portion of the address. US and Canada use the two-letter code for the subdivision."
+    type: "string"
+    maxLength: 16
+    example: "MA"

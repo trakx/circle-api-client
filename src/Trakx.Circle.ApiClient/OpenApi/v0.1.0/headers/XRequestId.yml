@@ -1,0 +1,4 @@
+description: Unique identifier for the request. Helpful for identifying a request when communicating with Circle support.
+schema:
+  type: string
+  example: "2adba88e-9d63-44bc-b975-9b6ae3440dde"

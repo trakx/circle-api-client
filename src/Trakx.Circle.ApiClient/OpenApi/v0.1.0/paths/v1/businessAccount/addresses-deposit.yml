@@ -1,0 +1,54 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Generate a deposit address.
+  description: |
+    Generates a new blockchain address. Depositing cryptocurrency to this address will credit the associated account balance with the value of the deposit.
+  operationId: generateDepositAddress
+  tags:
+    - Addresses
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/businessAccount/GenerateAddressRequest.yml#/GenerateAddressRequest"
+
+  responses:
+    '201':
+      description: Successfully generated a new deposit address.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/AddressObject.yml"
+    '400':
+      $ref: "../../../responses/BadRequest.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+get:
+  security:
+    - bearerAuth: []
+  summary: Get a list of deposit addresses.
+  operationId: getDepositAddresses
+  tags:
+    - Addresses
+  responses:
+    '200':
+      description: Successfully retrieved a list of deposit addresses.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../schemas/AddressObject.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"

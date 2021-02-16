@@ -1,0 +1,29 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a mock wire payment.
+  description: In the sandbox environment, initiate a mock wire payment that mimics the behavior of funds sent through the bank (wire) account linked to master wallet.
+  operationId: createWirePayment
+  tags:
+    - Payments
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/MockWirePaymentRequest.yml"
+  responses:
+    '201':
+      description: Successfully created a mock wire payment.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/MockWirePaymentResponse.yml"
+    '400':
+      $ref: "../../../responses/BadRequest.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"

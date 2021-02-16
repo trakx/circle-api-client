@@ -1,0 +1,29 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a bank account (wires).
+  operationId: createWireBankAccount
+  tags:
+    - "Bank accounts (wires)"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/WireCreationRequest.yml#/WireCreationRequest"
+
+  responses:
+    '201':
+      description: Successfully created a bank account for wire transfers.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/Wire.yml"
+    '400':
+      $ref: "../../../responses/BadRequest.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"

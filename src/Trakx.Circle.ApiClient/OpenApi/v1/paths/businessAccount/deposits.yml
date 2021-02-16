@@ -1,0 +1,38 @@
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: type
+      description: "Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type."
+      in: query
+      schema:
+        type: string
+        enum:
+          - wire
+        example: "wire"
+    - $ref: "../../../v0.1.0/parameters/daterange/From.yml#/From"
+    - $ref: "../../../v0.1.0/parameters/daterange/To.yml#/To"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of deposits.
+  description: Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
+  operationId: searchDeposits
+  tags:
+    - Deposits
+  responses:
+    '200':
+      description: Successfully retrieved a list of deposits.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../v0.1.0/schemas/businessAccount/Deposit.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"

@@ -1,0 +1,86 @@
+WireCreationRequest:
+  description: "Request object used to create a bank account (wires). Different fields are required depending on the bank country, see the guide documentation for the list of supported bank countries along with which ones support IBAN."
+  type : object
+  oneOf:
+    - $ref: "#/WireCreationRequest_US"
+    - $ref: "#/WireCreationRequest_iban"
+    - $ref: "#/WireCreationRequest_accountNumber"
+
+WireCreationRequest_US:
+  title: "US Bank Account"
+  type: object
+  description: "Relevant fields for U.S. bank accounts."
+  required:
+    - idempotencyKey
+    - accountNumber
+    - routingNumber
+    - billingDetails
+    - bankAddress
+  properties:
+    idempotencyKey:
+      $ref: "./IdempotencyKey.yml"
+    accountNumber:
+      description: "Account number that identifies the bank account."
+      type: string
+      example: "12340010"
+    routingNumber:
+      description: "ABA routing number for the bank account. Note this has to be specific for bank wire transfers."
+      type: string
+      example: "121000248"
+    billingDetails:
+      description: "Billing address details of the bank account holder."
+      $ref: "./BillingDetails.yml"
+    bankAddress:
+      description: "The address of the bank. Country field is required."
+      $ref: "./BankAddress.yml"
+
+WireCreationRequest_iban:
+  title: "Non US Bank Account - IBAN Supported"
+  type: object
+  description: "Relevant fields for non-U.S. bank accounts that support IBAN."
+  required:
+    - idempotencyKey
+    - iban
+    - billingDetails
+    - bankAddress
+  properties:
+    idempotencyKey:
+      $ref: "./IdempotencyKey.yml"
+    iban:
+      description: "International Bank Account Number (IBAN) for the bank account."
+      type: string
+      example: "DE31100400480532013000"
+    billingDetails:
+      description: "Billing address details of the bank account holder."
+      $ref: "./BillingDetails.yml"
+    bankAddress:
+      description: "The address of the bank. City and country fields are required."
+      $ref: "./BankAddressIbanSupported.yml"
+
+WireCreationRequest_accountNumber:
+  title: "Non US Bank Account - IBAN Not Supported"
+  type: object
+  description: "Relevant fields for non-U.S. banks that do NOT support IBAN."
+  required:
+    - idempotencyKey
+    - accountNumber
+    - routingNumber
+    - billingDetails
+    - bankAddress
+  properties:
+    idempotencyKey:
+      $ref: "./IdempotencyKey.yml"
+    accountNumber:
+      description: "Account number that identifies the bank account."
+      type: string
+      example: "0321800123"
+    routingNumber:
+      description: "The bank's SWIFT / BIC code."
+      type: string
+      example: "SBININBB354"
+    billingDetails:
+      description: "Billing address details of the bank account holder."
+      $ref: "./BillingDetails.yml"
+    bankAddress:
+      description: "The address of the bank. BankName, City and Country fields are required"
+      $ref: "./BankAddressNonIban.yml"

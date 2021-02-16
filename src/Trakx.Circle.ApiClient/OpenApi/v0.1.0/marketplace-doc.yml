@@ -1,0 +1,79 @@
+openapi: 3.0.2
+servers:
+  - url: api-sandbox.circle.com
+
+info:
+  version: ${version}
+  title: Circle Marketplaces API
+  description: "<u>Glossary</u>: \n
+    - <b>Marketplace</b>: this is the entity that administers the marketplace \n
+    - <b>Merchant</b>: this is an entity that sells goods or services and accepts payments associated with the Marketplace \n
+    - <b>End user</b>: this is the entity that owns a payment method used throughout the flows \n
+    - <b>Payment Method</b>: a card, bank account, etc. \n
+    - <b>Payment</b>: the act of collecting fiat funds from a payment method, and depositing an associated amount of stablecoin on a wallet \n
+    - <b>Payout</b>: the act of burning a certain amount of stablecoin from a wallet and transferring the associated fiat funds to a payment method \n
+  "
+
+tags:
+  - name: Cards
+    description: "Create and manage cards."
+  - name: Payments
+    description: "Create and manage payments."
+
+paths:
+  /v1/marketplace/merchants:
+    $ref: './paths/v1/payments/marketplace/merchants.yml'
+
+  /v1/marketplace/payments:
+    $ref: './paths/v1/payments/marketplace/payments.yml'
+
+  /v1/marketplace/payments/{id}:
+    $ref: './paths/v1/payments/payments-id.yml'
+
+  /v1/marketplace/payments/{id}/cancel:
+    $ref: './paths/v1/payments/payments-id-cancel.yml'
+
+  /v1/marketplace/payments/{id}/refund:
+    $ref: './paths/v1/payments/payments-id-refund.yml'
+
+  /v1/cards:
+    $ref: './paths/v1/payments/cards.yml'
+
+  /v1/cards/{id}:
+    $ref: './paths/v1/payments/cards-id.yml'
+
+  /v1/chargebacks:
+    $ref: './paths/v1/payments/marketplace/chargebacks.yml'
+
+  /v1/chargebacks/{id}:
+    $ref: './paths/v1/payments/chargebacks-id.yml'
+
+  /v1/mocks/cards/chargebacks:  
+    $ref: './paths/v1/payments/chargebacks-mock.yml'
+
+  /v1/settlements:
+    $ref: './paths/v1/payments/marketplace/settlements.yml'
+
+  /v1/settlements/{id}:
+    $ref: './paths/v1/payments/settlements-id.yml'
+
+  /v1/banks/wires:
+    $ref: './paths/v1/payments/wires.yml'
+
+  /v1/banks/wires/{id}:
+    $ref: './paths/v1/payments/wires-id.yml'
+
+  /v1/banks/wires/{id}/instructions:
+    $ref: './paths/v1/payments/wires-id-instructions.yml'
+
+  /v1/payouts:
+    $ref: './paths/v1/payments/payouts.yml'
+
+  /v1/payouts/{id}:
+    $ref: './paths/v1/payments/payouts-id.yml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

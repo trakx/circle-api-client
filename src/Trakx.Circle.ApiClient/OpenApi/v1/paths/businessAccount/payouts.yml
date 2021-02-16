@@ -1,0 +1,73 @@
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: destination
+      description: "Unique identifier for the destination bank account. Filters the results to fetch all payouts made to a destination bank account."
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: type
+      description: "Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types."
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - wire
+        example: "wire"
+    - $ref: "../../../v0.1.0/parameters/daterange/From.yml#/From"
+    - $ref: "../../../v0.1.0/parameters/daterange/To.yml#/To"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of payouts.
+  operationId: getPayouts
+  tags:
+    - Payouts
+  responses:
+    '200':
+      description: Successfully retrieved a list of payouts.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../v0.1.0/schemas/Payout.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"
+
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a payout.
+  operationId: createPayout
+  tags:
+    - Payouts
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../v0.1.0/schemas/businessAccount/PayoutCreationRequest.yml"
+  responses:
+    '201':
+      description: Successfully created a payout.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/Payout.yml"
+    '400':
+      $ref: "../../../v0.1.0/responses/BadRequest.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"

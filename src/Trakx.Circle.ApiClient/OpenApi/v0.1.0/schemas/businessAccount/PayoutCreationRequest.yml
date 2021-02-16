@@ -1,0 +1,13 @@
+type: object
+required:
+  - idempotencyKey
+  - destination
+  - amount
+properties:
+  idempotencyKey:
+    $ref: "../IdempotencyKey.yml"
+  destination:
+    description: "The destination bank account (wires)."
+    $ref: "./WireDestinationRequest.yml"
+  amount:
+    $ref: "../Money.yml"

@@ -1,0 +1,62 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Add a recipient address.
+  description: |
+    Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.
+  operationId: createRecipientAddress
+  tags:
+    - Addresses
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/businessAccount/RecipientAddressCreationRequest.yml#/RecipientAddressCreationRequest"
+
+  responses:
+    '200':
+      description: Successfully added a recipient address.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/businessAccount/RecipientAddressObject.yml"
+    '400':
+      $ref: "../../../responses/BadRequest.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - $ref: "../../../parameters/daterange/From.yml#/From"
+    - $ref: "../../../parameters/daterange/To.yml#/To"
+    - $ref: "../../../parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of verified recipient addresses.
+  description: |
+    Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending verification are not included in the response.
+  operationId: getRecipientAddresses
+  tags:
+    - Addresses
+  responses:
+    '200':
+      description: Successfully retrieved a list of recipient addresses.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../schemas/businessAccount/RecipientAddressObject.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"

@@ -1,0 +1,15 @@
+type: object
+required:
+  - available
+  - unsettled
+properties:
+  available:
+    description: List of currency balances (one for each currency) that are currently available to spend.
+    type: array
+    items:
+      $ref: "./Money.yml"
+  unsettled:
+    description: List of currency balances (one for each currency) that have been captured but are currently in the process of settling and will become available to spend at some point in the future.
+    type: array
+    items:
+      $ref: "./Money.yml"

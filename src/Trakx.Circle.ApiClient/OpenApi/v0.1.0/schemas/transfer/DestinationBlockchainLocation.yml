@@ -1,0 +1,16 @@
+description: "A destination blockchain address."
+type: object
+required:
+  - type
+  - chain
+  - address
+properties:
+  type:
+    type: string
+    enum:
+      - "blockchain"
+  address:
+    $ref: "./../Address.yml"
+  chain:
+    $ref: "./../Chain.yml"
+

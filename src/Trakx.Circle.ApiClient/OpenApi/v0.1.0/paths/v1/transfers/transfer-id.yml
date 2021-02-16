@@ -1,0 +1,27 @@
+parameters:
+  - name: id
+    description: "Unique identifier for the transfer."
+    in: path
+    required: true
+    schema:
+      type: string
+get:
+  security:
+    - bearerAuth: []
+  summary: Get a transfer.
+  operationId: getTransfer
+  tags:
+    - Transfers
+  responses:
+    '200':
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      description: Successfully retrieved a transfer.
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/transfer/DetailedTransfer.yml"
+

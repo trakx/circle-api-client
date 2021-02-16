@@ -1,0 +1,16 @@
+type: object
+properties:
+  id:
+    type: "string"
+    format: "uuid"
+    description: "Identifier of a subscription."
+    example: "3cbc2878-a9a5-4aa8-a02b-8b6affcc335d"
+  endpoint:
+    type: "string"
+    description: "URL of the endpoint."
+    example: "https://example.org/handler/for/notifications"
+  subscriptionDetails:
+    type: "array"
+    description: "List of subscriptions details for created subscriptions."
+    items:
+      $ref: "./SubscriptionDetail.yml"

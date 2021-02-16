@@ -1,0 +1,28 @@
+type: object
+properties:
+  payoutId:
+    description: "Unique identifier of the payout that is associated with the return."
+    example: "abdb500d-4a59-457c-801f-2d418c8703ac"
+  amount:
+    description: "Amount of the payout being returned to the source wallet. Note that this amount could be less than the original payout amount due to any fees incurred during the return."
+    $ref: "./Money.yml"
+  fees:
+    $ref: "./Money.yml"
+  reason:
+    description: "Reason for the return."
+    type: string
+    example: "payout_returned"
+  status:
+    description: "Status of the return. A `pending` status indicates that the return is in process; `complete` indicates it finished successfully; `failed` indicates it failed."
+    type: string
+    enum:
+      - pending
+      - complete
+      - failed
+  errorCode:
+    $ref: "./PayoutErrorCode.yml"
+    nullable: true
+  createDate:
+    $ref: "./UTCTimestamp.yml"
+  updateDate:
+    $ref: "./UTCTimestamp.yml"

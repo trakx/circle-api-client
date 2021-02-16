@@ -1,0 +1,25 @@
+get:
+  security:
+    - bearerAuth: []
+  summary: Get balance.
+  description: Retrieves the balance of merchant funds that have settled and also of funds that have been sent for processing but have not yet settled.
+  operationId: getBalances
+  tags:
+    - Balances
+  responses:
+    '200':
+      description: Successfully retrieved balances.
+      headers:
+        X-Request-Id:
+          description: Unique identifier for the request. Helpful for identifying a request when communicating with Circle support.
+          schema:
+            type: string
+            example: "2adba88e-9d63-44bc-b975-9b6ae3440dde"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "./../v0.1.0/schemas/Balances.yml"
+    '401':
+      $ref: "./../v0.1.0/responses/NotAuthorized.yml"

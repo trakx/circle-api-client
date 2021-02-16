@@ -1,0 +1,31 @@
+parameters:
+  - name: id
+    description: "Unique identifier of the bank account for ACH transfers."
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+get:
+  security:
+    - bearerAuth: []
+  summary: Get a bank account (ACH).
+  operationId: getACHBankAccount
+  tags:
+    - "Bank accounts (ACH)"
+  responses:
+    '200':
+      description: Successfully retrieved a bank account for ACH transfers.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/ACH.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../responses/NotFound.yml"

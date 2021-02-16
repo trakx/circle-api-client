@@ -1,0 +1,13 @@
+description: "A source blockchain address."
+type: object
+required:
+  - type
+  - chain
+properties:
+  type:
+    type: string
+    enum:
+      - "blockchain"
+  chain:
+    $ref: "./../Chain.yml"
+

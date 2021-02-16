@@ -1,0 +1,5 @@
+description: "Phone number of the user in E.164 format. We recommend using a library such as [libphonenumber](https://github.com/google/libphonenumber) to parse and validate phone numbers."
+type: string
+maxLength: 16
+pattern: /\+?[1-9]\d{1,14}/
+example: "+14155555555, 442012341234"

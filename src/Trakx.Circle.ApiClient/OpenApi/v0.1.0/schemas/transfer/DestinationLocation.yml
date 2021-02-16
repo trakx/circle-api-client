@@ -1,0 +1,6 @@
+description: "A destination of funds."
+oneOf:
+  - $ref: "./DestinationBlockchainLocation.yml"
+  - $ref: "./DestinationWalletLocation.yml"
+discriminator:
+  propertyName: type

@@ -1,0 +1,18 @@
+description: "A destination wallet location."
+type: object
+required:
+  - type
+  - id
+properties:
+  type:
+    type: string
+    enum:
+      - "wallet"
+  id:
+    type: string
+    description: "The id of the wallet."
+    example: "12345"
+  address:
+    type: string
+    description: "An alphanumeric string which indicates the wallet address used to receive the transfer. Will only be set when the transfer source is a blockchain address."
+    example: "0x8381470ED67C3802402dbbFa0058E8871F017A6F"

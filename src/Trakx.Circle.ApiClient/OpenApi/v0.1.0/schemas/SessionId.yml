@@ -1,0 +1,4 @@
+description: "Hash of the session identifier; typically of the end user. This helps us make risk decisions and prevent fraud. IMPORTANT: Please hash the session identifier to prevent sending us actual session identifiers."
+type: string
+maxLength: 50
+example: "DE6FA86F60BB47B379307F851E238617"

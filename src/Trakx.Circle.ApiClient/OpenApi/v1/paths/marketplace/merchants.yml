@@ -1,0 +1,24 @@
+get:
+  security:
+    - bearerAuth: []
+  summary: Get a list of merchants.
+  description: Retrieves a list of merchants associated with a marketplace. The associated marketplace is determined by the API key.
+  operationId: searchMarketplaceMerchants
+  tags:
+    - Merchants
+  responses:
+    '200':
+      description: Successfully retrieved a list of merchants.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../../v0.1.0/schemas/marketplace/MarketplaceMerchant.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"

@@ -1,0 +1,56 @@
+type: object
+required:
+  - id
+  - status
+  - accountNumber
+  - routingNumber
+  - description
+  - billingDetails
+  - bankAddress
+  - fingerprint
+  - createDate
+  - updateDate
+properties:
+  id:
+    description: "Unique system generated identifier for the ACH account."
+    type: string
+    example: "1e38dcef-a947-493a-a674-f623e4418ace"
+  status:
+    description: "Status of the ACH account. A `pending` status indicates that the linking is in-progress; `complete` indicates the ACH account was linked successfully; `failed` indicates it failed."
+    type: string
+    enum:
+      - pending
+      - complete
+      - failed
+  accountNumber:
+    description: "The account number of the ACH account."
+    type: string
+    example: "123456789"
+  routingNumber:
+    description: "The routing number of the ACH account."
+    type: string
+    example: "613334455"
+  billingDetails:
+    description: "Billing details of the account holder."
+    $ref: "./BillingDetails.yml"
+  bankAddress:
+    description: "The address details for the bank, as provided during ACH account creation."
+    $ref: "./BankAddress.yml"
+  fingerprint:
+    description: "A UUID that uniquely identifies the ACH account. If the same account is used more than once, each account object will have a different id, but the fingerprint will stay the same."
+    type: string
+    example: "eb170539-9e1c-4e92-bf4f-1d09534fdca2"
+  riskEvaluation:
+    description: "Results of risk evaluation. Only present if the ACH account is denied by Circle's risk service."
+    nullable: true
+    $ref: "./RiskEvaluation.yml"
+  createDate:
+    description: "Datetime when the ACH account was created. ISO-8601."
+    type: string
+    format: date-time
+    example: "2019-09-18T19:19:01Z"
+  updateDate:
+    description: "Datetime when the ACH account was updated. ISO-8601."
+    type: string
+    format: date-time
+    example: "2019-09-18T19:20:00Z"

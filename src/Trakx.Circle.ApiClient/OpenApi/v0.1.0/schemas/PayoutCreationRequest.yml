@@ -1,0 +1,21 @@
+type: object
+required:
+  - idempotencyKey
+  - destination
+  - amount
+  - metadata
+properties:
+  idempotencyKey:
+    $ref: "./IdempotencyKey.yml"
+  source:
+    description: "The wallet Id that will fund the payout. If not provided the wallet associated with the API Key will be used"
+    nullable: true
+    $ref: "./transfer/RequestWalletLocation.yml"
+  destination:
+    description: "The destination bank account (wires)."
+    $ref: "./WireDestinationRequest.yml"
+  amount:
+    $ref: "./Money.yml"
+  metadata:
+    description: "Additional properties related to the payout beneficiary."
+    $ref: "./MetadataPayout.yml"

@@ -1,0 +1,15 @@
+ACHCreationRequest:
+  type: object
+  required:
+    - idempotencyKey
+    - plaidProcessorToken
+    - billingDetails
+  properties:
+    idempotencyKey:
+      $ref: "./IdempotencyKey.yml"
+    plaidProcessorToken:
+      description: "The token for the ACH account provided by the processor (Plaid)."
+      type: string
+    billingDetails:
+      description: "Billing details of the card holder."
+      $ref: "./BillingDetails.yml"

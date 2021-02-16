@@ -1,0 +1,71 @@
+get:
+  security:
+    - bearerAuth: []
+  parameters:
+    - $ref: "../../../v0.1.0/parameters/MerchantId.yml#/MerchantId"
+    - $ref: "../../../v0.1.0/parameters/SettlementId.yml#/SettlementId"
+    - $ref: "../../../v0.1.0/parameters/PaymentSourceType.yml#/PaymentSourceType"
+    - $ref: "../../../v0.1.0/parameters/daterange/From.yml#/From"
+    - $ref: "../../../v0.1.0/parameters/daterange/To.yml#/To"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageBefore.yml#/PageBefore"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageAfter.yml#/PageAfter"
+    - $ref: "../../../v0.1.0/parameters/pagination/PageSize.yml#/PageSize"
+  summary: Get a list of payments.
+  operationId: getPayments
+  tags:
+    - Payments
+  responses:
+    '200':
+      description: Successfully retrieved a list of payments in a marketplace.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: "../../../v0.1.0/schemas/BasicPayment.yml"
+                    - $ref: "../../../v0.1.0/schemas/BasicCancel.yml"
+                    - $ref: "../../../v0.1.0/schemas/BasicRefund.yml"
+                  discriminator:
+                    propertyName: type
+                    mapping:
+                      payment: "../../../v0.1.0/schemas/BasicPayment.yml"
+                      cancel: "../../../v0.1.0/schemas/BasicCancel.yml"
+                      refund: "../../../v0.1.0/schemas/BasicRefund.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a payment.
+  operationId: createPayment
+  tags:
+    - Payments
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../v0.1.0/schemas/marketplace/CardPaymentCreationRequest.yml"
+  responses:
+    '201':
+      description: Successfully created a payment.
+      headers:
+        X-Request-Id:
+          $ref: "../../../v0.1.0/headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../v0.1.0/schemas/DetailedPayment.yml"
+    '400':
+      $ref: "../../../v0.1.0/responses/BadRequest.yml"
+    '401':
+      $ref: "../../../v0.1.0/responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../v0.1.0/responses/NotFound.yml"

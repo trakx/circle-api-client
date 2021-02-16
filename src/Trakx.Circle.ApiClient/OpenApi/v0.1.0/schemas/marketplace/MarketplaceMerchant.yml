@@ -1,0 +1,21 @@
+type: object
+properties:
+  marketplaceId:
+    description: "Unique identifier of the marketplace."
+    type: string
+    example: "1e38dcef-a947-493a-a674-f623e4418ace"
+  merchantId:
+    description: "Unique identifier of the merchant."
+    type: string
+    example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+  merchantWalletId:
+    description: "Merchant wallet identifier."
+    type: string
+    maxLength: 36
+    example: "212000"
+  createDate:
+    $ref: "../UTCTimestamp.yml"
+  name:
+    description: "Name of the marketplace merchant."
+    type: string
+    example: "Merchant Inc"

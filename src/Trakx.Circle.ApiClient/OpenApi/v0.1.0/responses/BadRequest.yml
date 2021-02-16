@@ -1,0 +1,15 @@
+description: The request cannot be processed due to a client error.
+headers:
+  X-Request-Id:
+    $ref: "../headers/XRequestId.yml"
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        $ref: "../schemas/Error.yml#/required"
+      properties:
+        $ref: "../schemas/Error.yml#/properties"
+      example:
+        code: 400
+        example: "Bad request."

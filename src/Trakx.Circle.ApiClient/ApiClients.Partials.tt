@@ -5,10 +5,14 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 
-namespace Trakx.Circle.ApiClient
+<# 
+var nameSpace = "Trakx.Circle.ApiClient";
+#>
+
+namespace <#= nameSpace #>
 {
 <# 
-var clientNames = new [] { /*"ExchangesClient", "MarketDataClient",*/ "AccountsClient" };
+var clientNames = new [] { "AccountsClient" };
 
 foreach(var name in clientNames)
 {

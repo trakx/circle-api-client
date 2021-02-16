@@ -1,0 +1,45 @@
+type: object
+properties:
+  id:
+    description: "Unique system generated identifier for the settlement.  Can be used to filter for payments settled by this settlement."
+    type: string
+    format: "uuid"
+    example: "1e38dcef-a947-493a-a674-f623e4418ace"
+
+  merchantWalletId:
+    description: "The merchant wallet (master wallet) to which settlement funds were deposited."
+    type: string
+    example: "12345"
+
+  walletId:
+    description: "If this settlement was used for a marketplace payment, the wallet involved in the settlement. Not included for standard merchant settlements."
+    type: string
+    example: "12345"
+
+  totalDebits:
+    description: "The total debits (charges) added to this settlement."
+    $ref: "./Money.yml"
+
+  totalCredits:
+    description: "The total credits (refunds) subtracted from this settlement."
+    $ref: "./Money.yml"
+
+  paymentFees:
+    description: "The total fees for payments charged in this settlement."
+    $ref: "./Money.yml"
+
+  chargebackFees:
+    description: "The total fees for chargebacks incurred in this settlement."
+    $ref: "./Money.yml"
+
+  createDate:
+    description: "Datetime when the settlement was created. ISO-8061."
+    type: string
+    format: date-time
+    example: "2019-09-18T19:19:01Z"
+
+  updateDate:
+    description: "Datetime when the settlement was updated. ISO-8061."
+    type: string
+    format: date-time
+    example: "2019-09-18T19:19:01Z"

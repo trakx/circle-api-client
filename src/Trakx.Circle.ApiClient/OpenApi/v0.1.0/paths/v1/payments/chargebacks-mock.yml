@@ -1,0 +1,33 @@
+post:
+  security:
+    - bearerAuth: []
+  summary: Create a mock chargeback.
+  description: In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
+  operationId: createMockChargeback
+  tags:
+    - Chargebacks
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/MockChargebackCreationRequest.yml"
+  responses:
+    '201':
+      description: Successfully created a mock chargeback.
+      headers:
+        X-Request-Id:
+          $ref: "../../../headers/XRequestId.yml"
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                $ref: "../../../schemas/MockChargeback.yml"
+    '400':
+      $ref: "../../../responses/BadRequest.yml"
+    '401':
+      $ref: "../../../responses/NotAuthorized.yml"
+    '404':
+      $ref: "../../../responses/NotFound.yml"
+    '409':
+      $ref: "../../../responses/Conflict.yml"

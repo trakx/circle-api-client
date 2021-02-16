@@ -1,0 +1,8 @@
+From:
+  name: from
+  description: Queries items created since the specified date-time (inclusive).
+  in: query
+  required: false
+  schema:
+    type: string
+    format: date-time

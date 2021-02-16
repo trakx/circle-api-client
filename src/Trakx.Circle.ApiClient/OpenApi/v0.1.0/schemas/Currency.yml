@@ -1,0 +1,4 @@
+type: string
+enum: [USD]
+description: "A currency associated with a balance or address. Currently, only `USD` is supported."
+example: "USD"

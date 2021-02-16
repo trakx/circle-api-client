@@ -1,0 +1,12 @@
+type: object
+properties:
+  decision:
+    description: "Enumerated decision of the card."
+    type: string
+    enum: ["approved", "denied", "review"]
+    example: "denied"
+  reason:
+    description: "Risk reason for the definitive decision outcome."
+    type: string
+    nullable: true
+    example: "3000"

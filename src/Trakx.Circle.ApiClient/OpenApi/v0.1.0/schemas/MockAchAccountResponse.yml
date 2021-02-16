@@ -1,0 +1,11 @@
+type: object
+properties:
+  processorToken:
+    description: "The processor token needs to be provided when linking an ACH account against this mock."
+    type: string
+    example: "processor-sandbox-circle-82cf95bb-43f8-4191-8d30-2c9f42853621"
+  balance:
+    description: The balance of the mocked account
+    $ref: "./Money.yml"
+  account:
+    $ref: "./MockAchAccount.yml"
