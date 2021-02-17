@@ -4,7 +4,6 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
-
 <# 
 var nameSpace = "Trakx.Circle.ApiClient";
 #>
@@ -19,7 +18,9 @@ foreach(var name in clientNames)
 #>
     internal partial class <#= name #>
     {
+#pragma warning disable S1172
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url)
+#pragma warning restore S1172
         {
             CredentialProvider.AddCredentials(request);
         }
