@@ -7,7 +7,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 
-#pragma warning disable CS0618
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
 #pragma warning disable 472 // Disable "CS0472 The result of the expression is always 'false' since a value of type 'Int32' is never equal to 'null' of type 'Int32?'
@@ -82,7 +81,7 @@ namespace Trakx.Circle.ApiClient
     
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
@@ -239,7 +238,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.3.6.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial record Balances 
+    public partial class Balances 
     {
         /// <summary>List of currency balances (one for each currency) that are currently available to spend.</summary>
         [Newtonsoft.Json.JsonProperty("available", Required = Newtonsoft.Json.Required.Always)]
@@ -264,7 +263,7 @@ namespace Trakx.Circle.ApiClient
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.3.6.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial record BalancesResponse 
+    public partial class BalancesResponse 
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -283,7 +282,7 @@ namespace Trakx.Circle.ApiClient
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.3.6.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial record Money 
+    public partial class Money 
     {
         /// <summary>Magnitude of the amount, in units of the currency, with a `.` decimal.</summary>
         [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.Always)]
@@ -308,10 +307,10 @@ namespace Trakx.Circle.ApiClient
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.3.6.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial record Error 
+    public partial class Error 
     {
         [Newtonsoft.Json.JsonProperty("code", Required = Newtonsoft.Json.Required.Always)]
-        public int Code { get; init; }
+        public int Code { get; set; }
     
         [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
