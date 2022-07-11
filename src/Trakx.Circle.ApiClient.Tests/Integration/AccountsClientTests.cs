@@ -9,7 +9,7 @@ using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration
 {
-    public sealed class AccountsClientTests : CircleClientTestsBase
+    public  class AccountsClientTests : CircleClientTestsBase
     {
         private readonly IAccountsClient _accountsClient;
         public AccountsClientTests(CircleApiFixture apiFixture, ITestOutputHelper output) : base(apiFixture, output)

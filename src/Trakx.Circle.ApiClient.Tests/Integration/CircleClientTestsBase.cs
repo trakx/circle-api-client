@@ -9,7 +9,7 @@ namespace Trakx.Circle.ApiClient.Tests.Integration
     [Collection(nameof(ApiTestCollection))]
     public class CircleClientTestsBase
     {
-        protected ServiceProvider ServiceProvider;
+        protected readonly ServiceProvider ServiceProvider;
         protected ILogger Logger;
 
         public CircleClientTestsBase(CircleApiFixture apiFixture, ITestOutputHelper output)
@@ -34,7 +34,7 @@ namespace Trakx.Circle.ApiClient.Tests.Integration
 
         public CircleApiFixture()
         {
-            var secrets = new Secrets();
+            var secrets = new Secrets(Config.API_KEY);
             var configuration = new CircleApiConfiguration
             {
                 ApiKey = secrets.CircleApiKey,

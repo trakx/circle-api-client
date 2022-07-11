@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Trakx.Utils.Apis;
@@ -30,6 +31,12 @@ namespace Trakx.Circle.ApiClient.Utils
             msg.Headers.Add("Authorization", "Bearer " + _configuration.ApiKey);
             Logger.Verbose("Headers added");
         }
+
+        public Task AddCredentialsAsync(HttpRequestMessage msg)
+        {
+            return Task.Run(()=>AddCredentials(msg));
+        }
+
         #endregion
 
         #region IDisposable
