@@ -1,6 +1,4 @@
-﻿using Trakx.Utils.Testing;
-using Trakx.Utils.Testing.ReadmeUpdater;
-using Xunit.Abstractions;
+﻿using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 

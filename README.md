@@ -11,6 +11,13 @@ In order to be able to run some integration tests, you should create a `.env` fi
 CircleApiConfiguration__ApiKey=********
 ```
 
+## AWS Parameters
+In order to be able to run some integration tests, you should ensure that you have access to the AWS parameters starting in `/CiCd`.In order for the applications in this solution to run correctly on AWS, please ensure that variables starting in `/[environment]`  are defined for all 3 environments (_Production_, _Staging_, _Development_) :
+```awsParams
+/[environment]/Trakx/Circle/ApiClient/CircleApiConfiguration/ApiKey
+/CiCd/Trakx/Circle/ApiClient/CircleApiConfiguration/ApiKey
+```
+
 ## How to regenerate C# API clients
 
 * If you work with external API, you probably need to update OpenAPI definition added to the project. It's usually openApi3.yaml file.
