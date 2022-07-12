@@ -7,19 +7,19 @@ using Polly.Extensions.Http;
 using Serilog;
 
 
-namespace Trakx.Circle.ApiClient
+namespace Trakx.Circle.ApiClient;
+
+public static partial class AddCircleClientExtension
 {
-    public static partial class AddCircleClientExtension
+    private static void AddClients(this IServiceCollection services, CircleApiConfiguration configuration)
     {
-        private static void AddClients(this IServiceCollection services, CircleApiConfiguration configuration)
-        {
-            var delay = Backoff.DecorrelatedJitterBackoffV2(
-                medianFirstRetryDelay: TimeSpan.FromMilliseconds(configuration.InitialRetryDelayInMilliseconds ?? 100), 
-                retryCount: configuration.MaxRetryCount ?? 3, fastFirst: true);
+        var delay = Backoff.DecorrelatedJitterBackoffV2(
+            medianFirstRetryDelay: TimeSpan.FromMilliseconds(configuration.InitialRetryDelayInMilliseconds ?? 100), 
+            retryCount: configuration.MaxRetryCount ?? 3, fastFirst: true);
                                     
-            services.AddHttpClient<IAccountsClient, AccountsClient>("Trakx.Circle.ApiClient.AccountsClient")
-                .AddPolicyHandler((s, request) => 
-                    Policy<HttpResponseMessage>
+        services.AddHttpClient<IAccountsClient, AccountsClient>("Trakx.Circle.ApiClient.AccountsClient")
+            .AddPolicyHandler((s, request) => 
+                Policy<HttpResponseMessage>
                     .Handle<ApiException>()
                     .Or<HttpRequestException>()
                     .OrTransientHttpStatusCode()
@@ -31,6 +31,5 @@ namespace Trakx.Circle.ApiClient
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.AccountsClient"));
 
-        }
     }
 }
