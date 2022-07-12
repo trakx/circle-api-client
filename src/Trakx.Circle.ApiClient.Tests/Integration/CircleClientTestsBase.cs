@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Trakx.Utils.Testing;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -34,12 +35,10 @@ namespace Trakx.Circle.ApiClient.Tests.Integration
 
         public CircleApiFixture()
         {
-            var secrets = new Secrets(Config.API_KEY);
-            var configuration = new CircleApiConfiguration
-            {
-                ApiKey = secrets.CircleApiKey,
-                BaseUrl = "https://api-sandbox.circle.com"
-            };
+            var configuration = ConfigurationHelper.GetConfigurationFromEnv<CircleApiConfiguration>()
+                with {
+                    BaseUrl = "https://api-sandbox.circle.com"
+                };
 
             var serviceCollection = new ServiceCollection();
 
