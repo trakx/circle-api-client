@@ -1,64 +1,61 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Trakx.Utils.Testing;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Trakx.Circle.ApiClient.Tests.Integration
+namespace Trakx.Circle.ApiClient.Tests.Integration;
+
+[Collection(nameof(ApiTestCollection))]
+public class CircleClientTestsBase
 {
-    [Collection(nameof(ApiTestCollection))]
-    public class CircleClientTestsBase
+    protected readonly ServiceProvider ServiceProvider;
+    protected ILogger Logger;
+
+    public CircleClientTestsBase(CircleApiFixture apiFixture, ITestOutputHelper output)
     {
-        protected ServiceProvider ServiceProvider;
-        protected ILogger Logger;
+        Logger = new LoggerConfiguration().WriteTo.TestOutput(output).CreateLogger();
 
-        public CircleClientTestsBase(CircleApiFixture apiFixture, ITestOutputHelper output)
-        {
-            Logger = new LoggerConfiguration().WriteTo.TestOutput(output).CreateLogger();
-
-            ServiceProvider = apiFixture.ServiceProvider;
-        }
+        ServiceProvider = apiFixture.ServiceProvider;
     }
+}
 
-    [CollectionDefinition(nameof(ApiTestCollection))]
-    public class ApiTestCollection : ICollectionFixture<CircleApiFixture>
+[CollectionDefinition(nameof(ApiTestCollection))]
+public class ApiTestCollection : ICollectionFixture<CircleApiFixture>
+{
+    // This class has no code, and is never created. Its purpose is simply
+    // to be the place to apply [CollectionDefinition] and all the
+    // ICollectionFixture<> interfaces.
+}
+
+public class CircleApiFixture : IDisposable
+{
+    public ServiceProvider ServiceProvider { get; }
+
+    public CircleApiFixture()
     {
-        // This class has no code, and is never created. Its purpose is simply
-        // to be the place to apply [CollectionDefinition] and all the
-        // ICollectionFixture<> interfaces.
-    }
-
-    public class CircleApiFixture : IDisposable
-    {
-        public ServiceProvider ServiceProvider { get; }
-
-        public CircleApiFixture()
-        {
-            var secrets = new Secrets();
-            var configuration = new CircleApiConfiguration
-            {
-                ApiKey = secrets.CircleApiKey,
+        var configuration = ConfigurationHelper.GetConfigurationFromAws<CircleApiConfiguration>()
+            with {
                 BaseUrl = "https://api-sandbox.circle.com"
             };
 
-            var serviceCollection = new ServiceCollection();
+        var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddSingleton(configuration);
-            serviceCollection.AddCircleClient(configuration);
+        serviceCollection.AddSingleton(configuration);
+        serviceCollection.AddCircleClient(configuration);
 
-            ServiceProvider = serviceCollection.BuildServiceProvider();
-        }
+        ServiceProvider = serviceCollection.BuildServiceProvider();
+    }
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposing) return;
-            ServiceProvider.Dispose();
-        }
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposing) return;
+        ServiceProvider.Dispose();
+    }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }

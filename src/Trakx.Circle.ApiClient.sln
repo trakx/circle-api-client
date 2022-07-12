@@ -7,26 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trakx.Circle.ApiClient", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trakx.Circle.ApiClient.Tests", "Trakx.Circle.ApiClient.Tests\Trakx.Circle.ApiClient.Tests.csproj", "{11085538-FCFD-461D-8B92-0A7E4FC6E69F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{F9183CBB-5B9E-4E27-A07E-261D68E1A66A}"
-	ProjectSection(SolutionItems) = preProject
-		.env = .env
-		..\.gitattributes = ..\.gitattributes
-		..\.gitignore = ..\.gitignore
-		Common.Projects.props = Common.Projects.props
-		..\LICENSE = ..\LICENSE
-		Packable.Projects.props = Packable.Projects.props
-		package-icon.png = package-icon.png
-		..\README.md = ..\README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{02EBA6A7-CCC3-4919-A39B-8C9053F64C27}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{3E562CF2-591E-4389-BDE2-525C7BF583B3}"
-	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\dotnet-core.yml = ..\.github\workflows\dotnet-core.yml
-		..\.github\workflows\publish.nuget.yml = ..\.github\workflows\publish.nuget.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,8 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{02EBA6A7-CCC3-4919-A39B-8C9053F64C27} = {F9183CBB-5B9E-4E27-A07E-261D68E1A66A}
-		{3E562CF2-591E-4389-BDE2-525C7BF583B3} = {02EBA6A7-CCC3-4919-A39B-8C9053F64C27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B8CE014-A9EF-4AC3-B0EE-BE721274FA40}

@@ -1,10 +1,5 @@
 ﻿﻿<#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ assembly name="System.Core" #>
-<#@ import namespace="System" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="System.IO" #>
 <#
 
 var fileNames = new[] {"account-doc.yml", "dda-doc.yml", "general-doc.yml", "marketplaces-doc.yml", "payments-doc.yml", "payouts-doc.yml"};
