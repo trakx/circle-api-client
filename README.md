@@ -1,4 +1,4 @@
-![.NET Core](https://github.com/trakx/circle-api-client/workflows/.NET%20Core/badge.svg)
+[![Build and Test](https://github.com/trakx/circle-api-client/actions/workflows/test.yml/badge.svg)](https://github.com/trakx/circle-api-client/actions/workflows/test.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a11f6875244948d39af6c2350095490f)](https://www.codacy.com/gh/trakx/circle-api-client/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=trakx/circle-api-client&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/435670815af049dc879feaa3cfd7cc81)](https://www.codacy.com/gh/trakx/circle-api-client/dashboard?utm_source=github.com&utm_medium=referral&utm_content=trakx/circle-api-client&utm_campaign=Badge_Coverage)
 
@@ -20,7 +20,7 @@ In order to be able to run some integration tests, you should ensure that you ha
 
 ## How to regenerate C# API clients
 
-* If you work with external API, you probably need to update OpenAPI definition added to the project. It's usually openApi3.yaml file.
-* Do right click on the project and select Edit Project File. In the file change value of `GenerateApiClient` property to true.
-* Rebuild the project. `NSwag` target will be executed as post action.
-* The last thing to be done is to run integration test `OpenApiGeneratedCodeModifier` that will rewrite auto generated C# classes to use C# 9 features like records and init keyword.
+  * If you work with external API, you probably need to update OpenAPI definition added to the project. It's usually openApi3.yaml file.
+  * Do right click on the project and select Edit Project File. In the file change value of `GenerateApiClient` property to true.
+  * Rebuild the project. `NSwag` target will be executed as post action.
+  * The last thing to be done is to run integration test `OpenApiGeneratedCodeModifier` that will rewrite auto generated C# classes to use C# 9 features like records and init keyword.
