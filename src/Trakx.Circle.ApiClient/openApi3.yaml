@@ -3,7 +3,7 @@ info:
   title: Circle API
   version: '1.0.0'
 servers:
-  - url: 'https://api.circle.io'
+  - url: 'https://api-sandbox.circle.com'
     description: Circle production base url
 security:
   - ApiKeyAuth: []
@@ -39,6 +39,78 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /v1/payments:
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: "#/components/parameters/SettlementId"
+        - $ref: "#/components/parameters/PaymentSourceType"
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/PageBefore"
+        - $ref: "#/components/parameters/PageAfter"
+        - $ref: "#/components/parameters/PageSize"
+        - $ref: "#/components/parameters/PaymentStatus"
+      summary: Get a list of payments.
+      operationId: getPayments
+      tags:
+        - Payments
+      responses:
+        '200':
+          description: Successfully retrieved a list of payments.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/BasicPayment"
+                        - $ref: "#/components/schemas/BasicCancel"
+                        - $ref: "#/components/schemas/BasicRefund"
+                      discriminator:
+                        propertyName: type
+                        mapping:
+                          payment: "#/components/schemas/BasicPayment"
+                          cancel: "#/components/schemas/BasicCancel"
+                          refund: "#/components/schemas/BasicRefund"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+    post:
+      security:
+        - bearerAuth: [ ]
+      summary: Create a payment.
+      operationId: createPayment
+      tags:
+        - Payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CardPaymentCreationRequest"
+      responses:
+        '201':
+          description: Successfully created a payment.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/DetailedPayment"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+        '404':
+          $ref: "#/components/responses/NotFound"
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -47,10 +119,10 @@ components:
       name: X-Api-Key
   headers:
     X-Request-Id:
-              description: Unique identifier for the request. Helpful for identifying a request when communicating with Circle support.
-              schema:
-                type: string
-                example: "2adba88e-9d63-44bc-b975-9b6ae3440dde"
+      description: Unique identifier for the request. Helpful for identifying a request when communicating with Circle support.
+      schema:
+        type: string
+        example: "2adba88e-9d63-44bc-b975-9b6ae3440dde"
   schemas:
     Balances:
       type: object
@@ -94,12 +166,618 @@ components:
     Error:
       type: object
       required:
-          - code
-          - message
+        - code
+        - message
       properties:
-          code:
-            type: integer
-            example: 400
-          message:
-            type: string
-            example: "Something went wrong."
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "Something went wrong."
+    UTCTimestamp:
+      type: string
+      description: "ISO-8601 UTC date/time format."
+      example: "2020-04-10T02:13:30.000Z"
+    Source:
+      type: object
+      properties:
+        id:
+          description: "Unique identifier for the source."
+          type: string
+          example: "58c93589-911f-4bcb-a918-87c593296791"
+        type:
+          description: "Type of the source."
+          type: string
+          enum: [ "card", "ach" ]
+    PaymentStatus:
+      type: string
+      enum:
+        - pending
+        - confirmed
+        - paid
+        - failed
+      description: "Enumerated status of the payment. `pending` means the payment is waiting to be processed.  `confirmed` means the payment has been approved by the bank and the merchant can treat it as successful, but settlement funds are not yet available to the merchant.  `paid` means settlement funds have been received and are available to the merchant.  `failed` means something went wrong (most commonly that the payment was denied).  Terminal states are `paid` and `failed`."
+    PaymentInfoPaymentAndRefund:
+      type: object
+      properties:
+        id:
+          description: "Unique system generated identifier for the item."
+          type: string
+          format: uuid
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        type:
+          description: "Type of the payment object."
+          type: string
+          enum: [ "payment", "refund" ]
+        amount:
+          $ref: "#/components/schemas/Money"
+        description:
+          description: "Enumerated description of the payment item."
+          type: string
+          nullable: true
+          enum: [ "Payment" ]
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        fees:
+          $ref: "#/components/schemas/Money"
+        createDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+    PaymentInfoCancel:
+      type: object
+      properties:
+        id:
+          description: "Unique system generated identifier for the item."
+          type: string
+          format: uuid
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        type:
+          description: "Type of the payment object."
+          type: string
+          enum: [ "cancel" ]
+        description:
+          description: "Enumerated description of the payment item."
+          type: string
+          nullable: true
+          enum: [ "Payment" ]
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        createDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+    Email:
+      description: "Email of the user"
+      type: string
+      maxLength: 1024
+      example: "satoshi@circle.com"
+    PhoneNumber:
+      description: "Phone number of the user in E.164 format. We recommend using a library such as [libphonenumber](https://github.com/google/libphonenumber) to parse and validate phone numbers."
+      type: string
+      maxLength: 16
+      pattern: /\+?[1-9]\d{1,14}/
+      example: "+14155555555, 442012341234"
+    SessionId:
+      description: "Hash of the session identifier; typically of the end user. This helps us make risk decisions and prevent fraud. IMPORTANT: Please hash the session identifier to prevent sending us actual session identifiers."
+      type: string
+      maxLength: 50
+      example: "DE6FA86F60BB47B379307F851E238617"
+    IpAddress:
+      description: "Single IPv4 or IPv6 address of user"
+      type: string
+      example: "244.28.239.130"
+    MetadataPayment:
+      type: object
+      required:
+        - email
+        - sessionId
+        - ipAddress
+      properties:
+        email:
+          $ref: "#/components/schemas/Email"
+        phoneNumber:
+          $ref: "#/components/schemas/PhoneNumber"
+        sessionId:
+          $ref: "#/components/schemas/SessionId"
+        ipAddress:
+          $ref: "#/components/schemas/IpAddress"
+    EncryptedCardPaymentData:
+      type: object
+      description: PGP encrypted json string. The object format given here needs to be stringified and PGP encrypted before it is sent to the server, so `encryptedData` will end up as a string, rather than an object.
+      properties:
+        cvv:
+          description: "Card Verification Number. Three or four digit security code. Only required if verification includes a cvv check."
+          type: string
+          example: "123"
+    IdempotencyKey:
+      type: string
+      description: "Unique idempotency key. This key is utilized to ensure exactly-once execution of mutating requests."
+      format: uuid
+      example: ba943ff1-ca16-49b2-ba55-1057e70ca5c7
+    CardPaymentCreationRequest:
+      type: object
+      required:
+        - idempotencyKey
+        - amount
+        - verification
+        - source
+        - metadata
+      properties:
+        idempotencyKey:
+          $ref: "#/components/schemas/IdempotencyKey"
+        keyId:
+          description: "Unique identifier of the public key used in encryption. Only required if request object includes encrypted data."
+          type: string
+          example: "fe57d4b1-9b8e-4606-a869-827eb4ac5bdf"
+        metadata:
+          $ref: "#/components/schemas/MetadataPayment"
+        amount:
+          $ref: "#/components/schemas/Money"
+        verification:
+          description: "Indicates the verification method for this payment."
+          type: string
+          enum: [ "none", "cvv" ]
+        source:
+          description: "The payment source."
+          $ref: "#/components/schemas/Source"
+        description:
+          description: "Description of the payment with length restriction of 240 characters."
+          type: string
+          example: "Payment"
+        encryptedData:
+          $ref: "#/components/schemas/EncryptedCardPaymentData"
+    
+    RiskEvaluation:
+      type: object
+      properties:
+        decision:
+          description: "Enumerated decision of the card."
+          type: string
+          enum: [ "approved", "denied", "review" ]
+          example: "denied"
+        reason:
+          description: "Risk reason for the definitive decision outcome."
+          type: string
+          nullable: true
+          example: "3000"
+    MetadataPhoneEmail:
+      # a separate schema from MetadataPayment since we do not expose all metadata fields in public responses
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          $ref: "#/components/schemas/Email"
+        phoneNumber:
+          $ref: "#/components/schemas/PhoneNumber"
+    PaymentErrorCode:
+      type: string
+      description: "Indicates the failure reason of a payment. Only present for payments in failed state. Possible values are [payment_failed, payment_fraud_detected, payment_denied, payment_not_supported_by_issuer, payment_not_funded, payment_unprocessable, payment_stopped_by_issuer, payment_canceled, payment_returned, payment_failed_balance_check, card_failed, card_invalid, card_address_mismatch, card_zip_mismatch, card_cvv_invalid, card_expired, card_limit_violated, card_not_honored, card_cvv_required, credit_card_not_allowed, card_account_ineligible, unauthorized_transaction, bank_account_ineligible, bank_transaction_error, invalid_account_number, invalid_wire_rtn, invalid_ach_rtn]"
+      enum:
+        - payment_failed
+        - payment_fraud_detected
+        - payment_denied
+        - payment_not_supported_by_issuer
+        - payment_not_funded
+        - payment_unprocessable
+        - payment_stopped_by_issuer
+        - payment_canceled
+        - payment_returned
+        - payment_failed_balance_check
+        - card_failed
+        - card_invalid
+        - card_address_mismatch
+        - card_zip_mismatch
+        - card_cvv_invalid
+        - card_expired
+        - card_limit_violated
+        - card_not_honored
+        - card_cvv_required
+        - card_restricted,
+        - card_account_ineligible
+        - unauthorized_transaction
+        - bank_account_ineligible
+        - bank_transaction_error
+        - invalid_account_number
+        - invalid_wire_rtn
+        - invalid_ach_rtn
+    VerificationResponse:
+      type: string
+      description: "Indicates the failure reason of the card verification. Only present on cards with failed verification. Possible values are [verification_failed, verification_fraud_detected, verification_denied, verification_not_supported_by_issuer, verification_stopped_by_issuer, card_failed, card_invalid, card_address_mismatch, card_zip_mismatch, card_cvv_invalid, card_expired, card_limit_violated, card_not_honored, card_cvv_required, credit_card_not_allowed, card_account_ineligible]"
+      enum:
+        - verification_failed
+        - verification_fraud_detected
+        - verification_denied
+        - verification_not_supported_by_issuer
+        - verification_stopped_by_issuer
+        - card_failed
+        - card_invalid
+        - card_address_mismatch
+        - card_zip_mismatch
+        - card_cvv_invalid
+        - card_expired
+        - card_limit_violated
+        - card_not_honored
+        - card_cvv_required
+        - credit_card_not_allowed
+        - card_account_ineligible
+    DetailedPayment:
+      type: object
+      required:
+        - id
+        - type
+        - merchantId
+        - amount
+        - source
+        - status
+      properties:
+        id:
+          description: "Unique system generated identifier for the payment item."
+          type: string
+          format: uuid
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        type:
+          description: "Type of the payment object."
+          type: string
+          enum: [ "payment" ]
+        merchantId:
+          description: "Unique system generated identifier for the merchant."
+          type: string
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        merchantWalletId:
+          description: "Unique system generated identifier for the wallet of the merchant."
+          type: string
+          maxLength: 36
+          example: "212000"
+        amount:
+          $ref: "#/components/schemas/Money"
+        source:
+          description: "The payment source."
+          $ref: "#/components/schemas/Source"
+        description:
+          description: "Enumerated description of the payment."
+          type: string
+          enum: [ "Payment" ]
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        verification:
+          description: "Indicates the status of the payment verification. This property will be present once the payment is confirmed."
+          $ref: "#/components/schemas/VerificationResponse"
+        cancel:
+          description: "Status information of the related cancel. This property is only present on canceled payment or refund items."
+          nullable: true
+          $ref: "#/components/schemas/BasicCancel"
+        refunds:
+          type: array
+          items:
+            $ref: "#/components/schemas/BasicRefund"
+        fees:
+          $ref: "#/components/schemas/Money"
+        trackingRef:
+          description: "Payment tracking reference. Will be present once known."
+          type: string
+          nullable: true
+          example: "24910599141085313498894"
+        errorCode:
+          $ref: "#/components/schemas/PaymentErrorCode"
+          nullable: true
+        metadata:
+          $ref: "#/components/schemas/MetadataPhoneEmail"
+        riskEvaluation:
+          description: "Results of risk evaluation. Only present if the payment is denied by Circle's risk service."
+          nullable: true
+          $ref: "#/components/schemas/RiskEvaluation"
+        createDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+        updateDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+    BasicPayment:
+      type: object
+      required:
+        - id
+        - type
+        - merchantId
+        - amount
+        - source
+        - status
+      properties:
+        id:
+          description: "Unique system generated identifier for the payment item."
+          type: string
+          format: uuid
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        type:
+          description: "Type of the payment object."
+          type: string
+          enum: [ "payment" ]
+        merchantId:
+          description: "Unique system generated identifier for the merchant."
+          type: string
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        merchantWalletId:
+          description: "Unique system generated identifier for the wallet of the merchant."
+          type: string
+          maxLength: 36
+          example: "212000"
+        amount:
+          $ref: "#/components/schemas/Money"
+        source:
+          description: "The payment source."
+          $ref: "#/components/schemas/Source"
+        description:
+          description: "Enumerated description of the payment."
+          type: string
+          enum: [ "Payment" ]
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        cancel:
+          description: "Status information of the related cancel. This property is only present on canceled payment or refund items."
+          nullable: true
+          $ref: "#/components/schemas/PaymentStatus"
+        refunds:
+          type: array
+          items:
+            $ref: "#/components/schemas/PaymentInfoPaymentAndRefund"
+        fees:
+          $ref: "#/components/schemas/Money"
+        createDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+        updateDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+    BasicCancel:
+      type: object
+      required:
+        - id
+        - type
+        - merchantId
+        - amount
+        - source
+        - status
+      properties:
+        id:
+          description: "Unique system generated identifier for the payment item."
+          type: string
+          format: uuid
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        type:
+          description: "Type of the payment object."
+          type: string
+          enum: [ "cancel" ]
+        merchantId:
+          description: "Unique system generated identifier for the merchant."
+          type: string
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        merchantWalletId:
+          description: "Unique system generated identifier for the wallet of the merchant."
+          type: string
+          maxLength: 36
+          example: "212000"
+        amount:
+          $ref: "#/components/schemas/Money"
+        source:
+          description: "The payment source."
+          $ref: "#/components/schemas/Source"
+        description:
+          description: "Enumerated description of the payment."
+          type: string
+          enum: [ "Payment" ]
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        originalPayment:
+          description: "Status information of the related payment. This property is only present on refund or cancel items."
+          $ref: "#/components/schemas/PaymentInfoPaymentAndRefund"
+        fees:
+          $ref: "#/components/schemas/Money"
+        createDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+        updateDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+    BasicRefund:
+      type: object
+      required:
+        - id
+        - type
+        - merchantId
+        - amount
+        - source
+        - status
+      properties:
+        id:
+          description: "Unique system generated identifier for the payment item."
+          type: string
+          format: uuid
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        type:
+          description: "Type of the payment object."
+          type: string
+          enum: [ "refund" ]
+        merchantId:
+          description: "Unique system generated identifier for the merchant."
+          type: string
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        merchantWalletId:
+          description: "Unique system generated identifier for the wallet of the merchant."
+          type: string
+          maxLength: 36
+          example: "212000"
+        amount:
+          $ref: "#/components/schemas/Money"
+        source:
+          description: "The payment source."
+          $ref: "#/components/schemas/Source"
+        description:
+          description: "Enumerated description of the payment."
+          type: string
+          enum: [ "Payment" ]
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        originalPayment:
+          description: "Status information of the related payment. This property is only present on refund or cancel items."
+          $ref: "#/components/schemas/PaymentInfoPaymentAndRefund"
+        cancel:
+          description: "Status information of the related cancel. This property is only present on canceled payment or refund items."
+          nullable: true
+          $ref: "#/components/schemas/PaymentInfoCancel"
+        fees:
+          $ref: "#/components/schemas/Money"
+        createDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+        updateDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+  parameters:
+    WalletId:
+      name: walletId
+      description: Queries items with the specified wallet involved in the settlement.
+      in: query
+      required: false
+      schema:
+        type: string
+        example: "12345"
+
+    MerchantWalletId:
+      name: merchantWalletId
+      description: Queries items with the specified merchant wallet (master wallet) to which settlement funds were deposited.
+      in: query
+      required: false
+      schema:
+        type: string
+        example: "12345"
+    SettlementId:
+      name: settlementId
+      description: Queries items with the specified settlement id. Matches any settlement id if unspecified.
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+    PaymentStatus:
+      name: status
+      description: Queries items with the specified status. Matches any status if unspecified.
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - pending
+          - confirmed
+          - paid
+          - failed
+        example: "pending"
+    PaymentSourceType:
+      name: type
+      description: Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - card
+            - wire
+            - ach
+          example: "card"
+    MerchantId:
+      name: merchantId
+      description: Queries items with the specified merchant id(s). Matches any merchant id if unspecified.
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uuid
+    PageAfter:
+      name: pageAfter
+      description: |
+        A collection ID value used for pagination.
+
+        It marks the exclusive begin of a page. When provided, the collection resource will return the next `n` items after
+        the id, with `n` being specified by `pageSize`.
+
+        The items will be returned in the natural order of the collection.
+
+        The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
+
+        SHOULD NOT be used in conjunction with pageBefore.
+      in: query
+      required: false
+      schema:
+        type: string
+    PageBefore:
+      name: pageBefore
+      description: |
+        A collection ID value used for pagination.
+
+        It marks the exclusive end of a page. When provided, the collection resource will return the next `n` items before
+        the id, with `n` being specified by `pageSize`.
+
+        The items will be returned in the natural order of the collection.
+
+        The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
+
+        SHOULD NOT be used in conjuction with pageAfter.
+      in: query
+      required: false
+      schema:
+        type: string
+    PageSize:
+      name: pageSize
+      description: |
+        Limits the number of items to be returned.
+
+        Some collections have a strict upper bound that will disregard this value. In case the specified value is higher
+        than the allowed limit, the collection limit will be used.
+
+        If avoided, the collection will determine the page size itself.
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    To:
+      name: to
+      description: Queries items created before the specified date-time (inclusive).
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+    From:
+      name: from
+      description: Queries items created since the specified date-time (inclusive).
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+  
+  
+  
+  
+  responses:
+    NotAuthorized:
+      description: The request has not been applied because it lacks valid authentication credentials.
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/X-Request-Id"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    BadRequest:
+      description: The request cannot be processed due to a client error.
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/X-Request-Id"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: The specified resource was not found.
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/X-Request-Id"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"

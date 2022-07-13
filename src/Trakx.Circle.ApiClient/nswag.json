@@ -42,7 +42,8 @@
       "operationGenerationMode": "MultipleClientsFromFirstTagAndOperationId",
       "additionalNamespaceUsages": [
         "Microsoft.AspNetCore.Mvc",
-        "System.Threading"
+        "System.Threading",
+        "Trakx.Utils.Apis"
       ],
       "additionalContractNamespaceUsages": [],
       "generateOptionalParameters": true,
@@ -55,7 +56,7 @@
       "wrapResponses": true,
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
-      "responseClass": "Response",
+      "responseClass": "{controller}Response",
       "namespace": "Trakx.Circle.ApiClient",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTimeOffset",

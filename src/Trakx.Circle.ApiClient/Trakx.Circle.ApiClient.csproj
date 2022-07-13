@@ -19,6 +19,124 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ClientRegistrations.tt</DependentUpon>
     </None>
+    <None Remove="OpenApi\v1\paths\schemas\transfer\TransferCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\Transfer.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\SourceWalletLocation.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\SourceLocation.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\SourceBlockchainLocation.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\RequestWalletLocation.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\RequestVerifiedBlockchainLocation.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\RequestBlockchainLocation.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\DetailedTransfer.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\DestinationWalletLocation.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\transfer\DestinationLocation.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\marketplace\Source.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\marketplace\MarketplaceMerchant.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\businessAccount\WireDestinationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\businessAccount\RecipientAddressObject.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\businessAccount\RecipientAddressCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\businessAccount\PayoutCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\businessAccount\GenerateAddressRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\businessAccount\Description.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\businessAccount\Deposit.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\WireInstructionBeneficiaryBank.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\WireInstructionBeneficiary.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\WireInstruction.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\WireDestinationResponse.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\WireDestinationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\WireCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Wire.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\WalletCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Wallet.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\VerificationResponse.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\VerificationErrorCode.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\UnwithdrawalObject.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\UnsubscribeResponse.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\UnixTimestamp.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\UTCTimestamp.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\SubscriptionResponse.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\SubscriptionRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\SubscriptionDetail.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Source.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\SimpleCard.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\SimpleBillingDetails.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Settlement.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\SessionId.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\RiskEvaluation.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\ReversalReason.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Reversal.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\RefundCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\PublicKey.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Ping.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\PhoneNumber.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\PayoutErrorCode.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\PayoutCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Payout.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\PaymentStatus.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\PaymentInfoPaymentAndRefund.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\PaymentInfoCancel.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\PaymentErrorCode.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Money.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MockWirePaymentResponse.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MockWirePaymentRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MockChargebackCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MockChargeback.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MockAchAccountResponse.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MockAchAccountCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MockAchAccount.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MetadataPhoneEmail.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MetadataPayout.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MetadataPayment.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MetadataCard.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\MarketplaceInfo.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\IpAddress.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\IdempotencyKey.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\GenerateAddressRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Error.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\EncryptedCardUpdateData.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\EncryptedCardPaymentData.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\EncryptedCardCreateData.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Email.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\DetailedRefund.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\DetailedPaymentPolymorphic.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\DetailedPayment.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\DetailedCancel.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\CvvResults.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Currency.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Configuration.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Chain.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\CardUpdate.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\CardPaymentCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\CardCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Card.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\CancelCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\BillingDetails.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\BasicRefund.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\BasicPayment.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\BasicChargebackHistory.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\BasicChargeback.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\BasicCancel.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\BankAddressNonIban.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\BankAddressIbanSupported.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\BankAddress.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Balances.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\AvsResults.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\AddressObject.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\Address.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\ACHCreationRequest.yml" />
+    <None Remove="OpenApi\v1\paths\schemas\ACH.yml" />
+    <None Remove="OpenApi\v1\paths\responses\NotFound.yml" />
+    <None Remove="OpenApi\v1\paths\responses\NotAuthorized.yml" />
+    <None Remove="OpenApi\v1\paths\responses\LimitExceeded.yml" />
+    <None Remove="OpenApi\v1\paths\responses\Conflict.yml" />
+    <None Remove="OpenApi\v1\paths\parameters\pagination\PageSize.yml" />
+    <None Remove="OpenApi\v1\paths\parameters\pagination\PageBefore.yml" />
+    <None Remove="OpenApi\v1\paths\parameters\daterange\To.yml" />
+    <None Remove="OpenApi\v1\paths\parameters\WalletIds.yml" />
+    <None Remove="OpenApi\v1\paths\parameters\SettlementId.yml" />
+    <None Remove="OpenApi\v1\paths\parameters\PaymentStatus.yml" />
+    <None Remove="OpenApi\v1\paths\parameters\PaymentSourceType.yml" />
+    <None Remove="OpenApi\v1\paths\parameters\MerchantId.yml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -70,9 +188,19 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="OpenApi\v1\paths\headers" />
+    <Folder Include="OpenApi\v1\paths\parameters\daterange" />
+    <Folder Include="OpenApi\v1\paths\parameters\pagination" />
+    <Folder Include="OpenApi\v1\paths\responses" />
+    <Folder Include="OpenApi\v1\paths\schemas\businessAccount" />
+    <Folder Include="OpenApi\v1\paths\schemas\marketplace" />
+    <Folder Include="OpenApi\v1\paths\schemas\transfer" />
+  </ItemGroup>
+
   <Target Name="NSwag" BeforeTargets="Build" Condition="'$(GenerateApiClient)'=='True' ">
     <Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
-    <Exec Command="$(NSwagExe_Net50) run nswag.json /variables:Configuration=$(Configuration) /runtime:Net60" />
+    <Exec Command="$(NSwagExe_Net60) run nswag.json /variables:Configuration=$(Configuration) /runtime:Net60" />
     <RemoveDir Directories="$(OutDir)References" />
   </Target>
 

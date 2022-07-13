@@ -29,6 +29,21 @@ public static partial class AddCircleClientExtension
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.AccountsClient"));
+        
+        services.AddHttpClient<IPaymentsClient, PaymentsClient>("Trakx.Circle.ApiClient.PaymentsClient")
+            .AddPolicyHandler((s, request) =>
+                Policy<HttpResponseMessage>
+                    .Handle<ApiException>()
+                    .Or<HttpRequestException>()
+                    .OrTransientHttpStatusCode()
+                    .WaitAndRetryAsync(delay,
+                        onRetry: (result, timeSpan, retryCount, context) =>
+                        {
+                            var logger = Log.Logger.ForContext<PaymentsClient>();
+                            logger.LogApiFailure(result, timeSpan, retryCount, context);
+                        })
+                    .WithPolicyKey("Trakx.Circle.ApiClient.PaymentsClient"));
+        
 
     }
 }
