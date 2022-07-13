@@ -19,5 +19,23 @@ namespace Trakx.Circle.ApiClient
             CredentialProvider.AddCredentials(request);
         }
     }
+    internal partial class CardsClient
+    {
+#pragma warning disable S1172
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url)
+#pragma warning restore S1172
+        {
+            CredentialProvider.AddCredentials(request);
+        }
+    }
+    internal partial class BankAccountsClient
+    {
+#pragma warning disable S1172
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url)
+#pragma warning restore S1172
+        {
+            CredentialProvider.AddCredentials(request);
+        }
+    }
 
 }

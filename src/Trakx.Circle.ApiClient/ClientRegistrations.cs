@@ -43,6 +43,34 @@ public static partial class AddCircleClientExtension
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.PaymentsClient"));
+        services.AddHttpClient<ICardsClient, CardsClient>("Trakx.Circle.ApiClient.CardsClient")
+            .AddPolicyHandler((s, request) =>
+                Policy<HttpResponseMessage>
+                    .Handle<ApiException>()
+                    .Or<HttpRequestException>()
+                    .OrTransientHttpStatusCode()
+                    .WaitAndRetryAsync(delay,
+                        onRetry: (result, timeSpan, retryCount, context) =>
+                        {
+                            var logger = Log.Logger.ForContext<CardsClient>();
+                            logger.LogApiFailure(result, timeSpan, retryCount, context);
+                        })
+                    .WithPolicyKey("Trakx.Circle.ApiClient.CardsClient"));
+        
+        services.AddHttpClient<IBankAccountsClient, BankAccountsClient>("Trakx.Circle.ApiClient.BankAccountsClient")
+            .AddPolicyHandler((s, request) =>
+                Policy<HttpResponseMessage>
+                    .Handle<ApiException>()
+                    .Or<HttpRequestException>()
+                    .OrTransientHttpStatusCode()
+                    .WaitAndRetryAsync(delay,
+                        onRetry: (result, timeSpan, retryCount, context) =>
+                        {
+                            var logger = Log.Logger.ForContext<BankAccountsClient>();
+                            logger.LogApiFailure(result, timeSpan, retryCount, context);
+                        })
+                    .WithPolicyKey("Trakx.Circle.ApiClient.BankAccountsClient"));
+        
         
 
     }
