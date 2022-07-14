@@ -1,3 +1,4 @@
+using System.Net;
 using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
@@ -8,12 +9,17 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
     {
     }
     public string GetUid() => $"UID{GetString(10).ToUpperInvariant()}";
+
+    private string GetIp()
+    {
+        return new IPAddress(1694542016).ToString();
+    }
     
     public CardPaymentCreationRequest CreatePaymentRequest () => new CardPaymentCreationRequest
     {
-        Amount = new Money()
+        Amount = new Money
         {
-            Amount = $"{GetDecimals()}", 
+            Amount = $"{GetDecimals()}.00", 
             Currency = "USD"
         },
         IdempotencyKey = Guid.NewGuid(),
@@ -23,7 +29,7 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
             Email = GetEmailAddress("trakx.io"),
             PhoneNumber = "+14155555555",
             SessionId = "DE6FA86F60BB47B379307F851E238617",
-            IpAddress = "244.28.239.130"
+            IpAddress = $"{GetIp()}"
         },
         Verification = CardPaymentCreationRequestVerification.None,
         Source = new Source { Id = "b8627ae8-732b-4d25-b947-1df8f4007a29" },
