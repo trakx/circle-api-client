@@ -387,6 +387,17 @@ paths:
               $ref: "#/components/schemas/WireCreationRequest"
 
       responses:
+        '200':
+          description: Successfully created a bank account for wire transfers.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Wire"
         '201':
           description: Successfully created a bank account for wire transfers.
           headers:

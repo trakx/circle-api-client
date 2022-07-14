@@ -37,4 +37,30 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
         // EncryptedData = new EncryptedCardPaymentData() { Cvv = "UHVibGljS2V5QmFzZTY0RW5jb2RlZA==" }
 
     };
+
+    public WireCreationRequest_US WireCreationRequestUs() => new WireCreationRequest_US
+    {
+        AccountNumber = $"{Random.Next(10000000,99999999)}",
+        BankAddress = new BankAddress
+        {
+            BankName = "SAN FRANCISCO",
+            City = "SAN FRANCISCO",
+            Country = "US",
+            District = "CA",
+            Line1 = "100 Money Street",
+            Line2 = "Suite 1"
+        },
+        BillingDetails = new BillingDetails
+        {
+            Name = "Satoshi Nakamoto",
+            City = "Boston",
+            Country = "US",
+            Line1 = "100 Money Street",
+            District = "MA",
+            PostalCode = "01234"
+        },
+        IdempotencyKey = Guid.NewGuid(),
+        RoutingNumber = "121000248",
+
+    };
 }
