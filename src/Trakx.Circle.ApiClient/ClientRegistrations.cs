@@ -71,6 +71,48 @@ public static partial class AddCircleClientExtension
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.BankAccountsClient"));
         
+        services.AddHttpClient<ISettlementsClient, SettlementsClient>("Trakx.Circle.ApiClient.SettlementsClient")
+            .AddPolicyHandler((s, request) =>
+                Policy<HttpResponseMessage>
+                    .Handle<ApiException>()
+                    .Or<HttpRequestException>()
+                    .OrTransientHttpStatusCode()
+                    .WaitAndRetryAsync(delay,
+                        onRetry: (result, timeSpan, retryCount, context) =>
+                        {
+                            var logger = Log.Logger.ForContext<SettlementsClient>();
+                            logger.LogApiFailure(result, timeSpan, retryCount, context);
+                        })
+                    
+                    .WithPolicyKey("Trakx.Circle.ApiClient.SettlementsClient"));
+        
+        services.AddHttpClient<IChargebacksClient, ChargebacksClient>("Trakx.Circle.ApiClient.ChargebacksClient")
+            .AddPolicyHandler((s, request) =>
+                Policy<HttpResponseMessage>
+                    .Handle<ApiException>()
+                    .Or<HttpRequestException>()
+                    .OrTransientHttpStatusCode()
+                    .WaitAndRetryAsync(delay,
+                        onRetry: (result, timeSpan, retryCount, context) =>
+                        {
+                            var logger = Log.Logger.ForContext<ChargebacksClient>();
+                            logger.LogApiFailure(result, timeSpan, retryCount, context);
+                        })
+                    .WithPolicyKey("Trakx.Circle.ApiClient.ChargebacksClient"));
+        
+        services.AddHttpClient<IReversalsClient, ReversalsClient>("Trakx.Circle.ApiClient.ReversalsClient")
+            .AddPolicyHandler((s, request) =>
+                Policy<HttpResponseMessage>
+                    .Handle<ApiException>()
+                    .Or<HttpRequestException>()
+                    .OrTransientHttpStatusCode()
+                    .WaitAndRetryAsync(delay,
+                        onRetry: (result, timeSpan, retryCount, context) =>
+                        {
+                            var logger = Log.Logger.ForContext<ReversalsClient>();
+                            logger.LogApiFailure(result, timeSpan, retryCount, context);
+                        })
+                    .WithPolicyKey("Trakx.Circle.ApiClient.ReversalsClient"));
         
 
     }

@@ -24,7 +24,12 @@ namespace <#= nameSpace #>
                 medianFirstRetryDelay: TimeSpan.FromMilliseconds(configuration.InitialRetryDelayInMilliseconds ?? 100),
                 retryCount: configuration.MaxRetryCount ?? 3, fastFirst: true);
             <#
-            var clientNames = new [] { "AccountsClient" , "PaymentsClient", "CardsClient", "BankAccountsClient"};
+            var clientNames = new [] { "AccountsClient" ,
+                "PaymentsClient", 
+                "CardsClient",
+                "BankAccountsClient", 
+                "SettlementsClient",
+                "ChargebacksClient", "ReversalsClient"};
 
             foreach(var name in clientNames)
             {

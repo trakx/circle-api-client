@@ -466,6 +466,459 @@ paths:
           $ref: "#/components/responses/NotAuthorized"
         '404':
           $ref: "#/components/responses/NotFound"
+  /v1/banks/ach:
+    post:
+      security:
+        - bearerAuth: [ ]
+      summary: Create a bank account (ACH).
+      description: ACH is currently only available in the sandbox environment.
+      operationId: createACHBankAccount
+      tags:
+        - BankAccounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ACHCreationRequest"
+
+      responses:
+        '201':
+          description: Successfully created a bank account for ACH transfers.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ACH"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+  /v1/banks/ach/{id}:
+    get:
+      parameters:
+        - name: id
+          description: "Unique identifier of the bank account for ACH transfers."
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      security:
+        - bearerAuth: [ ]
+      summary: Get a bank account (ACH).
+      description: ACH is currently only available in the sandbox environment.
+      operationId: getACHBankAccount
+      tags:
+        - BankAccounts
+      responses:
+        '200':
+          description: Successfully retrieved a bank account for ACH transfers.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ACH"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /v1/mocks/ach/accounts:
+    post:
+      security:
+        - bearerAuth: [ ]
+      summary: Create a mock ACH account.
+      description: In the sandbox environment, create a mock ACH account and retrieve a processor token that can be used to link an ACH account.
+      operationId: createAchAccount
+      tags:
+        - BankAccounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MockAchAccountCreationRequest"
+      responses:
+        '201':
+          description: Successfully created a mock ach payment.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MockAchAccountResponse"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+  /v1/wallets:
+    post:
+      security:
+        - bearerAuth: [ ]
+      summary: Create a wallet.
+      description: Creates an end user wallet.
+      operationId: createWallet
+      tags:
+        - Payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WalletCreationRequest"
+      responses:
+        '201':
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          description: Successfully created a wallet.
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Wallet"
+
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/PageBefore"
+        - $ref: "#/components/parameters/PageAfter"
+        - $ref: "#/components/parameters/PageSize"
+      summary: Get a list of wallets.
+      description: Retrieves a list of a user's wallets.
+      operationId: getWallets
+      tags:
+        - Payments
+      responses:
+        '200':
+          description: Successfully retrieved a list of wallets.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Wallet"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+  /v1/wallets/{id}:
+    get:
+      parameters:
+        - name: id
+          description: "Unique identifier for the wallet."
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: [ ]
+      summary: Get a wallet.
+      operationId: getWallet
+      tags:
+        - Payments
+      responses:
+        '200':
+          description: Successfully retrieved a wallet.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Wallet"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /v1/wallets/{id}/addresses:
+    post:
+      parameters:
+        - name: id
+          description: "Unique id of a wallet."
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: [ ]
+      summary: Generate a blockchain address.
+      description: |
+        Generates a new blockchain address for a wallet. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.
+      operationId: generateAddress
+      tags:
+        - Payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateAddressRequest"
+      responses:
+        '201':
+          description: Successfully generated a new address.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/AddressObject"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '409':
+          $ref: "#/components/responses/Conflict"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          description: "Unique id of a wallet."
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/PageBefore"
+        - $ref: "#/components/parameters/PageAfter"
+        - $ref: "#/components/parameters/PageSize"
+      summary: Get a list of addresses.
+      description: Retrieves a list of addresses associated with a wallet.
+      operationId: getAddresses
+      tags:
+        - On-chain payments
+      responses:
+        '200':
+          description: Successfully retrieved a list of addresses.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AddressObject"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /v1/settlements:
+    # Note comment in marketplace/settlements.yml.
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/PageBefore"
+        - $ref: "#/components/parameters/PageAfter"
+        - $ref: "#/components/parameters/PageSize"
+      summary: Get a list of settlements.
+      operationId: getSettlements
+      tags:
+        - Settlements
+      responses:
+        '200':
+          description: Successfully retrieved a list of settlements.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Settlement"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+  /v1/settlements/{id}:
+    get:
+      parameters:
+        - name: id
+          description: "Unique identifier of the settlement."
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      security:
+        - bearerAuth: [ ]
+      summary: Get a settlement.
+      operationId: getSettlement
+      tags:
+        - Settlements
+      responses:
+        '200':
+          description: Successfully retrieved a settlement.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Settlement"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /v1/chargebacks:
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/PageBefore"
+        - $ref: "#/components/parameters/PageAfter"
+        - $ref: "#/components/parameters/PageSize"
+      summary: Get a list of chargebacks.
+      description: "Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list."
+      operationId: getChargebacks
+      tags:
+        - Chargebacks
+      responses:
+        '200':
+          description: Successfully retrieved a list of chargebacks.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BasicChargeback"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+  /v1/chargebacks/{id}:
+    get:
+      parameters:
+        - name: id
+          description: "Unique identifier of the chargeback."
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      security:
+        - bearerAuth: [ ]
+      summary: Get a chargeback.
+      operationId: getChargeback
+      tags:
+        - Chargebacks
+      responses:
+        '200':
+          description: Successfully retrieved a chargeback.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/BasicChargeback"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /v1/mocks/cards/chargebacks:
+    post:
+      security:
+        - bearerAuth: [ ]
+      summary: Create a mock chargeback.
+      description: In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
+      operationId: createMockChargeback
+      tags:
+        - Chargebacks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MockChargebackCreationRequest"
+      responses:
+        '201':
+          description: Successfully created a mock chargeback.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MockChargeback"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+        '404':
+          $ref: "#/components/responses/NotFound"
+        '409':
+          $ref: "#/components/responses/Conflict"
+  /v1/reversals:
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/PageBefore"
+        - $ref: "#/components/parameters/PageAfter"
+        - $ref: "#/components/parameters/PageSize"
+      summary: Get a list of ACH payment reversals.
+      description: "Retrieve a list of ACH payment reversals. Results will be sorted by create date descending; more recent reversals will be at the beginning of the list."
+      operationId: getReversals
+      tags:
+        - Reversals
+      responses:
+        '200':
+          description: Successfully retrieved a list of ACH payment reversals.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Reversal"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -1812,7 +2265,370 @@ components:
           $ref: "#/components/schemas/WireInstructionBeneficiary"
         beneficiaryBank:
           $ref: "#/components/schemas/WireInstructionBeneficiaryBank"
+    ACHCreationRequest:
+      ACHCreationRequest:
+        type: object
+        required:
+          - idempotencyKey
+          - plaidProcessorToken
+          - billingDetails
+        properties:
+          idempotencyKey:
+            $ref: "#/components/schemas/IdempotencyKey"
+          plaidProcessorToken:
+            description: "The token for the ACH account provided by the processor (Plaid)."
+            type: string
+          billingDetails:
+            description: "Billing details of the card holder."
+            $ref: "#/components/schemas/BillingDetails"
+    ACH:
+      type: object
+      required:
+        - id
+        - status
+        - accountNumber
+        - routingNumber
+        - description
+        - billingDetails
+        - bankAddress
+        - fingerprint
+        - createDate
+        - updateDate
+      properties:
+        id:
+          description: "Unique system generated identifier for the ACH account."
+          type: string
+          example: "1e38dcef-a947-493a-a674-f623e4418ace"
+        status:
+          description: "Status of the ACH account. A `pending` status indicates that the linking is in-progress; `complete` indicates the ACH account was linked successfully; `failed` indicates it failed."
+          type: string
+          enum:
+            - pending
+            - complete
+            - failed
+        accountNumber:
+          description: "The account number of the ACH account."
+          type: string
+          example: "123456789"
+        routingNumber:
+          description: "The routing number of the ACH account."
+          type: string
+          example: "613334455"
+        billingDetails:
+          description: "Billing details of the account holder."
+          $ref: "#/components/schemas/BillingDetails"
+        bankAddress:
+          description: "The address details for the bank, as provided during ACH account creation."
+          $ref: "#/components/schemas/BankAddress"
+        fingerprint:
+          description: "A UUID that uniquely identifies the ACH account. If the same account is used more than once, each account object will have a different id, but the fingerprint will stay the same."
+          type: string
+          example: "eb170539-9e1c-4e92-bf4f-1d09534fdca2"
+        riskEvaluation:
+          description: "Results of risk evaluation. Only present if the ACH account is denied by Circle's risk service."
+          nullable: true
+          $ref: "#/components/schemas/RiskEvaluation"
+        createDate:
+          description: "Datetime when the ACH account was created. ISO-8601."
+          type: string
+          format: date-time
+          example: "2019-09-18T19:19:01Z"
+        updateDate:
+          description: "Datetime when the ACH account was updated. ISO-8601."
+          type: string
+          format: date-time
+          example: "2019-09-18T19:20:00Z"
+    MockAchAccount:
+      type: object
+      required:
+        - accountNumber
+        - routingNumber
+        - description
+      properties:
+        accountNumber:
+          description: "The account number of the ACH account."
+          type: string
+          example: "123456789"
+        routingNumber:
+          description: |
+            The routing number of the ACH account.
 
+            For sandbox testing, valid routing numbers include `011000028`, `011201762`, `011500120`, `021214862`, `121000248`, `121140399`, `211073473`, `221172610`, and `011000138`.
+          type: string
+          example: "011000028"
+        description:
+          type: string
+          description: "A description for the ACH account."
+          example: "My ACH account"
+    MockAchAccountCreationRequest:
+      type: object
+      required:
+        - account
+        - balance
+      properties:
+        account:
+          $ref: "#/components/schemas/MockAchAccount"
+        balance:
+          description: The balance of the mocked account
+          $ref: "#/components/schemas/Money"
+    MockAchAccountResponse:
+      type: object
+      properties:
+        processorToken:
+          description: "The processor token needs to be provided when linking an ACH account against this mock."
+          type: string
+          example: "processor-sandbox-circle-82cf95bb-43f8-4191-8d30-2c9f42853621"
+        balance:
+          description: The balance of the mocked account
+          $ref: "#/components/schemas/Money"
+        account:
+          $ref: "#/components/schemas/MockAchAccount"
+    WalletCreationRequest:
+        type: object
+        required:
+          - idempotencyKey
+        properties:
+          idempotencyKey:
+            $ref: "#/components/schemas/IdempotencyKey"
+          description:
+            description: "A human-friendly, non-unique identifier for a wallet."
+            type: string
+            example: "Treasury Wallet"
+            maxLength: 255
+    Wallet:
+      type: object
+      properties:
+        walletId:
+          description: "Wallet identifier. Numeric value but should be treated as a string as format may change in the future"
+          type: string
+          example: "434000"
+        entityId:
+          description: "Unique identifier of the entity that owns the wallet"
+          type: string
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        type:
+          description: "Wallet type."
+          type: string
+          enum: [ end_user_wallet ]
+          example: "end_user_wallet"
+        description:
+          description: "A human-friendly, non-unique identifier for a wallet."
+          type: string
+          example: "Treasury Wallet"
+          maxLength: 255
+        balances:
+          description: "A list of balances for currencies owned by the wallet."
+          type: array
+          items:
+            $ref: "#/components/schemas/Money"
+    Chain:
+      type: string
+      enum: [ ETH, ALGO, SOL ]
+      description: "A blockchain that a given currency is available on."
+      example: "ETH"
+    Currency:
+      type: string
+      enum: [ USD ]
+      description: "A currency associated with a balance or address. Currently, only `USD` is supported."
+      example: "USD"
+    GenerateAddressRequest:
+      GenerateAddressRequest:
+        type: object
+        required:
+          - idempotencyKey
+          - currency
+          - chain
+        properties:
+          idempotencyKey:
+            $ref: "#/components/schemas/IdempotencyKey"
+          currency:
+            $ref: "#/components/schemas/Currency"
+          chain:
+            $ref: "#/components/schemas/Chain"
+    Address:
+      type: string
+      description: "An alphanumeric string representing a blockchain address. Will be in different formats for different chains. It is important to preserve the exact formatting and capitalization of the address."
+      example: "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
+    AddressObject:
+      type: object
+      properties:
+        address:
+          $ref: "#/components/schemas/Address"
+        currency:
+          $ref: "#/components/schemas/Currency"
+        chain:
+          $ref: "#/components/schemas/Chain"
+    Settlement:
+      type: object
+      properties:
+        id:
+          description: "Unique system generated identifier for the settlement.  Can be used to filter for payments settled by this settlement."
+          type: string
+          format: "uuid"
+          example: "1e38dcef-a947-493a-a674-f623e4418ace"
+
+        merchantWalletId:
+          description: "The merchant wallet (master wallet) to which settlement funds were deposited."
+          type: string
+          example: "12345"
+
+        walletId:
+          description: "If this settlement was used for a marketplace payment, the wallet involved in the settlement. Not included for standard merchant settlements."
+          type: string
+          example: "12345"
+
+        totalDebits:
+          description: "The total debits (charges) added to this settlement."
+          $ref: "#/components/schemas/Money"
+
+        totalCredits:
+          description: "The total credits (refunds) subtracted from this settlement."
+          $ref: "#/components/schemas/Money"
+
+        paymentFees:
+          description: "The total fees for payments charged in this settlement."
+          $ref: "#/components/schemas/Money"
+
+        chargebackFees:
+          description: "The total fees for chargebacks incurred in this settlement."
+          $ref: "#/components/schemas/Money"
+
+        createDate:
+          description: "Datetime when the settlement was created. ISO-8061."
+          type: string
+          format: date-time
+          example: "2019-09-18T19:19:01Z"
+
+        updateDate:
+          description: "Datetime when the settlement was updated. ISO-8061."
+          type: string
+          format: date-time
+          example: "2019-09-18T19:19:01Z"
+    BasicChargebackHistory:
+      type: object
+      required:
+        - type
+        - chargebackAmount
+        - description
+      properties:
+        type:
+          description: "Enumerated type of the chargeback history event. `1st Chargeback` represents the first stage of the dispute procedure initiated by the cardholder’s issuing bank.
+            `2nd Chargeback` represents the second stage of the dispute procedure initiated by the cardholder’s issuing bank (This stage is MasterCard only).
+            `Chargeback Reversal` represents when 1st Chargeback or 2nd Chargeback is withdrawn by the issuer.
+            `Representment` represents the stage when merchants decided to dispute 1st Chargeback or 2nd Chargeback.
+            `Chargeback Settlement` can imply one of the two: 1) If merchant or marketplace is taking the lost of the chargeback, money will be debit from the wallet during this stage.
+            2) If merchant of marketplace successfully dispute the chargeback, money will be credit back to the wallet during this stage."
+          type: string
+          enum:
+            - 1st Chargeback
+            - 2nd Chargeback
+            - Chargeback Reversal
+            - Representment
+            - Chargeback Settlement
+          example: "1st Chargeback"
+        chargebackAmount:
+          description: "Amount associated with the chargeback."
+          $ref: "#/components/schemas/Money"
+        fee:
+          description: "Fee associated with processing this chargeback status. Note that fee for each item in the history list is seperated."
+          nullable: true
+          $ref: "#/components/schemas/Money"
+        description:
+          description: "The reason the chargeback was created."
+          type: string
+          example: "The cardholder claims an unauthorized transaction occurred."
+        settlementId:
+          description: "Unique system generated identifier for the settlement related to the chargeback history."
+          type: string
+          format: uuid
+          nullable: true
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        createDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+    BasicChargeback:
+      type: object
+      required:
+        - id
+        - paymentId
+        - merchantId
+        - history
+      properties:
+        id:
+          description: "Unique system generated identifier for the chargeback item."
+          type: string
+          format: uuid
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        paymentId:
+          description: "Unique system generated identifier for the payment that is associated to the chargeback item."
+          format: uuid
+          type: string
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        merchantId:
+          description: "Unique system generated identifier for the merchant."
+          format: uuid
+          type: string
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        history:
+          description: "The chargeback item's history list will be sorted by create date descending: more recent chargeback statuses will be at the beginning of the list."
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/BasicChargebackHistory"
+    MockChargebackCreationRequest:
+      type: object
+      required:
+        - paymentId
+      properties:
+        paymentId:
+          description: "The id of the payment to be charged back.  Each payment can only be charged back once."
+          format: uuid
+          type: string
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+    MockChargeback:
+      type: object
+      properties: { }
+    Reversal:
+      type: object
+      required:
+        - id
+        - paymentId
+        - amount
+        - description
+        - status
+        - reason
+        - fees
+        - createDate
+        - updateDate
+      properties:
+        id:
+          description: "Unique system generated identifier for the reversal item."
+          type: string
+          format: uuid
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        paymentId:
+          description: "Unique system generated identifier for the payment that is being reversed."
+          format: uuid
+          type: string
+          example: "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+        amount:
+          $ref: "#/components/schemas/Money"
+        description:
+          description: "Enumerated description of the payment."
+          type: string
+          example: "Merchant Payment Reversal"
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        reason:
+          $ref: "#/components/schemas/ReversalReason"
+        fees:
+          $ref: "#/components/schemas/Money"
+        createDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+        updateDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+  
+  
+  
   parameters:
     WalletId:
       name: walletId
@@ -1961,6 +2777,15 @@ components:
             $ref: "#/components/schemas/Error"
     NotFound:
       description: The specified resource was not found.
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/X-Request-Id"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Conflict:
+      description: The request has not been applied because it comes in conflict with another request (such as re-using an idempotencyKey for a different request).
       headers:
         X-Request-Id:
           $ref: "#/components/headers/X-Request-Id"
