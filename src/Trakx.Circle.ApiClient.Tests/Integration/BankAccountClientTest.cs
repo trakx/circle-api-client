@@ -98,10 +98,6 @@ public class BankAccountClientTest : CircleClientTestsBase
         Assert.Equal(201, wirePayment.StatusCode);
     }
     
-    // [Fact]
-    // public  Task Create_Non_Us_Bank_With_IBAN_Support_Should_Return_201 (){
-    //     
-    // }
     
     
 }
