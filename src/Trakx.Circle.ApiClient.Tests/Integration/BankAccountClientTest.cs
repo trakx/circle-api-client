@@ -77,7 +77,7 @@ public class BankAccountClientTest : CircleClientTestsBase
         var bankRequest = _mockCreator.WireCreationRequestUs();
         var bank =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
         var id = bank.Result.Data.Id;
-        var result =  await _bankAccountsClient.GetWireInstructionsBankAccountAsync(id);
+        var result =  await _bankAccountsClient.GetWireBankAccountAsync(id);
         var wireRequest = new MockWirePaymentRequest
         {
             Amount = new Money
