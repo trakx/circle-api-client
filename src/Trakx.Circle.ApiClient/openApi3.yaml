@@ -1008,7 +1008,7 @@ components:
         type:
           description: "Type of the source."
           type: string
-          enum: [ "card", "ach" ]
+          enum: [ "card", "ach" ,"wire","sepa" ]
     PaymentStatus:
       type: string
       enum:
@@ -1016,6 +1016,7 @@ components:
         - confirmed
         - paid
         - failed
+        - cancel
       description: "Enumerated status of the payment. `pending` means the payment is waiting to be processed.  `confirmed` means the payment has been approved by the bank and the merchant can treat it as successful, but settlement funds are not yet available to the merchant.  `paid` means settlement funds have been received and are available to the merchant.  `failed` means something went wrong (most commonly that the payment was denied).  Terminal states are `paid` and `failed`."
     PaymentInfoPaymentAndRefund:
       type: object
@@ -1053,12 +1054,13 @@ components:
         type:
           description: "Type of the payment object."
           type: string
-          enum: [ "cancel" ]
+          enum: 
+            - cancel
         description:
           description: "Enumerated description of the payment item."
           type: string
           nullable: true
-          enum: [ "Payment" ]
+#          enum: [ "Payment" ]
         status:
           $ref: "#/components/schemas/PaymentStatus"
         createDate:
@@ -1305,7 +1307,9 @@ components:
         type:
           description: "Type of the payment object."
           type: string
-          enum: [ "payment" ]
+          enum: 
+            - payment  
+            - cancel
         merchantId:
           description: "Unique system generated identifier for the merchant."
           type: string
@@ -1323,13 +1327,15 @@ components:
         description:
           description: "Enumerated description of the payment."
           type: string
-          enum: [ "Payment" ]
+#          enum: [ "Payment" ]
         status:
           $ref: "#/components/schemas/PaymentStatus"
         cancel:
           description: "Status information of the related cancel. This property is only present on canceled payment or refund items."
           nullable: true
-          $ref: "#/components/schemas/PaymentStatus"
+          type: string
+#          enum:
+#            - cancel
         refunds:
           type: array
           items:
@@ -1358,7 +1364,8 @@ components:
         type:
           description: "Type of the payment object."
           type: string
-          enum: [ "cancel" ]
+          enum: 
+            - cancel
         merchantId:
           description: "Unique system generated identifier for the merchant."
           type: string
@@ -1376,7 +1383,7 @@ components:
         description:
           description: "Enumerated description of the payment."
           type: string
-          enum: [ "Payment" ]
+#          enum: [ "Payment" ]
         status:
           $ref: "#/components/schemas/PaymentStatus"
         originalPayment:
@@ -1424,7 +1431,7 @@ components:
         description:
           description: "Enumerated description of the payment."
           type: string
-          enum: [ "Payment" ]
+#          enum: [ "Payment" ]
         status:
           $ref: "#/components/schemas/PaymentStatus"
         originalPayment:
@@ -1458,7 +1465,10 @@ components:
         type:
           description: "Type of the payment object."
           type: string
-          enum: [ "payment", "refund", "cancel" ]
+          enum: 
+            - payment
+            - refund
+            - cancel
         merchantId:
           description: "Unique system generated identifier for the merchant."
           type: string
@@ -1533,7 +1543,8 @@ components:
         type:
           description: "Type of the payment object."
           type: string
-          enum: [ "cancel" ]
+          enum: 
+            - cancel
         merchantId:
           description: "Unique system generated identifier for the merchant."
           type: string
@@ -1551,7 +1562,7 @@ components:
         description:
           description: "Enumerated description of the payment."
           type: string
-          enum: [ "Payment" ]
+#          enum: [ "Payment" ]
         status:
           $ref: "#/components/schemas/PaymentStatus"
         originalPayment:
@@ -2678,6 +2689,7 @@ components:
           - confirmed
           - paid
           - failed
+          - cancel
         example: "pending"
     PaymentSourceType:
       name: type
@@ -2692,6 +2704,7 @@ components:
             - card
             - wire
             - ach
+            - sepa
           example: "card"
     MerchantId:
       name: merchantId

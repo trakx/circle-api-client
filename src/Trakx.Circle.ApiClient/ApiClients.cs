@@ -4604,6 +4604,9 @@ namespace Trakx.Circle.ApiClient
         [System.Runtime.Serialization.EnumMember(Value = @"failed")]
         Failed = 3,
 
+        [System.Runtime.Serialization.EnumMember(Value = @"cancel")]
+        Cancel = 4,
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -4673,8 +4676,7 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment item.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public PaymentInfoCancelDescription? Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
@@ -5161,20 +5163,12 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public BasicPaymentDescription Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public PaymentStatus Status { get; set; }
-
-        /// <summary>
-        /// Status information of the related cancel. This property is only present on canceled payment or refund items.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("cancel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public PaymentStatus? Cancel { get; set; }
 
         [Newtonsoft.Json.JsonProperty("refunds", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.List<PaymentInfoPaymentAndRefund> Refunds { get; init; }
@@ -5246,8 +5240,7 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public BasicCancelDescription Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -5327,8 +5320,7 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public BasicRefundDescription Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -5530,8 +5522,7 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public DetailedCancelDescription Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7419,6 +7410,9 @@ namespace Trakx.Circle.ApiClient
         [System.Runtime.Serialization.EnumMember(Value = @"ach")]
         Ach = 2,
 
+        [System.Runtime.Serialization.EnumMember(Value = @"sepa")]
+        Sepa = 3,
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -7436,6 +7430,9 @@ namespace Trakx.Circle.ApiClient
 
         [System.Runtime.Serialization.EnumMember(Value = @"failed")]
         Failed = 3,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"cancel")]
+        Cancel = 4,
 
     }
 
@@ -7925,6 +7922,12 @@ namespace Trakx.Circle.ApiClient
         [System.Runtime.Serialization.EnumMember(Value = @"ach")]
         Ach = 1,
 
+        [System.Runtime.Serialization.EnumMember(Value = @"wire")]
+        Wire = 2,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"sepa")]
+        Sepa = 3,
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -7954,15 +7957,6 @@ namespace Trakx.Circle.ApiClient
 
         [System.Runtime.Serialization.EnumMember(Value = @"cancel")]
         Cancel = 0,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum PaymentInfoCancelDescription
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"Payment")]
-        Payment = 0,
 
     }
 
@@ -8018,14 +8012,8 @@ namespace Trakx.Circle.ApiClient
         [System.Runtime.Serialization.EnumMember(Value = @"payment")]
         Payment = 0,
 
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum BasicPaymentDescription
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"Payment")]
-        Payment = 0,
+        [System.Runtime.Serialization.EnumMember(Value = @"cancel")]
+        Cancel = 1,
 
     }
 
@@ -8039,29 +8027,11 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum BasicCancelDescription
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"Payment")]
-        Payment = 0,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum BasicRefundType
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"refund")]
         Refund = 0,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum BasicRefundDescription
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"Payment")]
-        Payment = 0,
 
     }
 
@@ -8095,15 +8065,6 @@ namespace Trakx.Circle.ApiClient
 
         [System.Runtime.Serialization.EnumMember(Value = @"cancel")]
         Cancel = 0,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum DetailedCancelDescription
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"Payment")]
-        Payment = 0,
 
     }
 

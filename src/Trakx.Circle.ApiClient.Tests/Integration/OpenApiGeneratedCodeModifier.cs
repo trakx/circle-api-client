@@ -1,11 +1,11 @@
 ﻿using Trakx.Utils.Extensions;
 using Xunit.Abstractions;
-
+using Trakx.Utils.Testing;
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
-public class OpenApiGeneratedCodeModifier : Trakx.Utils.Testing.OpenApiGeneratedCodeModifier
+public class OpenApiGeneratedCodeModifiers : OpenApiGeneratedCodeModifier
 {
-    public OpenApiGeneratedCodeModifier(ITestOutputHelper output)
+    public OpenApiGeneratedCodeModifiers(ITestOutputHelper output)
         : base(output)
     {
         var foundRoot = default(DirectoryInfo).TryWalkBackToRepositoryRoot(out var rootDirectory)!; 
