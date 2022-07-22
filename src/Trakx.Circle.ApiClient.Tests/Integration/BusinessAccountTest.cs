@@ -18,13 +18,20 @@ public class BusinessAccountTest: CircleClientTestsBase
     [Fact]
     public async Task Creating_Signet_Should_Succeed()
     {
-        var business = await _businessAccountClient.CreateSignetBankAsync(new SignetBankCreationRequest
+        var businesses = await _businessAccountClient.GetSignetBanksAsync();
+        if (businesses.Result.Data.Count < 3)
         {
-         IdempotencyKey   = Guid.NewGuid().ToString(),
-         WalletAddress = _mockCreator.GetEthereumAddress(),
-        });
+            var business = await _businessAccountClient.CreateSignetBankAsync(new SignetBankCreationRequest
+            {
+                IdempotencyKey   = Guid.NewGuid().ToString(),
+                WalletAddress = _mockCreator.GetEthereumAddress(),
+            });
         
-        business.Result.Data.TrackingRef.Should().NotBeNullOrEmpty();
+            business.Result.Data.TrackingRef.Should().NotBeNullOrEmpty();   
+        }
+        
+        
+
     }
     [Fact]
     public async Task Getting_Signet_Should_Succeed()
