@@ -27,10 +27,11 @@ public class BusinessAccountTest: CircleClientTestsBase
                 WalletAddress = _mockCreator.GetEthereumAddress(),
             });
         
-            business.Result.Data.TrackingRef.Should().NotBeNullOrEmpty();   
+            business.Result.Data.TrackingRef.Should().NotBeNullOrEmpty();
+            business.StatusCode.Should().Be(200);
         }
         
-        
+        businesses.Should().NotBeNull();
 
     }
     [Fact]
