@@ -29,7 +29,10 @@ namespace <#= nameSpace #>
                 "CardsClient",
                 "BankAccountsClient", 
                 "SettlementsClient",
-                "ChargebacksClient", "ReversalsClient"};
+                "ChargebacksClient", 
+                "ReversalsClient",
+                "BusinessAccountClient"
+            };
 
             foreach(var name in clientNames)
             {

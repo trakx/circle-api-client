@@ -97,6 +97,7 @@ public class BankAccountClientTest : CircleClientTestsBase
         Logger.Information($"The mock wire payment was initiated successfully with TrackingRef {wirePayment.Result.Data.TrackingRef}");
         Assert.Equal(201, wirePayment.StatusCode);
     }
+
     
     
     

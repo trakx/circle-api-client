@@ -930,6 +930,279 @@ paths:
           $ref: "#/components/responses/BadRequest"
         '401':
           $ref: "#/components/responses/NotAuthorized"
+  /v1/businessAccount/banks/signet:
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Get a list of signet banks.
+      description: "Retrieve a list of signet banks."
+      operationId: getSignetBanks
+      tags:
+        - BusinessAccount
+      responses:
+        '200':
+          description: Successfully retrieved a list of signet banks.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SignetBank"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+    post: 
+      security:
+        - bearerAuth: [ ]
+      summary: Create a signet bank.
+      description: "Create a signet bank."
+      operationId: createSignetBank
+      tags:
+        - BusinessAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignetBankCreationRequest"
+      responses:
+        '201':
+              description: Successfully created a signet bank.
+              headers:
+                X-Request-Id:
+                  $ref: "#/components/headers/X-Request-Id"
+              content:
+                application/json:
+                  schema:
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/SignetBank"
+        '400':
+            $ref: "#/components/responses/BadRequest"
+        '401':
+            $ref: "#/components/responses/NotAuthorized"
+        '404':
+            $ref: "#/components/responses/NotFound"
+  /v1/businessAccount/banks/signet/{id}:
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          description: "Universally unique identifier (UUID v4) of a resource."
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      summary: Get a signet bank.
+      description: "Retrieve a signet bank."
+      operationId: getSignetBank
+      tags:
+        - BusinessAccount
+      responses:
+        '200':
+          description: Successfully retrieved a signet bank.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/SignetBank"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /v1/wallets/{walletId}/addresses:
+    post:
+      parameters:
+        - name: walletId
+          description: "Unique id of a wallet."
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: [ ]
+      summary: Generate a blockchain address.
+      description: |
+        Generates a new blockchain address for a wallet. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.
+      operationId: generateWalletAddress
+      tags:
+        - Wallets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateAddressRequest"
+      responses:
+        '201':
+          description: Successfully generated a new address.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/AddressObject"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '409':
+          $ref: "#/components/responses/Conflict"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: walletId
+          description: "Unique id of a wallet."
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/PageBefore"
+        - $ref: "#/components/parameters/PageAfter"
+        - $ref: "#/components/parameters/PageSize"
+      summary: Get a list of addresses.
+      description: Retrieves a list of addresses associated with a wallet.
+      operationId: getWalletAddresses
+      tags:
+        - Wallets
+      responses:
+        '200':
+          description: Successfully retrieved a list of addresses.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Address"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /v1/transfers:
+    post:
+      security:
+        - bearerAuth: [ ]
+      summary: Create a transfer.
+      description: A transfer can be made from an existing funded wallet to a blockchain address or another wallet.
+      operationId: createTransfer
+      tags:
+        - Transfers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferCreationRequest"
+      responses:
+        '201':
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          description: Successfully created a transfer.
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Transfer"
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: walletId
+          description: "Unique identifier for the source or destination wallet of transfers, if any. May not be used in conjunction with destinationWalletId or sourceWalletId. Useful for fetching all transfers related to a wallet."
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: sourceWalletId
+          description: "Unique identifier for the source wallet of transfers, if any."
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: destinationWalletId
+          description: "Unique identifier for the destination wallet of transfers, if any."
+          in: query
+          required: false
+          schema:
+            type: string
+        - $ref: "#/components/parameters/From"
+        - $ref: "#/components/parameters/To"
+        - $ref: "#/components/parameters/PageBefore"
+        - $ref: "#/components/parameters/PageAfter"
+        - $ref: "#/components/parameters/PageSize"
+      summary: Get a list of transfers.
+      description: Searches for transfers involving the provided wallets. If no wallet ids are provided, searches all wallets associated with your Circle API account. If the date parameters are omitted, returns the most recent transfers. This endpoint returns up to 50 transfers in descending chronological order or pageSize, if provided.
+      operationId: searchTransfers
+      tags:
+        - Transfers
+      responses:
+        '200':
+          description: Successfully retrieved a list of transfers.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Transfer"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+  /v1/transfers/{id}:
+    get:
+      parameters:
+        - name: id
+          description: "Unique identifier for the transfer."
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: [ ]
+      summary: Get a transfer.
+      operationId: getTransfer
+      tags:
+        - Transfers
+      responses:
+        '200':
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          description: Successfully retrieved a transfer.
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/DetailedTransfer"
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -965,9 +1238,7 @@ components:
         - data
       properties:
         data:
-          type: object
-          schema:
-            $ref: "#/components/schemas/Balances"
+          $ref: "#/components/schemas/Balances"
     Money:
       type: object
       required:
@@ -1018,6 +1289,325 @@ components:
         - failed
         - cancel
       description: "Enumerated status of the payment. `pending` means the payment is waiting to be processed.  `confirmed` means the payment has been approved by the bank and the merchant can treat it as successful, but settlement funds are not yet available to the merchant.  `paid` means settlement funds have been received and are available to the merchant.  `failed` means something went wrong (most commonly that the payment was denied).  Terminal states are `paid` and `failed`."
+    SignetBank:
+      type: object
+      properties: 
+        id:
+          description: "Unique system generated identifier for the entity."
+          type: string
+          example: "58c93589-911f-4bcb-a918-87c593296791"
+          format: uuid
+        status:
+          description: "Status of the account. A pending status indicates that the linking is in-progress; complete indicates the account was linked successfully; failed indicates it failed"
+          type: string
+          enum: ["pending" ,"complete", "failed"]
+        trackingRef:
+          description: "Tracking ref that needs to be set in the public description field when you send the funds to Circle Signet wallet"
+          type: string
+          example: "58c93589-911f-4bcb-a918-87c593296791"
+        walletAddress:
+          description: "Your signet wallet address."
+          type: string
+        createDate: 
+          $ref: "#/components/schemas/UTCTimestamp"
+        updateDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+    SourceBlockchainLocation:
+      description: "A source blockchain address."
+      type: object
+      required:
+        - type
+        - chain
+      properties:
+        type:
+          type: string
+          enum:
+            - "blockchain"
+        chain:
+          $ref: "#/components/schemas/Chain"
+    SourceWalletLocation:
+      description: "A source wallet address."
+      type: object
+      required:
+        - type
+        - wallet
+      properties:
+        type:
+          type: string
+          enum:
+            - "wallet"
+        wallet:
+          $ref: "#/components/schemas/Wallet"
+    DestinationWalletLocation:
+      description: "A destination wallet location."
+      type: object
+      required:
+        - type
+        - id
+      properties:
+        type:
+          type: string
+          enum:
+            - "wallet"
+        id:
+          type: string
+          description: "The id of the wallet."
+          example: "12345"
+        address:
+          type: string
+          description: "An alphanumeric string which indicates the wallet address used to receive the transfer. Will only be set when the transfer source is a blockchain address."
+          example: "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
+    DestinationBlockchainLocation:
+      description: "A destination blockchain address."
+      type: object
+      required:
+        - type
+        - chain
+      properties:
+        type:
+          type: string
+          enum:
+            - "blockchain"
+        chain:
+          $ref: "#/components/schemas/Chain"
+    Transfer:
+      type: object
+      description: "A transfer of funds."
+      required:
+        - id
+        - source
+        - destination
+        - amount
+        - status
+      properties:
+        id:
+          description: "Unique identifier for this transfer."
+          type: string
+          format: uuid
+          example: "b36cbf12-6ed1-47ed-9eb9-5874f8991ca8"
+        source:
+          type: string
+          enum:
+            - "blockchain"
+            - "individual"
+            - "business"
+        name:
+          type: string
+          description: "The name of the source of the transfer."
+          example: "John Doe"
+        addresses:
+          type: array
+          description: "The addresses of the source of the transfer."
+          items:
+            $ref: "#/components/schemas/UserAddress"
+              
+        destination:
+          type: object
+          description: "The destination of the transfer."
+          properties: 
+            type:
+              type: string
+              enum:
+                - "wallet"
+                - "blockchain"
+            id: 
+              type: string
+              description: "The id of the wallet."
+              example: "12345"
+            address:
+              type: string
+              description: "An alphanumeric string which indicates the wallet address used to receive the transfer. Will only be set when the transfer source is a blockchain address."
+              example: "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
+            addressTag:
+              type: string
+              description: "An alphanumeric string which indicates the wallet address tag used to receive the transfer. Will only be set when the transfer source is a blockchain address."
+              example: "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
+            
+        amount:
+          $ref: "#/components/schemas/Money"
+        transactionHash:
+          description: "A hash that uniquely identifies the onchain transaction. This is only available where either source or destination are of type blockchain."
+          type: string
+          example: "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63"
+        status:
+          description: "Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed."
+          type: string
+          enum:
+            - "pending"
+            - "complete"
+            - "failed"
+        createDate:
+          description: "The create date of the transfer."
+          type: string
+          format: date-time
+        errorCode:
+          type: string
+          enum:
+            - "insufficient_funds"
+            - "blockchain_error"
+            - "transfer_denied"
+            - "transfer_failed"
+    SourceLocation:
+      description: "A source of funds."
+      oneOf:
+        # It's important to do SourceWalletLocation.yml first so that it's used as the example.
+        - $ref: "#/components/schemas/SourceWalletLocation"
+        - $ref: "#/components/schemas/SourceBlockchainLocation"
+      discriminator:
+        propertyName: type
+    DestinationLocation:
+      description: "A destination of funds."
+      oneOf:
+        # It's important to do DestinationWalletLocation.yml first so that it's used as the example.
+        - $ref: "#/components/schemas/DestinationWalletLocation"
+        - $ref: "#/components/schemas/DestinationBlockchainLocation"
+      discriminator:
+        propertyName: type
+    DetailedTransfer:
+      type: object
+      description: "A transfer of funds."
+      required:
+        - id
+        - source
+        - destination
+        - amount
+        - status
+      properties:
+        id:
+          description: "Unique identifier for this transfer."
+          type: string
+          format: uuid
+          example: "b36cbf12-6ed1-47ed-9eb9-5874f8991ca8"
+      
+        amount:
+          $ref: "#/components/schemas/Money"
+        transactionHash:
+          description: "A hash that uniquely identifies the onchain transaction. This is only available where either source or destination are of type blockchain."
+          type: string
+          example: "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63"
+        status:
+          description: "Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed."
+          type: string
+          enum:
+            - failed
+            - pending
+            - complete
+        riskEvaluation:
+          description: "Results of risk evaluation. Only present if the payment is denied by Circle's risk service."
+          nullable: true
+          $ref: "#/components/schemas/RiskEvaluation"
+        createDate:
+          description: "The create date of the transfer."
+          type: string
+          format: date-time
+    Destination:
+        type: object
+        description: "A destination of funds."
+        required:
+            - id
+            - location
+            - amount
+            - status
+        properties:
+            id:
+              description: "Unique identifier for this transfer."
+              type: string
+              format: uuid
+              example: "b36cbf12-6ed1-47ed-9eb9-5874f8991ca8"
+#            location:
+#              $ref: ""
+            amount:
+              $ref: "#/components/schemas/Money"
+            status:
+              description: "Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed."
+              type: string
+              enum:
+                - failed
+                - pending
+                - complete
+            createDate:
+              description: "The create date of the transfer."
+              type: string
+              format: date-time
+    UserAddress:
+      type: object
+      description: "A user address."
+      properties:
+        address:
+          description: "Address of the beneficiary's bank."
+          type: string
+          example: "4250 EXECUTIVE SQUARE SUITE 300"
+        city:
+            description: "City of the beneficiary's bank."
+            type: string
+            example: "LA JOLLA"
+        postalCode:
+            description: "Postal code of the beneficiary's bank."
+            type: string
+            example: "02110"
+        country:
+            description: "Country code of the beneficiary's bank"
+            type: string
+            example: "US"
+    SignetBankCreationRequest:
+        type: object
+        required:
+            - idempotencyKey
+            - walletAddress
+        properties:
+          idempotencyKey:
+            description: "Universally unique identifier (UUID v4) idempotency key. This key is utilized to ensure exactly-once execution of mutating requests."
+            type: string
+            example: "ba943ff1-ca16-49b2-ba55-1057e70ca5c7"
+          walletAddress: 
+            description: "Your signet wallet address."
+            type: string
+            example: "0x1234567890123456789012345678901234567890"
+    RequestWalletLocation:
+      type: object
+      required:
+        - type
+        - id
+      properties:
+        type:
+          type: string
+          enum:
+            - "wallet"
+        id:
+          type: string
+          description: "The id of the wallet."
+          example: "12345"
+    RequestBlockchainLocation:
+      description: "A source blockchain address."
+      type: object
+      required:
+        - type
+        - chain
+      properties:
+        type:
+          type: string
+          enum:
+            - "blockchain"
+        chain:
+          $ref: "#/components/schemas/Chain"
+    TransferCreationRequest:
+      type: object
+      required:
+        - idempotencyKey
+        - source
+        - destination
+        - amount
+      properties:
+        idempotencyKey:
+          $ref: "#/components/schemas/IdempotencyKey"
+        source:
+          $ref: '#/components/schemas/RequestWalletLocation'
+        destination:
+          oneOf:
+            - $ref: '#/components/schemas/RequestBlockchainLocation'
+            - $ref: '#/components/schemas/RequestWalletLocation'
+        amount:
+          $ref: "#/components/schemas/Money"
     PaymentInfoPaymentAndRefund:
       type: object
       properties:
@@ -2288,7 +2878,6 @@ components:
         beneficiaryBank:
           $ref: "#/components/schemas/WireInstructionBeneficiaryBank"
     ACHCreationRequest:
-      ACHCreationRequest:
         type: object
         required:
           - idempotencyKey
@@ -2454,7 +3043,6 @@ components:
       description: "A currency associated with a balance or address. Currently, only `USD` is supported."
       example: "USD"
     GenerateAddressRequest:
-      GenerateAddressRequest:
         type: object
         required:
           - idempotencyKey

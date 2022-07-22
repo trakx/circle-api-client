@@ -113,6 +113,19 @@ public static partial class AddCircleClientExtension
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.ReversalsClient"));
+        services.AddHttpClient<IBusinessAccountClient, BusinessAccountClient>("Trakx.Circle.ApiClient.BusinessAccountClient")
+            .AddPolicyHandler((s, request) =>
+                Policy<HttpResponseMessage>
+                    .Handle<ApiException>()
+                    .Or<HttpRequestException>()
+                    .OrTransientHttpStatusCode()
+                    .WaitAndRetryAsync(delay,
+                        onRetry: (result, timeSpan, retryCount, context) =>
+                        {
+                            var logger = Log.Logger.ForContext<BusinessAccountClient>();
+                            logger.LogApiFailure(result, timeSpan, retryCount, context);
+                        })
+                    .WithPolicyKey("Trakx.Circle.ApiClient.BusinessAccountClient"));
         
 
     }

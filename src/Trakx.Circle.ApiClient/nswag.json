@@ -56,7 +56,7 @@
       "wrapResponses": true,
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
-      "responseClass": "Trakx.Utils.Apis.Response",
+      "responseClass": "{controller}Response",
       "namespace": "Trakx.Circle.ApiClient",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTimeOffset",
