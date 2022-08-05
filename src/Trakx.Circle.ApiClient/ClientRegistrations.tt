@@ -1,18 +1,16 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ output extension=".cs" #>
-using System;
-using System.Net.Http;
+
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Polly.Extensions.Http;
 using Serilog;
+using Trakx.Circle.ApiClient.Utils;
 using Trakx.Utils.Apis;
 
-<#
-var nameSpace = "Trakx.Circle.ApiClient";
-#>
+<# var nameSpace = "Trakx.Circle.ApiClient"; #>
 
 namespace <#= nameSpace #>
 {
@@ -22,7 +20,7 @@ namespace <#= nameSpace #>
         {
             var delay = Backoff.DecorrelatedJitterBackoffV2(
                 medianFirstRetryDelay: TimeSpan.FromMilliseconds(configuration.InitialRetryDelayInMilliseconds ?? 100),
-                retryCount: configuration.MaxRetryCount ?? 3, fastFirst: true);
+                retryCount: configuration.MaxRetryCount ?? 10, fastFirst: true);
             <#
             var clientNames = new [] { "AccountsClient" ,
                 "PaymentsClient", 

@@ -2384,6 +2384,7 @@ components:
       required:
         - trackingRef
         - amount
+        - accountNumber
       properties:
         trackingRef:
           description: "Wire tracking reference that needs to be set in the wire reference to beneficiary field. This field is retrievable through the response during wire creation or via the bank instruction endpoint."
@@ -2391,6 +2392,10 @@ components:
           example: "CIR13FB13A"
         amount:
           $ref: "#/components/schemas/Money"
+        accountNumber:
+          description: "The account number of the beneficiary."
+          type: string
+          example: "123456789"
     MockWirePaymentResponse:
       type: object
       properties:

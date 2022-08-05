@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Polly;
-using Serilog;
 using Trakx.Circle.ApiClient.Utils;
 using Trakx.Utils.DateTimeHelpers;
 

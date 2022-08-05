@@ -1,4 +1,6 @@
-﻿
+﻿#pragma warning disable S1172, IDE0060 // Unused method parameters should be removed
+
+
 namespace Trakx.Circle.ApiClient
 {
     internal partial class AccountsClient

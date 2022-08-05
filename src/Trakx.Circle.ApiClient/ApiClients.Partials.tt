@@ -1,6 +1,8 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ output extension=".cs" #>
+#pragma warning disable S1172, IDE0060 // Unused method parameters should be removed
+
 <# 
 var nameSpace = "Trakx.Circle.ApiClient";
 #>
