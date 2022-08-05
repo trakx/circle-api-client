@@ -109,7 +109,7 @@ public class MockCreators: MockCreator
     /// <returns></returns>
     public WireCreationRequest_US NonUsBankWithIbanSupport() => new ()
     {
-        AccountNumber = $"{Random.Next(10000000,99999999)}",
+        AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
         BankAddress = new BankAddress
         {
             BankName = SanFrancisco,
