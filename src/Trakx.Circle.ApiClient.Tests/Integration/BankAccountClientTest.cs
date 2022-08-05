@@ -1,7 +1,8 @@
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
+using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
@@ -39,12 +40,11 @@ public class BankAccountClientTest : CircleClientTestsBase
     {
         Logger.Information("Running test for creating new Us Bank");
         var bankRequest = _mockCreator.WireCreationRequestUs();
-
         var bankCreated =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
 
         bankCreated.Should().NotBeNull();
         bankCreated?.Result.Data.Id.Should().NotBeEmpty();
-        int[] expectedCode = { 200, 201 };
+        int[] expectedCode = { StatusCodes.Status200OK, StatusCodes.Status201Created };
         Logger.Information("Us bank was created successfully with {DataId}", bankCreated?.Result.Data.Id);
         Assert.Single(expectedCode, bankCreated?.StatusCode);
     }
@@ -55,6 +55,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     [Fact]
     public async Task Get_Us_Bank_Account_Should_be_Successful()
     {
+         
         var bankRequest = _mockCreator.WireCreationRequestUs();
         var bank =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
         var id = bank.Result.Data.Id;
@@ -64,7 +65,7 @@ public class BankAccountClientTest : CircleClientTestsBase
         result.Should().NotBeNull();
         result?.Result.Data.Id.Should().Be(id);
         Logger.Information("Bank account returned with status code {ResultStatusCode}", result?.StatusCode);
-        Assert.Equal(200,result?.StatusCode);
+        Assert.Equal(StatusCodes.Status200OK,result?.StatusCode);
     }
 
     /// <summary>
@@ -73,6 +74,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     [Fact(Skip = "Mock payment is not working presently")]
     public async Task Create_Mock_Wire_Payment_Should_Be_Initialize_Successful()
     {
+       
         Logger.Information("Creating a mock payment test");
         var bankRequest = _mockCreator.WireCreationRequestUs();
         var bank =   _bankAccountsClient.CreateWireBankAccountAsync(bankRequest).Result;
@@ -96,7 +98,7 @@ public class BankAccountClientTest : CircleClientTestsBase
         wirePayment.Should().NotBeNull();
         wirePayment.Result.Data.TrackingRef.Should().NotBeEmpty();
         Logger.Information("The mock wire payment was initiated successfully with TrackingRef {DataTrackingRef}", wirePayment.Result.Data.TrackingRef);
-        Assert.Equal(201, wirePayment.StatusCode);
+        wirePayment.StatusCode.Should().Be(StatusCodes.Status201Created);
     }
 
     

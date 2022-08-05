@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
@@ -24,10 +25,11 @@ public class PaymentsClientTests : CircleClientTestsBase
     public async Task GetPayment_Should_work()
     {
         Logger.Information("Retrieving list of payment test");
-        var payment = await _paymentsClient.GetPaymentsAsync(pageSize: 10);
+        const int pageSize = 10;
+        var payment = await _paymentsClient.GetPaymentsAsync(pageSize: pageSize);
         payment.Should().NotBeNull();
         Logger.Information("The call to retrieve  returned with status code {PaymentStatusCode}", payment.StatusCode);
-        payment.StatusCode.Should().Be(200);
+        payment.StatusCode.Should().Be(StatusCodes.Status200OK);
         
     }
     
@@ -39,9 +41,9 @@ public class PaymentsClientTests : CircleClientTestsBase
     [Fact]
     public async Task Get_Payment_by_InValid_Id_Should_Throw_404()
     {
-        var id = _mockCreator.GetUid();
+        var id = _mockCreator.GetUid;
         var error = await  Assert.ThrowsAsync<ApiException<Error>>(async () => await _paymentsClient.GetPaymentAsync(id));
-        Assert.Equal(404,error?.StatusCode);
+        Assert.Equal(StatusCodes.Status404NotFound,error?.StatusCode);
         
     }
     

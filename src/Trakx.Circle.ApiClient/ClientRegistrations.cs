@@ -4,7 +4,6 @@ using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Polly.Extensions.Http;
 using Serilog;
-using Trakx.Circle.ApiClient.Utils;
 using Trakx.Utils.Apis;
 
 

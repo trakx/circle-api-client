@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
@@ -28,7 +29,7 @@ public class BusinessAccountTest: CircleClientTestsBase
             });
         
             business.Result.Data.TrackingRef.Should().NotBeNullOrEmpty();
-            business.StatusCode.Should().Be(200);
+            business.StatusCode.Should().Be(StatusCodes.Status200OK);
         }
         
         businesses.Should().NotBeNull();
@@ -40,6 +41,6 @@ public class BusinessAccountTest: CircleClientTestsBase
         var business = await _businessAccountClient.GetSignetBanksAsync();
         
         business.Result.Data.Should().NotBeNullOrEmpty();
-        business.StatusCode.Should().Be(200);
+        business.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 }

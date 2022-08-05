@@ -1,3 +1,4 @@
+
 using System.Net;
 using System.Text;
 using Trakx.Utils.Testing;
@@ -7,36 +8,44 @@ namespace Trakx.Circle.ApiClient.Tests.Integration;
 
 public class MockCreators: MockCreator
 {
+    const int StringSize = 10;
+    const int RandomGenerateMin = 10_000_000;
+    const int RandomGenerateMax = 99_999_999;
     public MockCreators(ITestOutputHelper output) : base(output)
     {
     }
     /// <summary>
-    /// Generate new UIS
+    /// Generate new UID
     /// </summary>
     /// <returns><see cref="string"/></returns>
-    public string GetUid() => $"UID{GetString(10).ToUpperInvariant()}";
+    public string GetUid => $"UID{GetString(StringSize).ToUpperInvariant()}";
 
     /// <summary>
     /// Generate an IP
     /// </summary>
     /// <returns><see cref="string"/></returns>
-    private string GetIp() => new IPAddress(1694542016).ToString();
+    private string GetIp() => new IPAddress(1_694_542_016).ToString();
     
 
     /// <summary>
     /// Card sample
     /// </summary>
     /// <returns></returns>
-    private string SampleCard() => "4263982640269299";
+    private const string SampleCard = "4263982640269299";
 
     private string CardBase64String()
     {
-        var plainText = Encoding.UTF8.GetBytes(SampleCard() + Cvv());
+        var plainText = Encoding.UTF8.GetBytes(SampleCard + Cvv);
 
         return Convert.ToBase64String(plainText);
     }
 
-    private string Cvv() => "837";
+    private const string Cvv = "837";
+    private const string SanFrancisco = "SAN FRANCISCO";
+    private const string MoneyStreet = "100 Money Street";
+    private const int ExpMonth = 2;
+    private const int ExpYear = 2023;
+
     /// <summary>
     /// Create payment request payload
     /// </summary>
@@ -70,14 +79,14 @@ public class MockCreators: MockCreator
     /// <returns><seealso cref="WireCreationRequest_US"/></returns>
     public WireCreationRequest_US WireCreationRequestUs() => new()
     {
-        AccountNumber = $"{Random.Next(10000000,99999999)}",
+        AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
         BankAddress = new BankAddress
         {
-            BankName = "SAN FRANCISCO",
-            City = "SAN FRANCISCO",
+            BankName = SanFrancisco,
+            City = SanFrancisco,
             Country = "US",
             District = "CA",
-            Line1 = "100 Money Street",
+            Line1 = MoneyStreet,
             Line2 = "Suite 1"
         },
         BillingDetails = new BillingDetails
@@ -85,7 +94,7 @@ public class MockCreators: MockCreator
             Name = "Satoshi Nakamoto",
             City = "Boston",
             Country = "US",
-            Line1 = "100 Money Street",
+            Line1 = MoneyStreet,
             District = "MA",
             PostalCode = "01234"
         },
@@ -103,11 +112,11 @@ public class MockCreators: MockCreator
         AccountNumber = $"{Random.Next(10000000,99999999)}",
         BankAddress = new BankAddress
         {
-            BankName = "SAN FRANCISCO",
-            City = "SAN FRANCISCO",
+            BankName = SanFrancisco,
+            City = SanFrancisco,
             Country = "US",
             District = "CA",
-            Line1 = "100 Money Street",
+            Line1 = MoneyStreet,
             Line2 = "Suite 1"
         },
         BillingDetails = new BillingDetails
@@ -115,7 +124,7 @@ public class MockCreators: MockCreator
             Name = "Satoshi Nakamoto",
             City = "Boston",
             Country = "US",
-            Line1 = "100 Money Street",
+            Line1 = MoneyStreet,
             District = "MA",
             PostalCode = "01234"
         },
@@ -135,13 +144,13 @@ public class MockCreators: MockCreator
             City = "Boston",
             Country = "US",
             Name = "Satoshi Nakamoto",
-            Line1 = "100 Money Street",
+            Line1 = MoneyStreet,
             PostalCode = "01234",
 
 
         },
-        ExpMonth = 2,
-        ExpYear = 2023,
+        ExpMonth = ExpMonth,
+        ExpYear = ExpYear,
         Metadata = new MetadataCard
         {
             Email = GetEmailAddress("track.io"),
