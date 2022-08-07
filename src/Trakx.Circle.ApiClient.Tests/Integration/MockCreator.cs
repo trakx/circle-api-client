@@ -165,4 +165,11 @@ public class MockCreators: MockCreator
         }
 
     };
+
+    public SignetBankCreationRequest SignetWireCreationRequest =>
+        new()
+        {
+            IdempotencyKey = Guid.NewGuid().ToString(),
+            WalletAddress = GetEthereumAddress()
+        };
 }

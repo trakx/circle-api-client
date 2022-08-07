@@ -982,6 +982,17 @@ paths:
                     properties:
                       data:
                         $ref: "#/components/schemas/SignetBank"
+        '200':
+          description: Successfully created a signet bank.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/SignetBank"
         '400':
             $ref: "#/components/responses/BadRequest"
         '401':

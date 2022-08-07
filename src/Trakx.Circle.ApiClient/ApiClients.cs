@@ -4490,7 +4490,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response31>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response32>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -4657,6 +4657,16 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
+                            var objectResponse_ = await ReadObjectResponseAsync<Response31>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<Response31>("Successfully created a signet bank.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 200)
+                        {
                             var objectResponse_ = await ReadObjectResponseAsync<Response30>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
@@ -4721,7 +4731,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response31>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response32>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -4762,12 +4772,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response31>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response32>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response31>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response32>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4933,7 +4943,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="walletId">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response32>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response33>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4970,7 +4980,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of addresses.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response33>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response34>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -5008,7 +5018,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="walletId">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response32>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response33>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (walletId == null)
                 throw new System.ArgumentNullException("walletId");
@@ -5052,12 +5062,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response32>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response33>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response32>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response33>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5144,7 +5154,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of addresses.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response33>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response34>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (walletId == null)
                 throw new System.ArgumentNullException("walletId");
@@ -5206,12 +5216,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response33>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response34>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response33>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response34>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5366,7 +5376,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response34>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response35>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5405,7 +5415,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response35>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response36>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5414,7 +5424,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the transfer.</param>
         /// <returns>Successfully retrieved a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response36>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response37>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -5451,7 +5461,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response34>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response35>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/transfers");
@@ -5491,12 +5501,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response34>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response35>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response34>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response35>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {
@@ -5555,7 +5565,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response35>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response36>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/transfers?");
@@ -5625,12 +5635,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response35>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response36>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response35>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response36>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -5669,7 +5679,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the transfer.</param>
         /// <returns>Successfully retrieved a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response36>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response37>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -5710,12 +5720,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response36>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response37>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response36>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response37>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {
@@ -9871,7 +9881,7 @@ namespace Trakx.Circle.ApiClient
     public partial record Response32
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressObject Data { get; init; }
+        public SignetBank Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9888,7 +9898,7 @@ namespace Trakx.Circle.ApiClient
     public partial record Response33
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> Data { get; init; }
+        public AddressObject Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9905,7 +9915,7 @@ namespace Trakx.Circle.ApiClient
     public partial record Response34
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Transfer Data { get; init; }
+        public System.Collections.Generic.List<string> Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9922,7 +9932,7 @@ namespace Trakx.Circle.ApiClient
     public partial record Response35
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Transfer> Data { get; init; }
+        public Transfer Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9937,6 +9947,23 @@ namespace Trakx.Circle.ApiClient
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial record Response36
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<Transfer> Data { get; init; }
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record Response37
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public DetailedTransfer Data { get; init; }
