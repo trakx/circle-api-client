@@ -101,8 +101,4 @@ public class BankAccountClientTest : CircleClientTestsBase
         wirePayment.StatusCode.Should().Be(StatusCodes.Status201Created);
     }
 
-    
-    
-    
-    
 }

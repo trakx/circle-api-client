@@ -1,5 +1,3 @@
-
-using System.Net;
 using System.Text;
 using Trakx.Utils.Testing;
 using Xunit.Abstractions;
@@ -24,7 +22,7 @@ public class MockCreators: MockCreator
     /// Generate an IP
     /// </summary>
     /// <returns><see cref="string"/></returns>
-    private string GetIp() => new IPAddress(1_694_542_016).ToString();
+    private string GetIp() => new System.Net.IPAddress(1_694_542_016).ToString();
     
 
     /// <summary>
@@ -80,24 +78,8 @@ public class MockCreators: MockCreator
     public WireCreationRequest_US WireCreationRequestUs() => new()
     {
         AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
-        BankAddress = new BankAddress
-        {
-            BankName = SanFrancisco,
-            City = SanFrancisco,
-            Country = "US",
-            District = "CA",
-            Line1 = MoneyStreet,
-            Line2 = "Suite 1"
-        },
-        BillingDetails = new BillingDetails
-        {
-            Name = "Satoshi Nakamoto",
-            City = "Boston",
-            Country = "US",
-            Line1 = MoneyStreet,
-            District = "MA",
-            PostalCode = "01234"
-        },
+        BankAddress = BankAddress,
+        BillingDetails = BillingDetails,
         IdempotencyKey = Guid.NewGuid(),
         RoutingNumber = "121000248",
 
@@ -110,16 +92,15 @@ public class MockCreators: MockCreator
     public WireCreationRequest_US NonUsBankWithIbanSupport() => new ()
     {
         AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
-        BankAddress = new BankAddress
-        {
-            BankName = SanFrancisco,
-            City = SanFrancisco,
-            Country = "US",
-            District = "CA",
-            Line1 = MoneyStreet,
-            Line2 = "Suite 1"
-        },
-        BillingDetails = new BillingDetails
+        BankAddress = BankAddress,
+        BillingDetails = BillingDetails,
+        IdempotencyKey = Guid.NewGuid(),
+        RoutingNumber = "121000248"
+
+    };
+
+    private static BillingDetails BillingDetails =>
+        new()
         {
             Name = "Satoshi Nakamoto",
             City = "Boston",
@@ -127,11 +108,18 @@ public class MockCreators: MockCreator
             Line1 = MoneyStreet,
             District = "MA",
             PostalCode = "01234"
-        },
-        IdempotencyKey = Guid.NewGuid(),
-        RoutingNumber = "121000248"
+        };
 
-    };
+    private static BankAddress BankAddress =>
+        new()
+        {
+            BankName = SanFrancisco,
+            City = SanFrancisco,
+            Country = "US",
+            District = "CA",
+            Line1 = MoneyStreet,
+            Line2 = "Suite 1"
+        };
 
     /// <summary>
     /// Create a card request payload
@@ -139,16 +127,7 @@ public class MockCreators: MockCreator
     /// <returns><see cref="CardCreationRequest"/></returns>
     public CardCreationRequest CreatCardRequest() => new()
     {
-        BillingDetails = new BillingDetails
-        {
-            City = "Boston",
-            Country = "US",
-            Name = "Satoshi Nakamoto",
-            Line1 = MoneyStreet,
-            PostalCode = "01234",
-
-
-        },
+        BillingDetails =BillingDetails,
         ExpMonth = ExpMonth,
         ExpYear = ExpYear,
         Metadata = new MetadataCard
