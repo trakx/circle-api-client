@@ -19,9 +19,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ClientRegistrations.tt</DependentUpon>
     </None>
-    <None Remove="OpenApi\v1\paths\schemas\*" />
-    <None Remove="OpenApi\v1\paths\responses\*" />
-    <None Remove="OpenApi\v1\paths\parameters\*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,16 +68,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>nswag.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="OpenApi\v1\paths\headers" />
-    <Folder Include="OpenApi\v1\paths\parameters\daterange" />
-    <Folder Include="OpenApi\v1\paths\parameters\pagination" />
-    <Folder Include="OpenApi\v1\paths\responses" />
-    <Folder Include="OpenApi\v1\paths\schemas\businessAccount" />
-    <Folder Include="OpenApi\v1\paths\schemas\marketplace" />
-    <Folder Include="OpenApi\v1\paths\schemas\transfer" />
   </ItemGroup>
 
   <Target Name="NSwag" BeforeTargets="Build" Condition="'$(GenerateApiClient)'=='True' ">
