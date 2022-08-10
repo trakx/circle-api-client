@@ -10,12 +10,12 @@ public class BusinessAccountTest: CircleClientTestsBase
 {
     private readonly  IBusinessAccountClient _businessAccountClient;
     private readonly IAccountsClient _accountsClient;
-    private readonly MockCreators _mockCreator;
+    private readonly CircleMockCreator _circleMockCreator;
     public BusinessAccountTest(CircleApiFixture apiFixture, ITestOutputHelper output) : base(apiFixture, output)
     {
         _accountsClient = ServiceProvider.GetRequiredService<IAccountsClient>();
         _businessAccountClient = ServiceProvider.GetRequiredService<IBusinessAccountClient>();
-        _mockCreator = new MockCreators(output);
+        _circleMockCreator = new CircleMockCreator(output);
     }
     
     [Fact]
@@ -27,7 +27,7 @@ public class BusinessAccountTest: CircleClientTestsBase
             var business = await _businessAccountClient.CreateSignetBankAsync(new SignetBankCreationRequest
             {
                 IdempotencyKey   = Guid.NewGuid().ToString(),
-                WalletAddress = _mockCreator.GetEthereumAddress(),
+                WalletAddress = _circleMockCreator.GetEthereumAddress(),
             });
         
             business.Result.Data.TrackingRef.Should().NotBeNullOrEmpty();
@@ -49,7 +49,7 @@ public class BusinessAccountTest: CircleClientTestsBase
     [Fact]
     public async Task Create_Signet_Bank_Should_Be_Successful()
     {
-        var bankRequest = _mockCreator.SignetWireCreationRequest;
+        var bankRequest = _circleMockCreator.SignetWireCreationRequest;
         var statusCode = new []{StatusCodes.Status200OK, StatusCodes.Status201Created};
         Logger.Information("Creating a signet bank account with IdempotencyKey {IdempotencyKey}", bankRequest.IdempotencyKey);
         

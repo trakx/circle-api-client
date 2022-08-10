@@ -4,12 +4,12 @@ using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
-public class MockCreators: MockCreator
+public class CircleMockCreator: MockCreator
 {
     const int StringSize = 10;
     const int RandomGenerateMin = 10_000_000;
     const int RandomGenerateMax = 99_999_999;
-    public MockCreators(ITestOutputHelper output) : base(output)
+    public CircleMockCreator(ITestOutputHelper output) : base(output)
     {
     }
     /// <summary>
@@ -43,6 +43,10 @@ public class MockCreators: MockCreator
     private const string MoneyStreet = "100 Money Street";
     private const int ExpMonth = 2;
     private const int ExpYear = 2023;
+    /// <summary>
+    /// A sample source id from circle API sandbox
+    /// </summary>
+    private const string SandboxSourceId = "b8627ae8-732b-4d25-b947-1df8f4007a29";
 
     /// <summary>
     /// Create payment request payload
@@ -65,7 +69,8 @@ public class MockCreators: MockCreator
             IpAddress = $"{GetIp()}"
         },
         Verification = CardPaymentCreationRequestVerification.None,
-        Source = new Source { Id = "b8627ae8-732b-4d25-b947-1df8f4007a29" },
+        
+        Source = new Source { Id = SandboxSourceId },
         Description = "Payment",
         // EncryptedData = new EncryptedCardPaymentData() { Cvv = "UHVibGljS2V5QmFzZTY0RW5jb2RlZA==" }
 
@@ -89,7 +94,7 @@ public class MockCreators: MockCreator
     /// Create Not US Bank with IBAN support
     /// </summary>
     /// <returns></returns>
-    public WireCreationRequest_US GetWireCreationRequestNonUs() => new ()
+    public WireCreationRequest_US GetWireCreationRequestNonUs => new ()
     {
         AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
         BankAddress = BankAddress,

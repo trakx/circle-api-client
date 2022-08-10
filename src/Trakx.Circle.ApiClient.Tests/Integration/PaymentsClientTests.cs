@@ -9,11 +9,11 @@ namespace Trakx.Circle.ApiClient.Tests.Integration;
 public class PaymentsClientTests : CircleClientTestsBase
 {
     private readonly IPaymentsClient _paymentsClient;
-    private readonly MockCreators _mockCreator;
+    private readonly CircleMockCreator _circleMockCreator;
     public PaymentsClientTests(CircleApiFixture apiFixture, ITestOutputHelper output) : base(apiFixture, output)
     {
         _paymentsClient = ServiceProvider.GetRequiredService<IPaymentsClient>();
-        _mockCreator = new MockCreators(output);
+        _circleMockCreator = new CircleMockCreator(output);
     }
 
     
@@ -25,8 +25,9 @@ public class PaymentsClientTests : CircleClientTestsBase
     {
         Logger.Information("Retrieving list of payment test");
         const int pageSize = 10;
+        const int minCount = 0;
         var payment = await _paymentsClient.GetPaymentsAsync(pageSize: pageSize);
-        payment.Should().NotBeNull();
+        payment.Result.Data.Should().HaveCountGreaterThanOrEqualTo(minCount);
         Logger.Information("The call to retrieve  returned with status code {PaymentStatusCode}", payment.StatusCode);
         payment.StatusCode.Should().Be(StatusCodes.Status200OK);
         
@@ -40,7 +41,7 @@ public class PaymentsClientTests : CircleClientTestsBase
     [Fact]
     public async Task Get_Payment_by_InValid_Id_Should_Throw_404()
     {
-        var id = _mockCreator.GetUid;
+        var id = _circleMockCreator.GetUid;
         
         var error = await  Assert.ThrowsAsync<ApiException<Error>>(async () => await _paymentsClient.GetPaymentAsync(id));
         
