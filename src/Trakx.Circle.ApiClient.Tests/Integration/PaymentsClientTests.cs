@@ -35,14 +35,16 @@ public class PaymentsClientTests : CircleClientTestsBase
 
 
     /// <summary>
-    /// when payment is npt found with invalid id should throw not found exception
+    /// when payment is not found with invalid id should throw not found exception
     /// </summary>
     [Fact]
     public async Task Get_Payment_by_InValid_Id_Should_Throw_404()
     {
         var id = _mockCreator.GetUid;
+        
         var error = await  Assert.ThrowsAsync<ApiException<Error>>(async () => await _paymentsClient.GetPaymentAsync(id));
-        Assert.Equal(StatusCodes.Status404NotFound,error?.StatusCode);
+        
+        error.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         
     }
     

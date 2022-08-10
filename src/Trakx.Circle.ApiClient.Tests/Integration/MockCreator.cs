@@ -89,7 +89,7 @@ public class MockCreators: MockCreator
     /// Create Not US Bank with IBAN support
     /// </summary>
     /// <returns></returns>
-    public WireCreationRequest_US NonUsBankWithIbanSupport() => new ()
+    public WireCreationRequest_US GetWireCreationRequestNonUs() => new ()
     {
         AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
         BankAddress = BankAddress,

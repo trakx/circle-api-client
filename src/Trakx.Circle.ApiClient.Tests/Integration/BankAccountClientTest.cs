@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
@@ -25,7 +26,6 @@ public class BankAccountClientTest : CircleClientTestsBase
         _bankAccountsClient = ServiceProvider.GetRequiredService<IBankAccountsClient>();
         _paymentsClient = ServiceProvider.GetRequiredService<IPaymentsClient>();
         _mockCreator = new MockCreators(output);
-        Logger.Information($"Instantiating  {nameof(BankAccountClientTest)}");
     }
 
     /// <summary>
@@ -44,9 +44,12 @@ public class BankAccountClientTest : CircleClientTestsBase
 
         bankCreated.Should().NotBeNull();
         bankCreated?.Result.Data.Id.Should().NotBeEmpty();
-        int[] expectedCode = { StatusCodes.Status200OK, StatusCodes.Status201Created };
+        
         Logger.Information("Us bank was created successfully with {DataId}", bankCreated?.Result.Data.Id);
-        Assert.Single(expectedCode, bankCreated?.StatusCode);
+
+        var statusCode = new HttpResponseMessage((HttpStatusCode)bankCreated!.StatusCode);
+
+        statusCode.IsSuccessStatusCode.Should().BeTrue();
     }
     
     /// <summary>
@@ -65,7 +68,8 @@ public class BankAccountClientTest : CircleClientTestsBase
         result.Should().NotBeNull();
         result?.Result.Data.Id.Should().Be(id);
         Logger.Information("Bank account returned with status code {ResultStatusCode}", result?.StatusCode);
-        Assert.Equal(StatusCodes.Status200OK,result?.StatusCode);
+        
+        result?.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 
     /// <summary>
