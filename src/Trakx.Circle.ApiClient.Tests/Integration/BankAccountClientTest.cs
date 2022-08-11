@@ -15,7 +15,7 @@ public class BankAccountClientTest : CircleClientTestsBase
 {
     private readonly IBankAccountsClient _bankAccountsClient;
     private readonly IPaymentsClient _paymentsClient;
-    private readonly CircleMockCreator _circleMockCreator;
+    private readonly MockCreator _mockCreator;
     /// <summary>
     /// constructor for <see cref="BankAccountClientTest"/>
     /// </summary>
@@ -25,7 +25,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     {
         _bankAccountsClient = ServiceProvider.GetRequiredService<IBankAccountsClient>();
         _paymentsClient = ServiceProvider.GetRequiredService<IPaymentsClient>();
-        _circleMockCreator = new CircleMockCreator(output);
+        _mockCreator = new MockCreator(output);
     }
 
     /// <summary>
@@ -39,27 +39,27 @@ public class BankAccountClientTest : CircleClientTestsBase
     public async Task Create_Us_Bank_Account_Should_be_Successful()
     {
         Logger.Information("Running test for creating new Us Bank");
-        var bankRequest = _circleMockCreator.WireCreationRequestUs();
+        var bankRequest = _mockCreator.WireCreationRequestUs();
         var bankCreated =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
 
         bankCreated.Should().NotBeNull();
         bankCreated?.Result.Data.Id.Should().NotBeEmpty();
-        
+
         Logger.Information("Us bank was created successfully with {DataId}", bankCreated?.Result.Data.Id);
 
         var statusCode = new HttpResponseMessage((System.Net.HttpStatusCode)bankCreated!.StatusCode);
 
         statusCode.IsSuccessStatusCode.Should().BeTrue();
     }
-    
+
     /// <summary>
     /// Retrieving US bank account with valid id
     /// </summary>
     [Fact]
     public async Task Get_Us_Bank_Account_Should_be_Successful()
     {
-         
-        var bankRequest = _circleMockCreator.WireCreationRequestUs();
+
+        var bankRequest = _mockCreator.WireCreationRequestUs();
         var bank =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
         var id = bank.Result.Data.Id;
         Logger.Information("Retrieving back account for wire transfer with id {Id}", id);
@@ -68,7 +68,7 @@ public class BankAccountClientTest : CircleClientTestsBase
         result.Should().NotBeNull();
         result?.Result.Data.Id.Should().Be(id);
         Logger.Information("Bank account returned with status code {ResultStatusCode}", result?.StatusCode);
-        
+
         result?.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 
@@ -78,26 +78,23 @@ public class BankAccountClientTest : CircleClientTestsBase
     [Fact(Skip = "Mock payment is not working presently")]
     public async Task Create_Mock_Wire_Payment_Should_Be_Initialize_Successful()
     {
-       
+
         Logger.Information("Creating a mock payment test");
-        var bankRequest = _circleMockCreator.WireCreationRequestUs();
+        var bankRequest = _mockCreator.WireCreationRequestUs();
         var bank =   _bankAccountsClient.CreateWireBankAccountAsync(bankRequest).Result;
         var id = bank.Result.Data.Id;
         var result =  await _bankAccountsClient.GetWireInstructionsBankAccountAsync(id.GetValueOrDefault());
         var wireRequest = new MockWirePaymentRequest
         {
-            Amount = new Money
-            {
-                Amount = $"{_circleMockCreator.GetDecimals()}.00",
-                Currency = "USD"
-            },
+            Amount = _mockCreator.GetMoney(),
             TrackingRef = result.Result.Data.TrackingRef,
             AccountNumber = result.Result.Data.BeneficiaryBank.AccountNumber,
         };
-        Logger.Information("Creating a mock payment with {TrackingRef}. AccountNumber: {AccountNumber}", wireRequest.TrackingRef, wireRequest.AccountNumber);
+        Logger.Information("Creating a mock payment with {TrackingRef}. AccountNumber: {AccountNumber}",
+            wireRequest.TrackingRef, wireRequest.AccountNumber);
         // act
         var wirePayment = await _paymentsClient.CreateWirePaymentAsync(wireRequest);
-        
+
         //assert
         wirePayment.Should().NotBeNull();
         wirePayment.Result.Data.TrackingRef.Should().NotBeEmpty();

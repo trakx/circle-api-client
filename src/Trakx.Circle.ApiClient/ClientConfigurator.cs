@@ -7,10 +7,10 @@ internal class ClientConfigurator
 {
     public ICircleCredentialsProvider CredentialsProvider { get; }
     public CircleApiConfiguration ApiConfiguration { get; }
-        
-    public ClientConfigurator(IOptions<CircleApiConfiguration> configuration, ICircleCredentialsProvider credentialsProvider)
+
+    public ClientConfigurator(CircleApiConfiguration configuration, ICircleCredentialsProvider credentialsProvider)
     {
         CredentialsProvider = credentialsProvider;
-        ApiConfiguration = configuration.Value;
+        ApiConfiguration = configuration;
     }
 }

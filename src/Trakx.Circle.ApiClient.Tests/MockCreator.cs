@@ -1,34 +1,30 @@
 using System.Text;
-using Trakx.Utils.Testing;
 using Xunit.Abstractions;
 
-namespace Trakx.Circle.ApiClient.Tests.Integration;
+namespace Trakx.Circle.ApiClient.Tests;
 
-public class CircleMockCreator: MockCreator
+public class MockCreator: Trakx.Utils.Testing.MockCreator
 {
-    const int StringSize = 10;
-    const int RandomGenerateMin = 10_000_000;
-    const int RandomGenerateMax = 99_999_999;
-    public CircleMockCreator(ITestOutputHelper output) : base(output)
+    private const int StringSize = 10;
+    private const int RandomGenerateMin = 10_000_000;
+    private const int RandomGenerateMax = 99_999_999;
+    public MockCreator(ITestOutputHelper output) : base(output)
     {
     }
     /// <summary>
     /// Generate new UID
     /// </summary>
-    /// <returns><see cref="string"/></returns>
-    public string GetUid => $"UID{GetString(StringSize).ToUpperInvariant()}";
+    public string GetUid() => $"UID{GetString(StringSize).ToUpperInvariant()}";
 
     /// <summary>
     /// Generate an IP
     /// </summary>
-    /// <returns><see cref="string"/></returns>
     private string GetIp() => new System.Net.IPAddress(1_694_542_016).ToString();
-    
+
 
     /// <summary>
     /// Card sample
     /// </summary>
-    /// <returns></returns>
     private const string SampleCard = "4263982640269299";
 
     private string CardBase64String()
@@ -51,16 +47,10 @@ public class CircleMockCreator: MockCreator
     /// <summary>
     /// Create payment request payload
     /// </summary>
-    /// <returns> <see cref="CardCreationRequest"/></returns>
-    public CardPaymentCreationRequest CreatePaymentRequest () => new()
+    public CardPaymentCreationRequest GetCardPaymentCreationRequest() => new()
     {
-        Amount = new Money
-        {
-            Amount = $"{GetDecimals()}.00", 
-            Currency = "USD"
-        },
+        Amount = GetMoney(),
         IdempotencyKey = Guid.NewGuid(),
-        // KeyId = "key1",
         Metadata = new MetadataPayment
         {
             Email = GetEmailAddress("trakx.io"),
@@ -69,17 +59,20 @@ public class CircleMockCreator: MockCreator
             IpAddress = $"{GetIp()}"
         },
         Verification = CardPaymentCreationRequestVerification.None,
-        
+
         Source = new Source { Id = SandboxSourceId },
         Description = "Payment",
-        // EncryptedData = new EncryptedCardPaymentData() { Cvv = "UHVibGljS2V5QmFzZTY0RW5jb2RlZA==" }
-
     };
+
+    public Money GetMoney() => new()
+    {
+            Amount = $"{GetDecimals()}.00",
+            Currency = "USD"
+        };
 
     /// <summary>
     /// Create Us Wire Bank account payload
     /// </summary>
-    /// <returns><seealso cref="WireCreationRequest_US"/></returns>
     public WireCreationRequest_US WireCreationRequestUs() => new()
     {
         AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
@@ -87,21 +80,6 @@ public class CircleMockCreator: MockCreator
         BillingDetails = BillingDetails,
         IdempotencyKey = Guid.NewGuid(),
         RoutingNumber = "121000248",
-
-    };
-    
-    /// <summary>
-    /// Create Not US Bank with IBAN support
-    /// </summary>
-    /// <returns></returns>
-    public WireCreationRequest_US GetWireCreationRequestNonUs => new ()
-    {
-        AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
-        BankAddress = BankAddress,
-        BillingDetails = BillingDetails,
-        IdempotencyKey = Guid.NewGuid(),
-        RoutingNumber = "121000248"
-
     };
 
     private static BillingDetails BillingDetails =>
@@ -130,7 +108,7 @@ public class CircleMockCreator: MockCreator
     /// Create a card request payload
     /// </summary>
     /// <returns><see cref="CardCreationRequest"/></returns>
-    public CardCreationRequest CreatCardRequest() => new()
+    public CardCreationRequest GetCreatCardRequest() => new()
     {
         BillingDetails =BillingDetails,
         ExpMonth = ExpMonth,
@@ -147,10 +125,9 @@ public class CircleMockCreator: MockCreator
         {
             Cvv = $"{CardBase64String()}"
         }
-
     };
 
-    public SignetBankCreationRequest SignetWireCreationRequest =>
+    public SignetBankCreationRequest GetSignetWireCreationRequest() =>
         new()
         {
             IdempotencyKey = Guid.NewGuid().ToString(),

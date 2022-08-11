@@ -11,7 +11,6 @@ public static partial class AddCircleClientExtension
     public static IServiceCollection AddCircleClient(
         this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddOptions();
         var apiConfig = configuration.GetSection(nameof(CircleApiConfiguration))
             .Get<CircleApiConfiguration>()!;
         services.Configure<CircleApiConfiguration>(
@@ -24,8 +23,7 @@ public static partial class AddCircleClientExtension
     public static IServiceCollection AddCircleClient(
         this IServiceCollection services, CircleApiConfiguration apiConfiguration)
     {
-        var options = Options.Create(apiConfiguration);
-        services.AddSingleton(options);
+        services.AddSingleton(apiConfiguration);
 
         AddCommonDependencies(services, apiConfiguration);
 

@@ -5,12 +5,6 @@
 # circle-api-client
 C# implementation of a Circle api client
 
-## Creating your local .env file
-In order to be able to run some integration tests, you should create a `.env` file in the `src` folder with the following variables:
-```secretsEnvVariables
-CircleApiConfiguration__ApiKey=********
-```
-
 ## AWS Parameters
 In order to be able to run some integration tests, you should ensure that you have access to the AWS parameters starting in `/CiCd`.In order for the applications in this solution to run correctly on AWS, please ensure that variables starting in `/[environment]`  are defined for all 3 environments (_Production_, _Staging_, _Development_) :
 ```awsParams

@@ -9,14 +9,14 @@ namespace Trakx.Circle.ApiClient.Tests.Integration;
 public class PaymentsClientTests : CircleClientTestsBase
 {
     private readonly IPaymentsClient _paymentsClient;
-    private readonly CircleMockCreator _circleMockCreator;
+    private readonly MockCreator _mockCreator;
     public PaymentsClientTests(CircleApiFixture apiFixture, ITestOutputHelper output) : base(apiFixture, output)
     {
         _paymentsClient = ServiceProvider.GetRequiredService<IPaymentsClient>();
-        _circleMockCreator = new CircleMockCreator(output);
+        _mockCreator = new MockCreator(output);
     }
 
-    
+
     /// <summary>
     /// retrieving payment list with valid url should return status code 200
     /// </summary>
@@ -30,9 +30,9 @@ public class PaymentsClientTests : CircleClientTestsBase
         payment.Result.Data.Should().HaveCountGreaterThanOrEqualTo(minCount);
         Logger.Information("The call to retrieve  returned with status code {PaymentStatusCode}", payment.StatusCode);
         payment.StatusCode.Should().Be(StatusCodes.Status200OK);
-        
+
     }
-    
+
 
 
     /// <summary>
@@ -41,13 +41,12 @@ public class PaymentsClientTests : CircleClientTestsBase
     [Fact]
     public async Task Get_Payment_by_InValid_Id_Should_Throw_404()
     {
-        var id = _circleMockCreator.GetUid;
-        
+        var id = _mockCreator.GetUid();
+
         var error = await  Assert.ThrowsAsync<ApiException<Error>>(async () => await _paymentsClient.GetPaymentAsync(id));
-        
+
         error.StatusCode.Should().Be(StatusCodes.Status404NotFound);
-        
     }
-    
+
 
 }
