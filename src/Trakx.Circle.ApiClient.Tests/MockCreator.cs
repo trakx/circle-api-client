@@ -27,7 +27,7 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
     /// </summary>
     private const string SampleCard = "4263982640269299";
 
-    private string CardBase64String()
+    private string GetCardBase64String()
     {
         var plainText = Encoding.UTF8.GetBytes(SampleCard + Cvv);
 
@@ -108,9 +108,9 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
     /// Create a card request payload
     /// </summary>
     /// <returns><see cref="CardCreationRequest"/></returns>
-    public CardCreationRequest GetCreatCardRequest() => new()
+    public CardCreationRequest GetCardCreationRequest() => new()
     {
-        BillingDetails =BillingDetails,
+        BillingDetails = BillingDetails,
         ExpMonth = ExpMonth,
         ExpYear = ExpYear,
         Metadata = new MetadataCard
@@ -123,7 +123,7 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
         IdempotencyKey = Guid.NewGuid(),
         EncryptedData = new EncryptedCardPaymentData
         {
-            Cvv = $"{CardBase64String()}"
+            Cvv = GetCardBase64String(),
         }
     };
 
