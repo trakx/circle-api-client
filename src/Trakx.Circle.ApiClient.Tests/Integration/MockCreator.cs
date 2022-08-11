@@ -143,4 +143,10 @@ public class CircleMockCreator: MockCreator
             IdempotencyKey = Guid.NewGuid().ToString(),
             WalletAddress = GetEthereumAddress()
         };
+
+    public SignetBankCreationRequest GetSignetBankCreationRequest => new()
+    {
+        IdempotencyKey = Guid.NewGuid().ToString(),
+        WalletAddress = GetEthereumAddress(),
+    };
 }
