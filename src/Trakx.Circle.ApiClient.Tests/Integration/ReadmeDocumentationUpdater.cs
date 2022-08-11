@@ -1,10 +1,11 @@
 ﻿using Xunit.Abstractions;
-
+using Trakx.Utils.Testing.ReadmeUpdater;
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
-public class ReadmeDocumentationUpdater : Trakx.Utils.Testing.ReadmeUpdater.ReadmeDocumentationUpdaterBase
+public class ReadmeDocumentationUpdaters : ReadmeDocumentationUpdaterBase
 {
-    public ReadmeDocumentationUpdater(ITestOutputHelper output, int maxRecursions = 1, bool askForEnvFileSection = false) : base(output, maxRecursions, askForEnvFileSection)
+    public ReadmeDocumentationUpdaters(ITestOutputHelper output, int maxRecursions = 1, bool askForEnvFileSection = false)
+        : base(output, maxRecursions, askForEnvFileSection)
     {
     }
 }

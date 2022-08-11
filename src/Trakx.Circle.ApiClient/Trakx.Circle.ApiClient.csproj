@@ -72,7 +72,7 @@
 
   <Target Name="NSwag" BeforeTargets="Build" Condition="'$(GenerateApiClient)'=='True' ">
     <Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
-    <Exec Command="$(NSwagExe_Net50) run nswag.json /variables:Configuration=$(Configuration) /runtime:Net60" />
+    <Exec Command="$(NSwagExe_Net60) run nswag.json /variables:Configuration=$(Configuration) /runtime:Net60" />
     <RemoveDir Directories="$(OutDir)References" />
   </Target>
 

@@ -10,7 +10,7 @@ namespace Trakx.Circle.ApiClient.Tests.Integration;
 public class CircleClientTestsBase
 {
     protected readonly ServiceProvider ServiceProvider;
-    protected ILogger Logger;
+    protected readonly ILogger Logger;
 
     public CircleClientTestsBase(CircleApiFixture apiFixture, ITestOutputHelper output)
     {

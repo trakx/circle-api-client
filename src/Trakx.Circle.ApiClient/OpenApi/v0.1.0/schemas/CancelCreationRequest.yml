@@ -1,8 +1,8 @@
-type: object
-required:
-  - idempotencyKey
-properties:
-  idempotencyKey:
-    $ref: "./IdempotencyKey.yml"
-  reason:
-    $ref: "./ReversalReason.yml"
+  type: object
+  required:
+    - idempotencyKey
+  properties:
+    idempotencyKey:
+      $ref: "./IdempotencyKey.yml"
+    reason:
+      $ref: "./ReversalReason.yml"

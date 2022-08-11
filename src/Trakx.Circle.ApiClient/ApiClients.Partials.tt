@@ -8,7 +8,7 @@ var nameSpace = "Trakx.Circle.ApiClient";
 namespace <#= nameSpace #>
 {
 <# 
-var clientNames = new [] { "AccountsClient" };
+var clientNames = new [] { "AccountsClient" ,"PaymentsClient", "CardsClient","BankAccountsClient", "SettlementsClient", "ChargebacksClient", "ReversalsClient", "BusinessAccountClient"};
 
 foreach(var name in clientNames)
 {
