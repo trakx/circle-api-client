@@ -80,7 +80,7 @@ public class CircleMockCreator: MockCreator
     /// Create Us Wire Bank account payload
     /// </summary>
     /// <returns><seealso cref="WireCreationRequest_US"/></returns>
-    public WireCreationRequest_US GetWireCreationRequestUs() => new()
+    public WireCreationRequest_US GetWireCreationRequestUs => new()
     {
         AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
         BankAddress = BankAddress,

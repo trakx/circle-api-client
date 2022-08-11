@@ -40,7 +40,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     public async Task Create_Us_Bank_Account_Should_be_Successful()
     {
         Logger.Information("Running test for creating new Us Bank");
-        var bankRequest = _circleMockCreator.GetWireCreationRequestUs();
+        var bankRequest = _circleMockCreator.GetWireCreationRequestUs;
         Response<Response15>? bankCreated =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
 
         bankCreated.Should().NotBeNull();
@@ -60,7 +60,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     public async Task Get_Us_Bank_Account_Should_be_Successful()
     {
          
-        var bankRequest = _circleMockCreator.GetWireCreationRequestUs();
+        var bankRequest = _circleMockCreator.GetWireCreationRequestUs;
         var bank =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
         var id = bank.Result.Data.Id;
         Logger.Information("Retrieving back account for wire transfer with id {Id}", id);
@@ -81,7 +81,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     {
        
         Logger.Information("Creating a mock payment test");
-        var bankRequest = _circleMockCreator.GetWireCreationRequestUs();
+        var bankRequest = _circleMockCreator.GetWireCreationRequestUs;
         var bank =   _bankAccountsClient.CreateWireBankAccountAsync(bankRequest).Result;
         var id = bank.Result.Data.Id;
         var result =  await _bankAccountsClient.GetWireInstructionsBankAccountAsync(id.GetValueOrDefault());
