@@ -80,7 +80,7 @@ public class CircleMockCreator: MockCreator
     /// Create Us Wire Bank account payload
     /// </summary>
     /// <returns><seealso cref="WireCreationRequest_US"/></returns>
-    public WireCreationRequest_US WireCreationRequestUs() => new()
+    public WireCreationRequest_US GetWireCreationRequestUs() => new()
     {
         AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
         BankAddress = BankAddress,
@@ -90,19 +90,6 @@ public class CircleMockCreator: MockCreator
 
     };
     
-    /// <summary>
-    /// Create Not US Bank with IBAN support
-    /// </summary>
-    /// <returns></returns>
-    public WireCreationRequest_US GetWireCreationRequestNonUs => new ()
-    {
-        AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
-        BankAddress = BankAddress,
-        BillingDetails = BillingDetails,
-        IdempotencyKey = Guid.NewGuid(),
-        RoutingNumber = "121000248"
-
-    };
 
     private static BillingDetails BillingDetails =>
         new()

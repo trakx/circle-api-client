@@ -4,6 +4,7 @@ using Xunit;
 using Xunit.Abstractions;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Trakx.Utils.Apis;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
@@ -39,8 +40,8 @@ public class BankAccountClientTest : CircleClientTestsBase
     public async Task Create_Us_Bank_Account_Should_be_Successful()
     {
         Logger.Information("Running test for creating new Us Bank");
-        var bankRequest = _circleMockCreator.WireCreationRequestUs();
-        var bankCreated =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
+        var bankRequest = _circleMockCreator.GetWireCreationRequestUs();
+        Response<Response15>? bankCreated =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
 
         bankCreated.Should().NotBeNull();
         bankCreated?.Result.Data.Id.Should().NotBeEmpty();
@@ -59,7 +60,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     public async Task Get_Us_Bank_Account_Should_be_Successful()
     {
          
-        var bankRequest = _circleMockCreator.WireCreationRequestUs();
+        var bankRequest = _circleMockCreator.GetWireCreationRequestUs();
         var bank =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
         var id = bank.Result.Data.Id;
         Logger.Information("Retrieving back account for wire transfer with id {Id}", id);
@@ -73,14 +74,14 @@ public class BankAccountClientTest : CircleClientTestsBase
     }
 
     /// <summary>
-    /// Test to initiate a mock wire payment that mimics the behavior of funds sent through the bank (wire) account linked to master wallet
+    ///     Test to initiate a mock wire payment that mimics the behavior of funds sent through the bank (wire) account linked to master wallet
     /// </summary>
-    [Fact(Skip = "Mock payment is not working presently")]
+    [Fact]
     public async Task Create_Mock_Wire_Payment_Should_Be_Initialize_Successful()
     {
        
         Logger.Information("Creating a mock payment test");
-        var bankRequest = _circleMockCreator.WireCreationRequestUs();
+        var bankRequest = _circleMockCreator.GetWireCreationRequestUs();
         var bank =   _bankAccountsClient.CreateWireBankAccountAsync(bankRequest).Result;
         var id = bank.Result.Data.Id;
         var result =  await _bankAccountsClient.GetWireInstructionsBankAccountAsync(id.GetValueOrDefault());
@@ -92,7 +93,7 @@ public class BankAccountClientTest : CircleClientTestsBase
                 Currency = "USD"
             },
             TrackingRef = result.Result.Data.TrackingRef,
-            AccountNumber = result.Result.Data.BeneficiaryBank.AccountNumber,
+            AccountNumber = result.Result.Data.BeneficiaryBank.AccountNumber
         };
         Logger.Information("Creating a mock payment with {TrackingRef}. AccountNumber: {AccountNumber}", wireRequest.TrackingRef, wireRequest.AccountNumber);
         // act
