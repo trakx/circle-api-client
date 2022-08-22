@@ -121,10 +121,7 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
             IpAddress = GetIp()
         },
         IdempotencyKey = Guid.NewGuid(),
-        EncryptedData = new EncryptedCardPaymentData
-        {
-            Cvv = GetCardBase64String(),
-        }
+        EncryptedData = GetCardBase64String(),
     };
 
     public SignetBankCreationRequest GetSignetWireCreationRequest() =>
@@ -132,5 +129,24 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
         {
             IdempotencyKey = Guid.NewGuid().ToString(),
             WalletAddress = GetEthereumAddress()
+        };
+
+    public SilverGateSenBankRequest GetSilverGateSenBankRequest() =>
+        new()
+        {
+            IdempotencyKey = Guid.NewGuid().ToString(),
+           Currency = Currency.USD.ToString(),
+           AccountNumber =  $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}"
+        };
+    public  SilverGateSenBankTransferRequest GetSilverGateSenBankTransferRequest(string trackingRef) =>
+        new()
+        {
+            Amount = GetMoney(),
+            BeneficiaryBank = new BeneficiaryBank2
+            {
+                AccountNumber = "11111111",
+
+            },
+            TrackingRef = trackingRef
         };
 }
