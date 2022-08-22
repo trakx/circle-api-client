@@ -16,6 +16,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     private readonly IBankAccountsClient _bankAccountsClient;
     private readonly IPaymentsClient _paymentsClient;
     private readonly MockCreator _mockCreator;
+    
     /// <summary>
     /// constructor for <see cref="BankAccountClientTest"/>
     /// </summary>
@@ -75,7 +76,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     /// <summary>
     /// Test to initiate a mock wire payment that mimics the behavior of funds sent through the bank (wire) account linked to master wallet
     /// </summary>
-    [Fact(Skip = "Mock payment is not working presently")]
+    [Fact]
     public async Task Create_Mock_Wire_Payment_Should_Be_Initialize_Successful()
     {
 
@@ -101,5 +102,8 @@ public class BankAccountClientTest : CircleClientTestsBase
         Logger.Information("The mock wire payment was initiated successfully with TrackingRef {DataTrackingRef}", wirePayment.Result.Data.TrackingRef);
         wirePayment.StatusCode.Should().Be(StatusCodes.Status201Created);
     }
+    
+    
+    
 
 }

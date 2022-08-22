@@ -1034,6 +1034,155 @@ paths:
           $ref: "#/components/responses/NotAuthorized"
         '404':
           $ref: "#/components/responses/NotFound"
+  /v1/businessAccount/banks/sen:
+    post:
+      security:
+        - bearerAuth: []
+      summary: "Create a SilverGate sen bank"
+      description: "Create a SilverGate SEn bank"
+      operationId: createSilverGateBank
+      tags:
+        - BusinessAccount
+      requestBody: 
+        content: 
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/SilverGateSenBankRequest"
+      responses: 
+        '201': 
+            description: "Successfully created a SilverGate bank"
+            headers:
+              X-Request-Id:
+               $ref: "#/components/headers/X-Request-Id"
+            content: 
+              application/json:
+                schema: 
+                  properties: 
+                    data:
+                      $ref: "#/components/schemas/SilverGateSenBankResponse"
+        '200':
+          description: "Successfully created a SilverGate bank"
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/SilverGateSenBankResponse"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+        '404':
+          $ref: "#/components/responses/NotFound"    
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Get a list of silvergate sen banks.
+      description: "Retrieve a list of silvergte sen banks."
+      operationId: getSilverGateBanks
+      tags:
+        - BusinessAccount
+      responses:
+        '200':
+          description: Successfully retrieved a list of silver gate banks.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SilverGateSenBankResponse"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+    
+  /v1/mocks/payments/sen:
+    post:
+      security:
+        - bearerAuth: [ ]
+      summary: "Create a mock Silvergate SEN payment"
+      description: "In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet."
+      operationId: createSilverGateMockTransfer
+      tags:
+        - BusinessAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SilverGateSenBankTransferRequest"
+      responses:
+        '201':
+          description: "Successfully created a SilverGate payment"
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/SilverGateSenPaymentResponse"
+        '200':
+          description: "Successfully created a SilverGate payment"
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/SilverGateSenPaymentResponse"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /v1/businessAccount/banks/sen/{id}/instructions:
+    get:
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          description: "Universally unique identifier (UUID v4) of a resource."
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      summary: Get a signet bank.
+      description: "Get the SilverGate SEN transfer instructions into the Circle bank account given your bank account id (BETA)."
+      operationId: getSilverGateBankInstruction
+      tags:
+        - BusinessAccount
+      responses:
+        '200':
+          description: Successfully retrieved a SilverGate bank instruction.
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/X-Request-Id"
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/SilverGateBankInstructionResponse"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/NotAuthorized"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  
   /v1/wallets/{walletId}/addresses:
     post:
       parameters:
@@ -1227,6 +1376,97 @@ components:
         type: string
         example: "2adba88e-9d63-44bc-b975-9b6ae3440dde"
   schemas:
+    SilverGateSenPaymentResponse:
+      type: object
+      properties:
+        trackingRef:
+          description: Circle tracking reference that needs to be set in the memo filed. This field is retrievable through the response during SEN account creation or via the bank instruction endpoint.
+          type: string
+        amount:
+          $ref: "#/components/schemas/Money"
+        beneficiaryBank:
+          type: object
+          properties:
+            accountNumber:
+              type: string
+              description: Circle corporate Silvergate SEN account number that needs to be set as destination.
+        status:
+          type: string
+          enum:
+            - pending
+            - processed
+            - failed
+    
+    SilverGateSenBankTransferRequest:
+      type: object
+      required: 
+        - trackingRef
+        - amount
+        - beneficiaryBank
+      properties:
+        trackingRef:
+          description: Circle tracking reference that needs to be set in the memo filed. This field is retrievable through the response during SEN account creation or via the bank instruction endpoint.
+          type: string
+        amount: 
+          $ref: "#/components/schemas/Money"
+        beneficiaryBank:
+          type: object
+          properties:
+            accountNumber: 
+              type: string
+              description: Circle corporate Silvergate SEN account number that needs to be set as destination.
+          
+    SilverGateSenBankRequest:
+      type: object
+      required:
+        - idempotencyKey
+        - accountNumber
+        - currency
+      properties:
+        idempotencyKey:
+          description: Universally unique identifier (UUID v4) idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.
+          type: string
+        accountNumber:
+          description: Silvergate SEN account number.
+          type: string
+        currency:
+          description: Currency of the fiat account.
+          type: string
+
+    SilverGateSenBankResponse:
+      type: object
+      required: 
+        - id
+        - status
+        - description
+        - trackingRef
+        - createDate
+        - updateDate
+      properties: 
+        id:
+          description: Unique system generated identifier for the entity.
+          type: string
+        status:
+          description: Status of the account. A pending status indicates that the linking is in-progress; complete indicates the account was linked successfully; failed indicates it failed.
+          type: string
+          enum:
+            - pending
+            - complete
+            - failed
+        description:
+          description: Bank name plus last four digits of the bank account number.
+          type: string
+        trackingRef:
+          description: Circle tracking reference that needs to be set in the memo field..
+          type: string
+        createDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+        updateDate:
+          $ref: "#/components/schemas/UTCTimestamp"
+        currency: 
+          description: Currency of the fiat account.
+          type: string
+          
     Balances:
       type: object
       required:
@@ -1300,6 +1540,19 @@ components:
         - failed
         - cancel
       description: "Enumerated status of the payment. `pending` means the payment is waiting to be processed.  `confirmed` means the payment has been approved by the bank and the merchant can treat it as successful, but settlement funds are not yet available to the merchant.  `paid` means settlement funds have been received and are available to the merchant.  `failed` means something went wrong (most commonly that the payment was denied).  Terminal states are `paid` and `failed`."
+    SilverGateBankInstructionResponse:
+      type: object
+      properties:
+        trackingRef:
+          description: "Tracking ref that needs to be set in the public description field when you send the funds to Circle Signet wallet"
+          type: string
+          example: "58c93589-911f-4bcb-a918-87c593296791"
+        accountNumber:
+          description: "Circle corporate Silvergate SEN account number that needs to be set as destination."
+          type: string
+        currency:
+          description: Currency of Circle corporate Silvergate SEN account.
+          type: string
     SignetBank:
       type: object
       properties: 
@@ -2269,7 +2522,8 @@ components:
           type: string
           example: "fe57d4b1-9b8e-4606-a869-827eb4ac5bdf"
         encryptedData:
-          $ref: "#/components/schemas/EncryptedCardPaymentData"
+          type: string
+          description: "PGP encrypted base64 encoded string. Contains Number and CVV."
         billingDetails:
           description: "Billing details of the card holder."
           $ref: "#/components/schemas/BillingDetails"
@@ -2454,6 +2708,7 @@ components:
         - metadata
         - createDate
         - updateDate
+        - status
       properties:
         id:
           description: "Unique system generated identifier for the card."
@@ -2505,6 +2760,13 @@ components:
           type: string
           format: date-time
           example: "2019-09-18T19:20:00Z"
+        status:
+          description: Status of the account. A pending status indicates that the linking is in-progress; complete indicates the account was linked successfully; failed indicates it failed.
+          type: string
+          enum:
+            - pending
+            - complete
+            - failed
     SimpleBillingDetails:
       # BillingDetails with no sensitive fields
       type: object
