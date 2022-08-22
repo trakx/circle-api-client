@@ -60,7 +60,7 @@ public class BusinessAccountTest: CircleClientTestsBase
     [Fact]
     public async Task Create_SilverGate_Bank_Should_Be_Successful()
     {
-        var bankRequest = _mockCreator.GetSilverGateSenBankRequest();
+        var bankRequest = _mockCreator.GetSilverGateSenBankRequest;
         Logger.Information("Creating a silver gate bank account with IdempotencyKey {IdempotencyKey}", bankRequest.IdempotencyKey);
 
         var result = await _businessAccountClient.CreateSilverGateBankAsync(bankRequest);

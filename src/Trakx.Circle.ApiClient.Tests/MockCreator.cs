@@ -131,7 +131,7 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
             WalletAddress = GetEthereumAddress()
         };
 
-    public SilverGateSenBankRequest GetSilverGateSenBankRequest() =>
+    public SilverGateSenBankRequest GetSilverGateSenBankRequest =>
         new()
         {
             IdempotencyKey = Guid.NewGuid().ToString(),
