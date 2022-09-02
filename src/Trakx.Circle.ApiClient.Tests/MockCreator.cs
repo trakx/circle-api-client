@@ -44,6 +44,8 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
     /// </summary>
     private const string SandboxSourceId = "b8627ae8-732b-4d25-b947-1df8f4007a29";
 
+    private const string Iban = "DE31100400480532013000";
+
     /// <summary>
     /// Create payment request payload
     /// </summary>
@@ -75,7 +77,7 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
     /// </summary>
     public WireCreationRequest_iban WireCreationRequestIban() => new()
     {
-        Iban = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
+        Iban = Iban,
         BankAddress = BankAddress,
         BillingDetails = BillingDetails,
         IdempotencyKey = Guid.NewGuid(),
