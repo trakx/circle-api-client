@@ -30,7 +30,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     }
 
     /// <summary>
-    /// creating US bank account with valid payload should be successful
+    /// creating IBAN bank account with valid payload should be successful
     /// <remarks>
     /// The documentation state that the response code should be 201, but the sandbox response returned 200
     /// either 200 or 201 should be valid
@@ -39,14 +39,14 @@ public class BankAccountClientTest : CircleClientTestsBase
     [Fact(Skip = "IBAN not working currently for IBAN")]
     public async Task Create_IBAN_Bank_Account_Should_be_Successful()
     {
-        Logger.Information("Running test for creating new Us Bank");
+        Logger.Information("Running test for creating new IBAN Bank");
         var bankRequest = _mockCreator.WireCreationRequestIban();
         var bankCreated =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
 
         bankCreated.Should().NotBeNull();
         bankCreated?.Result.Data.Id.Should().NotBeEmpty();
 
-        Logger.Information("Us bank was created successfully with {DataId}", bankCreated?.Result.Data.Id);
+        Logger.Information("IBAN bank was created successfully with {DataId}", bankCreated?.Result.Data.Id);
 
         var statusCode = new HttpResponseMessage((System.Net.HttpStatusCode)bankCreated!.StatusCode);
 
@@ -54,7 +54,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     }
 
     /// <summary>
-    /// Retrieving US bank account with valid id
+    /// Retrieving IBAN bank account with valid id
     /// </summary>
     [Fact(Skip = "Skip not working currently for IBAN")]
     public async Task Get_IBAN_Bank_Account_Should_be_Successful()
