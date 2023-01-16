@@ -44,6 +44,8 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
     /// </summary>
     private const string SandboxSourceId = "b8627ae8-732b-4d25-b947-1df8f4007a29";
 
+    private const string Iban = "DE31100400480532013000";
+
     /// <summary>
     /// Create payment request payload
     /// </summary>
@@ -73,13 +75,13 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
     /// <summary>
     /// Create Us Wire Bank account payload
     /// </summary>
-    public WireCreationRequest_US WireCreationRequestUs() => new()
+    public WireCreationRequest_iban WireCreationRequestIban() => new()
     {
-        AccountNumber = $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}",
+        Iban = Iban,
         BankAddress = BankAddress,
         BillingDetails = BillingDetails,
         IdempotencyKey = Guid.NewGuid(),
-        RoutingNumber = "121000248",
+       
     };
 
     private static BillingDetails BillingDetails =>
@@ -87,18 +89,18 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
         {
             Name = "Satoshi Nakamoto",
             City = "Boston",
-            Country = "US",
+            Country = "FRA",
             Line1 = MoneyStreet,
             District = "MA",
             PostalCode = "01234"
         };
 
-    private static BankAddress BankAddress =>
+    private static BankAddressIbanSupported BankAddress =>
         new()
         {
             BankName = SanFrancisco,
             City = SanFrancisco,
-            Country = "US",
+            Country = "FRA",
             District = "CA",
             Line1 = MoneyStreet,
             Line2 = "Suite 1"
@@ -142,7 +144,7 @@ public class MockCreator: Trakx.Utils.Testing.MockCreator
         new()
         {
             Amount = GetMoney(),
-            BeneficiaryBank = new BeneficiaryBank2
+            BeneficiaryBank = new BeneficiaryBank
             {
                 AccountNumber = "11111111",
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using Trakx.Utils.Apis;
 
+#pragma warning disable CS0618
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
 #pragma warning disable 472 // Disable "CS0472 The result of the expression is always 'false' since a value of type 'Int32' is never equal to 'null' of type 'Int32?'
@@ -89,7 +90,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -286,7 +287,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="status">Queries items with the specified status. Matches any status if unspecified.</param>
         /// <returns>Successfully retrieved a list of payments.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response>> GetPaymentsAsync(System.Guid? settlementId = null, System.Collections.Generic.List<Anonymous> type = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, Status? status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<PaymentResponse>> GetPaymentsAsync(System.Guid? settlementId = null, System.Collections.Generic.List<Anonymous> type = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, Status? status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -294,7 +295,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response2>> CreatePaymentAsync(CardPaymentCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedPaymentResponse>> CreatePaymentAsync(CardPaymentCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -303,7 +304,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Successfully retrieved a payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response3>> GetPaymentAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedPaymentPolymorphicResponse>> GetPaymentAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -312,7 +313,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Payment cancellation successfully initiated.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response4>> CancelPaymentAsync(string id, CancelCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedCancelResponse>> CancelPaymentAsync(string id, CancelCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -321,7 +322,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Payment refund successfully initiated.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response5>> RefundPaymentAsync(string id, RefundCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedRefundResponse>> RefundPaymentAsync(string id, RefundCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -329,7 +330,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock wire payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response6>> CreateWirePaymentAsync(MockWirePaymentRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<MockWirePaymentResponse>> CreateWirePaymentAsync(MockWirePaymentRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -337,7 +338,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a wallet.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response7>> CreateWalletAsync(WalletCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response>> CreateWalletAsync(WalletCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -373,7 +374,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of wallets.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response8>> GetWalletsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response2>> GetWalletsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -382,7 +383,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the wallet.</param>
         /// <returns>Successfully retrieved a wallet.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response9>> GetWalletAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WalletResponse>> GetWalletAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -391,7 +392,44 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response10>> GenerateAddressAsync(string id, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response3>> GenerateAddressAsync(string id, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a list of addresses.
+        /// </summary>
+        /// <param name="id">Unique id of a wallet.</param>
+        /// <param name="from">Queries items created since the specified date-time (inclusive).</param>
+        /// <param name="to">Queries items created before the specified date-time (inclusive).</param>
+        /// <param name="pageBefore">A collection ID value used for pagination.
+        /// <br/>
+        /// <br/>It marks the exclusive end of a page. When provided, the collection resource will return the next `n` items before
+        /// <br/>the id, with `n` being specified by `pageSize`.
+        /// <br/>
+        /// <br/>The items will be returned in the natural order of the collection.
+        /// <br/>
+        /// <br/>The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
+        /// <br/>
+        /// <br/>SHOULD NOT be used in conjuction with pageAfter.</param>
+        /// <param name="pageAfter">A collection ID value used for pagination.
+        /// <br/>
+        /// <br/>It marks the exclusive begin of a page. When provided, the collection resource will return the next `n` items after
+        /// <br/>the id, with `n` being specified by `pageSize`.
+        /// <br/>
+        /// <br/>The items will be returned in the natural order of the collection.
+        /// <br/>
+        /// <br/>The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
+        /// <br/>
+        /// <br/>SHOULD NOT be used in conjunction with pageBefore.</param>
+        /// <param name="pageSize">Limits the number of items to be returned.
+        /// <br/>
+        /// <br/>Some collections have a strict upper bound that will disregard this value. In case the specified value is higher
+        /// <br/>than the allowed limit, the collection limit will be used.
+        /// <br/>
+        /// <br/>If avoided, the collection will determine the page size itself.</param>
+        /// <returns>Successfully retrieved a list of addresses.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response4>> GetAddressesAsync(string id, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -459,7 +497,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="status">Queries items with the specified status. Matches any status if unspecified.</param>
         /// <returns>Successfully retrieved a list of payments.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response>> GetPaymentsAsync(System.Guid? settlementId = null, System.Collections.Generic.List<Anonymous> type = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, Status? status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<PaymentResponse>> GetPaymentsAsync(System.Guid? settlementId = null, System.Collections.Generic.List<Anonymous> type = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, Status? status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/payments?");
@@ -513,7 +551,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -529,12 +567,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PaymentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<PaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -572,7 +610,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response2>> CreatePaymentAsync(CardPaymentCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedPaymentResponse>> CreatePaymentAsync(CardPaymentCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/payments");
@@ -596,7 +634,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -612,12 +650,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response2>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<DetailedPaymentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response2>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<DetailedPaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -676,7 +714,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Successfully retrieved a payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response3>> GetPaymentAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedPaymentPolymorphicResponse>> GetPaymentAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -701,7 +739,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -717,12 +755,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<DetailedPaymentPolymorphicResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response3>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<DetailedPaymentPolymorphicResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -771,7 +809,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Payment cancellation successfully initiated.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response4>> CancelPaymentAsync(string id, CancelCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedCancelResponse>> CancelPaymentAsync(string id, CancelCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -799,7 +837,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -815,12 +853,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response4>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<DetailedCancelResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response4>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<DetailedCancelResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -869,7 +907,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Payment refund successfully initiated.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response5>> RefundPaymentAsync(string id, RefundCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedRefundResponse>> RefundPaymentAsync(string id, RefundCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -897,7 +935,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -913,12 +951,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response5>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<DetailedRefundResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response5>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<DetailedRefundResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -966,7 +1004,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock wire payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response6>> CreateWirePaymentAsync(MockWirePaymentRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<MockWirePaymentResponse>> CreateWirePaymentAsync(MockWirePaymentRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/mocks/payments/wire");
@@ -990,7 +1028,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -1006,12 +1044,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response6>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<MockWirePaymentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response6>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<MockWirePaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -1059,7 +1097,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a wallet.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response7>> CreateWalletAsync(WalletCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response>> CreateWalletAsync(WalletCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/wallets");
@@ -1083,7 +1121,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -1099,12 +1137,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response7>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response7>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {
@@ -1160,7 +1198,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of wallets.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response8>> GetWalletsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response2>> GetWalletsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/wallets?");
@@ -1202,7 +1240,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -1218,12 +1256,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response8>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response2>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response8>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response2>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -1262,7 +1300,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the wallet.</param>
         /// <returns>Successfully retrieved a wallet.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response9>> GetWalletAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WalletResponse>> GetWalletAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1287,7 +1325,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -1303,12 +1341,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response9>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<WalletResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response9>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<WalletResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 404)
@@ -1347,7 +1385,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response10>> GenerateAddressAsync(string id, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response3>> GenerateAddressAsync(string id, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1375,7 +1413,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -1391,12 +1429,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response10>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response3>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response10>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response3>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -1417,6 +1455,150 @@ namespace Trakx.Circle.ApiClient
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             throw new ApiException<Error>("The request has not been applied because it comes in conflict with another request (such as re-using an idempotencyKey for a different request).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<Error>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<Error>("The specified resource was not found.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a list of addresses.
+        /// </summary>
+        /// <param name="id">Unique id of a wallet.</param>
+        /// <param name="from">Queries items created since the specified date-time (inclusive).</param>
+        /// <param name="to">Queries items created before the specified date-time (inclusive).</param>
+        /// <param name="pageBefore">A collection ID value used for pagination.
+        /// <br/>
+        /// <br/>It marks the exclusive end of a page. When provided, the collection resource will return the next `n` items before
+        /// <br/>the id, with `n` being specified by `pageSize`.
+        /// <br/>
+        /// <br/>The items will be returned in the natural order of the collection.
+        /// <br/>
+        /// <br/>The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
+        /// <br/>
+        /// <br/>SHOULD NOT be used in conjuction with pageAfter.</param>
+        /// <param name="pageAfter">A collection ID value used for pagination.
+        /// <br/>
+        /// <br/>It marks the exclusive begin of a page. When provided, the collection resource will return the next `n` items after
+        /// <br/>the id, with `n` being specified by `pageSize`.
+        /// <br/>
+        /// <br/>The items will be returned in the natural order of the collection.
+        /// <br/>
+        /// <br/>The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
+        /// <br/>
+        /// <br/>SHOULD NOT be used in conjunction with pageBefore.</param>
+        /// <param name="pageSize">Limits the number of items to be returned.
+        /// <br/>
+        /// <br/>Some collections have a strict upper bound that will disregard this value. In case the specified value is higher
+        /// <br/>than the allowed limit, the collection limit will be used.
+        /// <br/>
+        /// <br/>If avoided, the collection will determine the page size itself.</param>
+        /// <returns>Successfully retrieved a list of addresses.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response4>> GetAddressesAsync(string id, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/wallets/{id}/addresses?");
+            urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+            if (from != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("from") + "=").Append(System.Uri.EscapeDataString(from.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (to != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("to") + "=").Append(System.Uri.EscapeDataString(to.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (pageBefore != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("pageBefore") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageBefore, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (pageAfter != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("pageAfter") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageAfter, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (pageSize != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("pageSize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<Response4>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return new Trakx.Utils.Apis.Response<Response4>(status_, headers_, objectResponse_.Object);
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<Error>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<Error>("The request cannot be processed due to a client error.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -1561,7 +1743,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response11>> CreateCardAsync(CardCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> CreateCardAsync(CardCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1595,7 +1777,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of cards.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response12>> GetCardsAsync(string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<SimpleCardResponse>> GetCardsAsync(string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1604,7 +1786,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the card.</param>
         /// <returns>Successfully retrieved a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response13>> GetCardAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> GetCardAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1613,7 +1795,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the card.</param>
         /// <returns>Successfully modified a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response14>> UpdateCardAsync(string id, CardUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> UpdateCardAsync(string id, CardUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -1650,7 +1832,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response11>> CreateCardAsync(CardCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> CreateCardAsync(CardCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/cards");
@@ -1674,7 +1856,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -1690,12 +1872,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response11>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CardResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response11>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<CardResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -1769,7 +1951,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of cards.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response12>> GetCardsAsync(string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<SimpleCardResponse>> GetCardsAsync(string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/cards?");
@@ -1803,7 +1985,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -1819,12 +2001,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response12>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<SimpleCardResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response12>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<SimpleCardResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -1863,7 +2045,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the card.</param>
         /// <returns>Successfully retrieved a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response13>> GetCardAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> GetCardAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1888,7 +2070,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -1904,12 +2086,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response13>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CardResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response13>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<CardResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -1958,7 +2140,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the card.</param>
         /// <returns>Successfully modified a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response14>> UpdateCardAsync(string id, CardUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> UpdateCardAsync(string id, CardUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1986,7 +2168,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -2002,12 +2184,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response14>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CardResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response14>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<CardResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {
@@ -2142,7 +2324,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a bank account for wire transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response15>> CreateWireBankAccountAsync(WireCreationRequest_US body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireResponse>> CreateWireBankAccountAsync(WireCreationRequest_iban body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2151,7 +2333,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for wire transfers.</param>
         /// <returns>Successfully retrieved a bank account for wire transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response17>> GetWireBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireResponse>> GetWireBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2160,7 +2342,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for wire transfers.</param>
         /// <returns>Successfully retrieved wire transfer instructions for the bank account.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response18>> GetWireInstructionsBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireInstructionResponse>> GetWireInstructionsBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2168,7 +2350,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a bank account for ACH transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response19>> CreateACHBankAccountAsync(ACHCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<ACHResponse>> CreateACHBankAccountAsync(ACHCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2177,7 +2359,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for ACH transfers.</param>
         /// <returns>Successfully retrieved a bank account for ACH transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response20>> GetACHBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<ACHResponse>> GetACHBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2185,7 +2367,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock ach payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response21>> CreateAchAccountAsync(MockAchAccountCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<MockAchAccountResponse>> CreateAchAccountAsync(MockAchAccountCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -2222,7 +2404,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a bank account for wire transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response15>> CreateWireBankAccountAsync(WireCreationRequest_US body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireResponse>> CreateWireBankAccountAsync(WireCreationRequest_iban body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/banks/wires");
@@ -2246,7 +2428,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -2262,22 +2444,22 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response15>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<WireResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response15>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<WireResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response16>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<WireResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiException<Response16>("Successfully created a bank account for wire transfers.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            return new Trakx.Utils.Apis.Response<WireResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -2326,7 +2508,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for wire transfers.</param>
         /// <returns>Successfully retrieved a bank account for wire transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response17>> GetWireBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireResponse>> GetWireBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2351,7 +2533,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -2367,12 +2549,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response17>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<WireResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response17>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<WireResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -2421,7 +2603,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for wire transfers.</param>
         /// <returns>Successfully retrieved wire transfer instructions for the bank account.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response18>> GetWireInstructionsBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireInstructionResponse>> GetWireInstructionsBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2446,7 +2628,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -2462,12 +2644,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response18>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<WireInstructionResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response18>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<WireInstructionResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -2515,7 +2697,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a bank account for ACH transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response19>> CreateACHBankAccountAsync(ACHCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<ACHResponse>> CreateACHBankAccountAsync(ACHCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/banks/ach");
@@ -2539,7 +2721,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -2555,12 +2737,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response19>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ACHResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response19>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<ACHResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -2609,7 +2791,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for ACH transfers.</param>
         /// <returns>Successfully retrieved a bank account for ACH transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response20>> GetACHBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<ACHResponse>> GetACHBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2634,7 +2816,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -2650,12 +2832,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response20>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ACHResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response20>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<ACHResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -2703,7 +2885,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock ach payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response21>> CreateAchAccountAsync(MockAchAccountCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<MockAchAccountResponse>> CreateAchAccountAsync(MockAchAccountCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/mocks/ach/accounts");
@@ -2727,7 +2909,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -2743,12 +2925,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response21>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<MockAchAccountResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response21>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<MockAchAccountResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -2769,323 +2951,6 @@ namespace Trakx.Circle.ApiClient
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             throw new ApiException<Error>("The request has not been applied because it lacks valid authentication credentials.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        protected struct ObjectResponseResult<T>
-        {
-            public ObjectResponseResult(T responseObject, string responseText)
-            {
-                this.Object = responseObject;
-                this.Text = responseText;
-            }
-
-            public T Object { get; }
-
-            public string Text { get; }
-        }
-
-        public bool ReadResponseAsString { get; set; }
-
-        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
-        {
-            if (response == null || response.Content == null)
-            {
-                return new ObjectResponseResult<T>(default(T), string.Empty);
-            }
-
-            if (ReadResponseAsString)
-            {
-                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
-                    return new ObjectResponseResult<T>(typedBody, responseText);
-                }
-                catch (Newtonsoft.Json.JsonException exception)
-                {
-                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new ApiException(message, (int)response.StatusCode, responseText, headers, exception);
-                }
-            }
-            else
-            {
-                try
-                {
-                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                    using (var streamReader = new System.IO.StreamReader(responseStream))
-                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
-                    {
-                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
-                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
-                        return new ObjectResponseResult<T>(typedBody, string.Empty);
-                    }
-                }
-                catch (Newtonsoft.Json.JsonException exception)
-                {
-                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
-                }
-            }
-        }
-
-        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
-        {
-            if (value == null)
-            {
-                return "";
-            }
-
-            if (value is System.Enum)
-            {
-                var name = System.Enum.GetName(value.GetType(), value);
-                if (name != null)
-                {
-                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
-                    if (field != null)
-                    {
-                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
-                            as System.Runtime.Serialization.EnumMemberAttribute;
-                        if (attribute != null)
-                        {
-                            return attribute.Value != null ? attribute.Value : name;
-                        }
-                    }
-
-                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
-                    return converted == null ? string.Empty : converted;
-                }
-            }
-            else if (value is bool) 
-            {
-                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
-            }
-            else if (value is byte[])
-            {
-                return System.Convert.ToBase64String((byte[]) value);
-            }
-            else if (value.GetType().IsArray)
-            {
-                var array = System.Linq.Enumerable.OfType<object>((System.Array) value);
-                return string.Join(",", System.Linq.Enumerable.Select(array, o => ConvertToString(o, cultureInfo)));
-            }
-
-            var result = System.Convert.ToString(value, cultureInfo);
-            return result == null ? "" : result;
-        }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IOnChain_paymentsClient
-    {
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get a list of addresses.
-        /// </summary>
-        /// <param name="id">Unique id of a wallet.</param>
-        /// <param name="from">Queries items created since the specified date-time (inclusive).</param>
-        /// <param name="to">Queries items created before the specified date-time (inclusive).</param>
-        /// <param name="pageBefore">A collection ID value used for pagination.
-        /// <br/>
-        /// <br/>It marks the exclusive end of a page. When provided, the collection resource will return the next `n` items before
-        /// <br/>the id, with `n` being specified by `pageSize`.
-        /// <br/>
-        /// <br/>The items will be returned in the natural order of the collection.
-        /// <br/>
-        /// <br/>The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
-        /// <br/>
-        /// <br/>SHOULD NOT be used in conjuction with pageAfter.</param>
-        /// <param name="pageAfter">A collection ID value used for pagination.
-        /// <br/>
-        /// <br/>It marks the exclusive begin of a page. When provided, the collection resource will return the next `n` items after
-        /// <br/>the id, with `n` being specified by `pageSize`.
-        /// <br/>
-        /// <br/>The items will be returned in the natural order of the collection.
-        /// <br/>
-        /// <br/>The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
-        /// <br/>
-        /// <br/>SHOULD NOT be used in conjunction with pageBefore.</param>
-        /// <param name="pageSize">Limits the number of items to be returned.
-        /// <br/>
-        /// <br/>Some collections have a strict upper bound that will disregard this value. In case the specified value is higher
-        /// <br/>than the allowed limit, the collection limit will be used.
-        /// <br/>
-        /// <br/>If avoided, the collection will determine the page size itself.</param>
-        /// <returns>Successfully retrieved a list of addresses.</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response22>> GetAddressesAsync(string id, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    internal partial class OnChain_paymentsClient : AuthorisedClient, IOnChain_paymentsClient
-    {
-        private System.Net.Http.HttpClient _httpClient;
-        private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
-
-        public OnChain_paymentsClient(ClientConfigurator configuration, System.Net.Http.HttpClient httpClient) : base(configuration)
-        {
-            _httpClient = httpClient;
-            _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
-        }
-
-        private Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
-        {
-            var settings = new Newtonsoft.Json.JsonSerializerSettings();
-            UpdateJsonSerializerSettings(settings);
-            return settings;
-        }
-
-        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
-
-        partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
-
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
-        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get a list of addresses.
-        /// </summary>
-        /// <param name="id">Unique id of a wallet.</param>
-        /// <param name="from">Queries items created since the specified date-time (inclusive).</param>
-        /// <param name="to">Queries items created before the specified date-time (inclusive).</param>
-        /// <param name="pageBefore">A collection ID value used for pagination.
-        /// <br/>
-        /// <br/>It marks the exclusive end of a page. When provided, the collection resource will return the next `n` items before
-        /// <br/>the id, with `n` being specified by `pageSize`.
-        /// <br/>
-        /// <br/>The items will be returned in the natural order of the collection.
-        /// <br/>
-        /// <br/>The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
-        /// <br/>
-        /// <br/>SHOULD NOT be used in conjuction with pageAfter.</param>
-        /// <param name="pageAfter">A collection ID value used for pagination.
-        /// <br/>
-        /// <br/>It marks the exclusive begin of a page. When provided, the collection resource will return the next `n` items after
-        /// <br/>the id, with `n` being specified by `pageSize`.
-        /// <br/>
-        /// <br/>The items will be returned in the natural order of the collection.
-        /// <br/>
-        /// <br/>The resource will return the first page if neither `pageAfter` nor `pageBefore` are specified.
-        /// <br/>
-        /// <br/>SHOULD NOT be used in conjunction with pageBefore.</param>
-        /// <param name="pageSize">Limits the number of items to be returned.
-        /// <br/>
-        /// <br/>Some collections have a strict upper bound that will disregard this value. In case the specified value is higher
-        /// <br/>than the allowed limit, the collection limit will be used.
-        /// <br/>
-        /// <br/>If avoided, the collection will determine the page size itself.</param>
-        /// <returns>Successfully retrieved a list of addresses.</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response22>> GetAddressesAsync(string id, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            if (id == null)
-                throw new System.ArgumentNullException("id");
-
-            var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/wallets/{id}/addresses?");
-            urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-            if (from != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("from") + "=").Append(System.Uri.EscapeDataString(from.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            if (to != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("to") + "=").Append(System.Uri.EscapeDataString(to.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            if (pageBefore != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("pageBefore") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageBefore, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            if (pageAfter != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("pageAfter") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageAfter, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            if (pageSize != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("pageSize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response22>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return new Trakx.Utils.Apis.Response<Response22>(status_, headers_, objectResponse_.Object);
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<Error>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<Error>("The request cannot be processed due to a client error.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<Error>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<Error>("The specified resource was not found.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -3248,7 +3113,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of settlements.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response23>> GetSettlementsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response5>> GetSettlementsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3257,7 +3122,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the settlement.</param>
         /// <returns>Successfully retrieved a settlement.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response24>> GetSettlementAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response6>> GetSettlementAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -3322,7 +3187,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of settlements.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response23>> GetSettlementsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response5>> GetSettlementsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/settlements?");
@@ -3364,7 +3229,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -3380,12 +3245,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response23>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response5>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response23>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response5>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -3424,7 +3289,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the settlement.</param>
         /// <returns>Successfully retrieved a settlement.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response24>> GetSettlementAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response6>> GetSettlementAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3449,7 +3314,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -3465,12 +3330,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response24>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response6>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response24>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response6>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -3653,7 +3518,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of chargebacks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response25>> GetChargebacksAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response7>> GetChargebacksAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3662,7 +3527,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the chargeback.</param>
         /// <returns>Successfully retrieved a chargeback.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response26>> GetChargebackAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response8>> GetChargebackAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3670,7 +3535,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock chargeback.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response27>> CreateMockChargebackAsync(MockChargebackCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response9>> CreateMockChargebackAsync(MockChargebackCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -3735,7 +3600,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of chargebacks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response25>> GetChargebacksAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response7>> GetChargebacksAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/chargebacks?");
@@ -3777,7 +3642,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -3793,12 +3658,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response25>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response7>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response25>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response7>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -3847,7 +3712,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the chargeback.</param>
         /// <returns>Successfully retrieved a chargeback.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response26>> GetChargebackAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response8>> GetChargebackAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3872,7 +3737,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -3888,12 +3753,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response26>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response8>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response26>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response8>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -3941,7 +3806,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock chargeback.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response27>> CreateMockChargebackAsync(MockChargebackCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response9>> CreateMockChargebackAsync(MockChargebackCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/mocks/cards/chargebacks");
@@ -3965,7 +3830,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -3981,12 +3846,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response27>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response9>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response27>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response9>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4189,7 +4054,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of ACH payment reversals.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response28>> GetReversalsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response10>> GetReversalsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -4254,7 +4119,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of ACH payment reversals.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response28>> GetReversalsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response10>> GetReversalsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/reversals?");
@@ -4296,7 +4161,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -4312,12 +4177,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response28>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response10>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response28>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response10>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4472,7 +4337,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved a list of signet banks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response29>> GetSignetBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response11>> GetSignetBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4480,7 +4345,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response30>> CreateSignetBankAsync(SignetBankCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response12>> CreateSignetBankAsync(SignetBankCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4489,7 +4354,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response32>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response14>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4497,7 +4362,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a SilverGate bank</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response33>> CreateSilverGateBankAsync(SilverGateSenBankRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response15>> CreateSilverGateBankAsync(SilverGateSenBankRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4505,7 +4370,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved a list of silver gate banks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response35>> GetSilverGateBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response17>> GetSilverGateBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4513,7 +4378,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a SilverGate payment</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response36>> CreateSilverGateMockTransferAsync(SilverGateSenBankTransferRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<SilverGateSenPaymentResponse>> CreateSilverGateMockTransferAsync(SilverGateSenBankTransferRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4522,7 +4387,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a SilverGate bank instruction.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response38>> GetSilverGateBankInstructionAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response18>> GetSilverGateBankInstructionAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -4559,7 +4424,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved a list of signet banks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response29>> GetSignetBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response11>> GetSignetBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/businessAccount/banks/signet");
@@ -4580,7 +4445,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -4596,12 +4461,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response29>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response11>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response29>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response11>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4649,7 +4514,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response30>> CreateSignetBankAsync(SignetBankCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response12>> CreateSignetBankAsync(SignetBankCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/businessAccount/banks/signet");
@@ -4673,7 +4538,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -4689,22 +4554,22 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response31>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response13>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiException<Response31>("Successfully created a signet bank.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiException<Response13>("Successfully created a signet bank.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response30>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response12>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response30>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response12>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4763,7 +4628,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response32>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response14>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -4788,7 +4653,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -4804,12 +4669,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response32>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response14>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response32>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response14>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4867,7 +4732,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a SilverGate bank</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response33>> CreateSilverGateBankAsync(SilverGateSenBankRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response15>> CreateSilverGateBankAsync(SilverGateSenBankRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/businessAccount/banks/sen");
@@ -4891,7 +4756,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -4907,22 +4772,22 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response34>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response16>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiException<Response34>("Successfully created a SilverGate bank", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiException<Response16>("Successfully created a SilverGate bank", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response33>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response15>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response33>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response15>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4980,7 +4845,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved a list of silver gate banks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response35>> GetSilverGateBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response17>> GetSilverGateBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/businessAccount/banks/sen");
@@ -5001,7 +4866,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -5017,12 +4882,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response35>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response17>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response35>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response17>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5070,7 +4935,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a SilverGate payment</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response36>> CreateSilverGateMockTransferAsync(SilverGateSenBankTransferRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<SilverGateSenPaymentResponse>> CreateSilverGateMockTransferAsync(SilverGateSenBankTransferRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/mocks/payments/sen");
@@ -5094,7 +4959,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -5110,22 +4975,22 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response37>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<SilverGateSenPaymentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiException<Response37>("Successfully created a SilverGate payment", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            return new Trakx.Utils.Apis.Response<SilverGateSenPaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response36>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<SilverGateSenPaymentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response36>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<SilverGateSenPaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5184,7 +5049,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a SilverGate bank instruction.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response38>> GetSilverGateBankInstructionAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response18>> GetSilverGateBankInstructionAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -5209,7 +5074,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -5225,12 +5090,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response38>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response18>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response38>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<Response18>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5396,7 +5261,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="walletId">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response39>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<AddressObjectResponse>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5433,7 +5298,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of addresses.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response40>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<AddressResponse>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -5471,7 +5336,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="walletId">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response39>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<AddressObjectResponse>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (walletId == null)
                 throw new System.ArgumentNullException("walletId");
@@ -5499,7 +5364,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -5515,12 +5380,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response39>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<AddressObjectResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response39>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<AddressObjectResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5607,7 +5472,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of addresses.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response40>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<AddressResponse>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (walletId == null)
                 throw new System.ArgumentNullException("walletId");
@@ -5653,7 +5518,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -5669,12 +5534,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response40>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<AddressResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response40>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<AddressResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5829,7 +5694,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response41>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<TransferResponse>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5868,7 +5733,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response42>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<System.Collections.Generic.List<TransferResponse>>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5877,7 +5742,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the transfer.</param>
         /// <returns>Successfully retrieved a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response43>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedTransferResponse>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -5914,7 +5779,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response41>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<TransferResponse>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/transfers");
@@ -5938,7 +5803,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -5954,12 +5819,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response41>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<TransferResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response41>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<TransferResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {
@@ -6018,7 +5883,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response42>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<System.Collections.Generic.List<TransferResponse>>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/transfers?");
@@ -6072,7 +5937,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -6088,12 +5953,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response42>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.List<TransferResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response42>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<System.Collections.Generic.List<TransferResponse>>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -6132,7 +5997,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the transfer.</param>
         /// <returns>Successfully retrieved a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response43>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedTransferResponse>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -6157,7 +6022,7 @@ namespace Trakx.Circle.ApiClient
 
                     PrepareRequest(client_, request_, url_);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = client_.Send(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                     var disposeResponse_ = true;
                     try
                     {
@@ -6173,12 +6038,12 @@ namespace Trakx.Circle.ApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Response43>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<DetailedTransferResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response43>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Utils.Apis.Response<DetailedTransferResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {
@@ -6304,23 +6169,11 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SilverGateSenPaymentResponse
+    public partial record PaymentResponse
     {
-        /// <summary>
-        /// Circle tracking reference that needs to be set in the memo filed. This field is retrievable through the response during SEN account creation or via the bank instruction endpoint.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Amount { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("beneficiaryBank", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BeneficiaryBank BeneficiaryBank { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public SilverGateSenPaymentResponseStatus? Status { get; set; }
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.List<BasicPayment> Data { get; set; } = new System.Collections.Generic.List<BasicPayment>();
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -6334,7 +6187,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SilverGateSenBankTransferRequest
+    public partial record SilverGateSenPaymentResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Data Data { get; set; } = new Data();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record SilverGateSenBankTransferRequest
     {
         /// <summary>
         /// Circle tracking reference that needs to be set in the memo filed. This field is retrievable through the response during SEN account creation or via the bank instruction endpoint.
@@ -6349,7 +6220,7 @@ namespace Trakx.Circle.ApiClient
 
         [Newtonsoft.Json.JsonProperty("beneficiaryBank", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public BeneficiaryBank2 BeneficiaryBank { get; set; } = new BeneficiaryBank2();
+        public BeneficiaryBank BeneficiaryBank { get; set; } = new BeneficiaryBank();
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -6363,7 +6234,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SilverGateSenBankRequest
+    public partial record SilverGateSenBankRequest
     {
         /// <summary>
         /// Universally unique identifier (UUID v4) idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.
@@ -6398,7 +6269,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SilverGateSenBankResponse
+    public partial record SilverGateSenBankResponse
     {
         /// <summary>
         /// Unique system generated identifier for the entity.
@@ -6441,7 +6312,7 @@ namespace Trakx.Circle.ApiClient
         /// Currency of the fiat account.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("currency", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Currency { get; set; }
+        public string Currency { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -6455,7 +6326,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Balances
+    public partial record Balances
     {
         /// <summary>
         /// List of currency balances (one for each currency) that are currently available to spend.
@@ -6483,7 +6354,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BalancesResponse
+    public partial record BalancesResponse
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -6501,7 +6372,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Money
+    public partial record Money
     {
         /// <summary>
         /// Magnitude of the amount, in units of the currency, with a `.` decimal.
@@ -6529,10 +6400,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Error
+    public partial record Error
     {
         [Newtonsoft.Json.JsonProperty("code", Required = Newtonsoft.Json.Required.Always)]
-        public int Code { get; set; }
+        public int Code { get; init; }
 
         [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -6550,13 +6421,13 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Source
+    public partial record Source
     {
         /// <summary>
         /// Unique identifier for the source.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Id { get; set; }
+        public string Id { get; init; }
 
         /// <summary>
         /// Type of the source.
@@ -6601,25 +6472,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SilverGateBankInstructionResponse
+    public partial record SilverGateBankInstructionResponse
     {
         /// <summary>
         /// Tracking ref that needs to be set in the public description field when you send the funds to Circle Signet wallet
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
+        public string TrackingRef { get; init; }
 
         /// <summary>
         /// Circle corporate Silvergate SEN account number that needs to be set as destination.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("accountNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AccountNumber { get; set; }
+        public string AccountNumber { get; init; }
 
         /// <summary>
         /// Currency of Circle corporate Silvergate SEN account.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("currency", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Currency { get; set; }
+        public string Currency { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -6633,13 +6504,13 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SignetBank
+    public partial record SignetBank
     {
         /// <summary>
         /// Unique system generated identifier for the entity.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid? Id { get; set; }
+        public System.Guid? Id { get; init; }
 
         /// <summary>
         /// Status of the account. A pending status indicates that the linking is in-progress; complete indicates the account was linked successfully; failed indicates it failed
@@ -6652,19 +6523,19 @@ namespace Trakx.Circle.ApiClient
         /// Tracking ref that needs to be set in the public description field when you send the funds to Circle Signet wallet
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
+        public string TrackingRef { get; init; }
 
         /// <summary>
         /// Your signet wallet address.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("walletAddress", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string WalletAddress { get; set; }
+        public string WalletAddress { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UpdateDate { get; set; }
+        public string UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -6681,7 +6552,7 @@ namespace Trakx.Circle.ApiClient
     /// A source blockchain address.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SourceBlockchainLocation
+    public partial record SourceBlockchainLocation
     {
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -6708,7 +6579,7 @@ namespace Trakx.Circle.ApiClient
     /// A source wallet address.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SourceWalletLocation
+    public partial record SourceWalletLocation
     {
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -6734,7 +6605,7 @@ namespace Trakx.Circle.ApiClient
     /// A destination wallet location.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DestinationWalletLocation
+    public partial record DestinationWalletLocation
     {
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -6752,7 +6623,7 @@ namespace Trakx.Circle.ApiClient
         /// An alphanumeric string which indicates the wallet address used to receive the transfer. Will only be set when the transfer source is a blockchain address.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Address { get; set; }
+        public string Address { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -6769,7 +6640,7 @@ namespace Trakx.Circle.ApiClient
     /// A destination blockchain address.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DestinationBlockchainLocation
+    public partial record DestinationBlockchainLocation
     {
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -6792,11 +6663,29 @@ namespace Trakx.Circle.ApiClient
 
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record TransferResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Transfer Data { get; set; } = new Transfer();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
     /// <summary>
     /// A transfer of funds.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Transfer
+    public partial record Transfer
     {
         /// <summary>
         /// Unique identifier for this transfer.
@@ -6814,13 +6703,13 @@ namespace Trakx.Circle.ApiClient
         /// The name of the source of the transfer.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         /// <summary>
         /// The addresses of the source of the transfer.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("addresses", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<UserAddress> Addresses { get; set; }
+        public System.Collections.Generic.List<UserAddress> Addresses { get; init; }
 
         /// <summary>
         /// The destination of the transfer.
@@ -6837,7 +6726,7 @@ namespace Trakx.Circle.ApiClient
         /// A hash that uniquely identifies the onchain transaction. This is only available where either source or destination are of type blockchain.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("transactionHash", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TransactionHash { get; set; }
+        public string TransactionHash { get; init; }
 
         /// <summary>
         /// Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed.
@@ -6851,7 +6740,7 @@ namespace Trakx.Circle.ApiClient
         /// The create date of the transfer.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? CreateDate { get; set; }
+        public System.DateTimeOffset? CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
@@ -6868,11 +6757,29 @@ namespace Trakx.Circle.ApiClient
 
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record DetailedTransferResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public DetailedTransfer Data { get; set; } = new DetailedTransfer();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
     /// <summary>
     /// A transfer of funds.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DetailedTransfer
+    public partial record DetailedTransfer
     {
         /// <summary>
         /// Unique identifier for this transfer.
@@ -6889,7 +6796,7 @@ namespace Trakx.Circle.ApiClient
         /// A hash that uniquely identifies the onchain transaction. This is only available where either source or destination are of type blockchain.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("transactionHash", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TransactionHash { get; set; }
+        public string TransactionHash { get; init; }
 
         /// <summary>
         /// Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed.
@@ -6903,13 +6810,13 @@ namespace Trakx.Circle.ApiClient
         /// Results of risk evaluation. Only present if the payment is denied by Circle's risk service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("riskEvaluation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RiskEvaluation RiskEvaluation { get; set; }
+        public RiskEvaluation RiskEvaluation { get; init; }
 
         /// <summary>
         /// The create date of the transfer.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? CreateDate { get; set; }
+        public System.DateTimeOffset? CreateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -6926,7 +6833,7 @@ namespace Trakx.Circle.ApiClient
     /// A destination of funds.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Destination
+    public partial record Destination
     {
         /// <summary>
         /// Unique identifier for this transfer.
@@ -6951,7 +6858,7 @@ namespace Trakx.Circle.ApiClient
         /// The create date of the transfer.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? CreateDate { get; set; }
+        public System.DateTimeOffset? CreateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -6968,31 +6875,31 @@ namespace Trakx.Circle.ApiClient
     /// A user address.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserAddress
+    public partial record UserAddress
     {
         /// <summary>
         /// Address of the beneficiary's bank.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Address { get; set; }
+        public string Address { get; init; }
 
         /// <summary>
         /// City of the beneficiary's bank.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("city", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string City { get; set; }
+        public string City { get; init; }
 
         /// <summary>
         /// Postal code of the beneficiary's bank.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("postalCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PostalCode { get; set; }
+        public string PostalCode { get; init; }
 
         /// <summary>
         /// Country code of the beneficiary's bank
         /// </summary>
         [Newtonsoft.Json.JsonProperty("country", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Country { get; set; }
+        public string Country { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7006,7 +6913,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SignetBankCreationRequest
+    public partial record SignetBankCreationRequest
     {
         /// <summary>
         /// Universally unique identifier (UUID v4) idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.
@@ -7034,7 +6941,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RequestWalletLocation
+    public partial record RequestWalletLocation
     {
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7063,7 +6970,7 @@ namespace Trakx.Circle.ApiClient
     /// A source blockchain address.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RequestBlockchainLocation
+    public partial record RequestBlockchainLocation
     {
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7087,7 +6994,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TransferCreationRequest
+    public partial record TransferCreationRequest
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7117,13 +7024,13 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PaymentInfoPaymentAndRefund
+    public partial record PaymentInfoPaymentAndRefund
     {
         /// <summary>
         /// Unique system generated identifier for the item.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid? Id { get; set; }
+        public System.Guid? Id { get; init; }
 
         /// <summary>
         /// Type of the payment object.
@@ -7133,7 +7040,7 @@ namespace Trakx.Circle.ApiClient
         public PaymentInfoPaymentAndRefundType? Type { get; set; }
 
         [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Amount { get; set; }
+        public Money Amount { get; init; }
 
         /// <summary>
         /// Enumerated description of the payment item.
@@ -7147,10 +7054,10 @@ namespace Trakx.Circle.ApiClient
         public PaymentStatus? Status { get; set; }
 
         [Newtonsoft.Json.JsonProperty("fees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Fees { get; set; }
+        public Money Fees { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7164,13 +7071,13 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PaymentInfoCancel
+    public partial record PaymentInfoCancel
     {
         /// <summary>
         /// Unique system generated identifier for the item.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid? Id { get; set; }
+        public System.Guid? Id { get; init; }
 
         /// <summary>
         /// Type of the payment object.
@@ -7183,14 +7090,14 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment item.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public PaymentStatus? Status { get; set; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7204,7 +7111,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MetadataPayment
+    public partial record MetadataPayment
     {
         [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7240,13 +7147,13 @@ namespace Trakx.Circle.ApiClient
     /// PGP encrypted json string. The object format given here needs to be stringified and PGP encrypted before it is sent to the server, so `encryptedData` will end up as a string, rather than an object.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class EncryptedCardPaymentData
+    public partial record EncryptedCardPaymentData
     {
         /// <summary>
         /// Card Verification Number. Three or four digit security code. Only required if verification includes a cvv check.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("cvv", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Cvv { get; set; }
+        public string Cvv { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7260,7 +7167,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CardPaymentCreationRequest
+    public partial record CardPaymentCreationRequest
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7270,7 +7177,7 @@ namespace Trakx.Circle.ApiClient
         /// Unique identifier of the public key used in encryption. Only required if request object includes encrypted data.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("keyId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string KeyId { get; set; }
+        public string KeyId { get; init; }
 
         [Newtonsoft.Json.JsonProperty("metadata", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -7299,10 +7206,10 @@ namespace Trakx.Circle.ApiClient
         /// Description of the payment with length restriction of 240 characters.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("encryptedData", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public EncryptedCardPaymentData EncryptedData { get; set; }
+        public EncryptedCardPaymentData EncryptedData { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7316,7 +7223,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RiskEvaluation
+    public partial record RiskEvaluation
     {
         /// <summary>
         /// Enumerated decision of the card.
@@ -7329,7 +7236,7 @@ namespace Trakx.Circle.ApiClient
         /// Risk reason for the definitive decision outcome.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("reason", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Reason { get; set; }
+        public string Reason { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7343,7 +7250,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MetadataPhoneEmail
+    public partial record MetadataPhoneEmail
     {
         [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7514,7 +7421,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DetailedPayment
+    public partial record DetailedPaymentResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public DetailedPayment Data { get; set; } = new DetailedPayment();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record DetailedPayment
     {
         /// <summary>
         /// Unique system generated identifier for the payment item.
@@ -7579,38 +7504,38 @@ namespace Trakx.Circle.ApiClient
         /// Status information of the related cancel. This property is only present on canceled payment or refund items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("cancel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BasicCancel Cancel { get; set; }
+        public BasicCancel Cancel { get; init; }
 
         [Newtonsoft.Json.JsonProperty("refunds", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<BasicRefund> Refunds { get; set; }
+        public System.Collections.Generic.List<BasicRefund> Refunds { get; init; }
 
         [Newtonsoft.Json.JsonProperty("fees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Fees { get; set; }
+        public Money Fees { get; init; }
 
         /// <summary>
         /// Payment tracking reference. Will be present once known.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
+        public string TrackingRef { get; init; }
 
         [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public PaymentErrorCode? ErrorCode { get; set; }
 
         [Newtonsoft.Json.JsonProperty("metadata", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MetadataPhoneEmail Metadata { get; set; }
+        public MetadataPhoneEmail Metadata { get; init; }
 
         /// <summary>
         /// Results of risk evaluation. Only present if the payment is denied by Circle's risk service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("riskEvaluation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RiskEvaluation RiskEvaluation { get; set; }
+        public RiskEvaluation RiskEvaluation { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UpdateDate { get; set; }
+        public string UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7624,7 +7549,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BasicPayment
+    public partial record BasicPayment
     {
         /// <summary>
         /// Unique system generated identifier for the payment item.
@@ -7670,7 +7595,7 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7681,19 +7606,19 @@ namespace Trakx.Circle.ApiClient
         /// Status information of the related cancel. This property is only present on canceled payment or refund items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("cancel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Cancel { get; set; }
+        public string Cancel { get; init; }
 
         [Newtonsoft.Json.JsonProperty("refunds", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<PaymentInfoPaymentAndRefund> Refunds { get; set; }
+        public System.Collections.Generic.List<PaymentInfoPaymentAndRefund> Refunds { get; init; }
 
         [Newtonsoft.Json.JsonProperty("fees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Fees { get; set; }
+        public Money Fees { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UpdateDate { get; set; }
+        public string UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7707,7 +7632,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BasicCancel
+    public partial record BasicCancel
     {
         /// <summary>
         /// Unique system generated identifier for the payment item.
@@ -7753,7 +7678,7 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7764,16 +7689,16 @@ namespace Trakx.Circle.ApiClient
         /// Status information of the related payment. This property is only present on refund or cancel items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("originalPayment", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PaymentInfoPaymentAndRefund OriginalPayment { get; set; }
+        public PaymentInfoPaymentAndRefund OriginalPayment { get; init; }
 
         [Newtonsoft.Json.JsonProperty("fees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Fees { get; set; }
+        public Money Fees { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UpdateDate { get; set; }
+        public string UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7787,7 +7712,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BasicRefund
+    public partial record BasicRefund
     {
         /// <summary>
         /// Unique system generated identifier for the payment item.
@@ -7833,7 +7758,7 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -7844,22 +7769,22 @@ namespace Trakx.Circle.ApiClient
         /// Status information of the related payment. This property is only present on refund or cancel items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("originalPayment", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PaymentInfoPaymentAndRefund OriginalPayment { get; set; }
+        public PaymentInfoPaymentAndRefund OriginalPayment { get; init; }
 
         /// <summary>
         /// Status information of the related cancel. This property is only present on canceled payment or refund items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("cancel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PaymentInfoCancel Cancel { get; set; }
+        public PaymentInfoCancel Cancel { get; init; }
 
         [Newtonsoft.Json.JsonProperty("fees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Fees { get; set; }
+        public Money Fees { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UpdateDate { get; set; }
+        public string UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7873,7 +7798,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DetailedPaymentPolymorphic
+    public partial record DetailedPaymentPolymorphicResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public DetailedPaymentPolymorphic Data { get; set; } = new DetailedPaymentPolymorphic();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record DetailedPaymentPolymorphic
     {
         /// <summary>
         /// Unique system generated identifier for the payment item.
@@ -7938,44 +7881,44 @@ namespace Trakx.Circle.ApiClient
         /// Status information of the related payment. This property is only present on refund or cancel items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("originalPayment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BasicPayment OriginalPayment { get; set; }
+        public BasicPayment OriginalPayment { get; init; }
 
         /// <summary>
         /// Status information of the related cancel. This property is only present on canceled payment or refund items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("cancel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BasicCancel Cancel { get; set; }
+        public BasicCancel Cancel { get; init; }
 
         [Newtonsoft.Json.JsonProperty("refunds", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<BasicRefund> Refunds { get; set; }
+        public System.Collections.Generic.List<BasicRefund> Refunds { get; init; }
 
         [Newtonsoft.Json.JsonProperty("fees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Fees { get; set; }
+        public Money Fees { get; init; }
 
         /// <summary>
         /// Payment tracking reference. Will be present once known.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
+        public string TrackingRef { get; init; }
 
         [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public PaymentErrorCode? ErrorCode { get; set; }
 
         [Newtonsoft.Json.JsonProperty("metadata", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MetadataPhoneEmail Metadata { get; set; }
+        public MetadataPhoneEmail Metadata { get; init; }
 
         /// <summary>
         /// Results of risk evaluation. Only present if the payment is denied by Circle's risk service
         /// </summary>
         [Newtonsoft.Json.JsonProperty("riskEvaluation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RiskEvaluation RiskEvaluation { get; set; }
+        public RiskEvaluation RiskEvaluation { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UpdateDate { get; set; }
+        public string UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -7989,7 +7932,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DetailedCancel
+    public partial record DetailedCancelResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public DetailedCancel Data { get; set; } = new DetailedCancel();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record DetailedCancel
     {
         /// <summary>
         /// Unique system generated identifier for the payment item.
@@ -8035,7 +7996,7 @@ namespace Trakx.Circle.ApiClient
         /// Enumerated description of the payment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string Description { get; init; }
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -8046,41 +8007,41 @@ namespace Trakx.Circle.ApiClient
         /// Status information of the related payment. This property is only present on refund or cancel items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("originalPayment", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BasicPayment OriginalPayment { get; set; }
+        public BasicPayment OriginalPayment { get; init; }
 
         [Newtonsoft.Json.JsonProperty("fees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Fees { get; set; }
+        public Money Fees { get; init; }
 
         /// <summary>
         /// Payment tracking reference. Will be present once known.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
+        public string TrackingRef { get; init; }
 
         [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public PaymentErrorCode? ErrorCode { get; set; }
 
         [Newtonsoft.Json.JsonProperty("metadata", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MetadataPhoneEmail Metadata { get; set; }
+        public MetadataPhoneEmail Metadata { get; init; }
 
         /// <summary>
         /// Results of risk evaluation. Only present if the payment is denied by Circle's risk service
         /// </summary>
         [Newtonsoft.Json.JsonProperty("riskEvaluation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RiskEvaluation RiskEvaluation { get; set; }
+        public RiskEvaluation RiskEvaluation { get; init; }
 
         /// <summary>
         /// If the cancel was made after a cutoff time period, it will be processed as a refund. This flag indicates that the cancel was processed as a refund
         /// </summary>
         [Newtonsoft.Json.JsonProperty("refund", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool? Refund { get; set; } = false;
+        public bool? Refund { get; init; } = false;
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UpdateDate { get; set; }
+        public string UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -8094,7 +8055,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MetadataCard
+    public partial record MetadataCard
     {
         [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -8127,7 +8088,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BillingDetails
+    public partial record BillingDetails
     {
         /// <summary>
         /// Full name of the card or bank account holder.
@@ -8195,7 +8156,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CardCreationRequest
+    public partial record CardCreationRequest
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -8205,7 +8166,7 @@ namespace Trakx.Circle.ApiClient
         /// Unique identifier of the public key used in encryption.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("keyId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string KeyId { get; set; }
+        public string KeyId { get; init; }
 
         /// <summary>
         /// PGP encrypted base64 encoded string. Contains Number and CVV.
@@ -8296,7 +8257,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CancelCreationRequest
+    public partial record CancelCreationRequest
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -8318,7 +8279,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RefundCreationRequest
+    public partial record RefundCreationRequest
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -8344,7 +8305,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DetailedRefund
+    public partial record DetailedRefundResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public DetailedRefund Data { get; set; } = new DetailedRefund();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record DetailedRefund
     {
         /// <summary>
         /// Unique system generated identifier for the payment item.
@@ -8402,41 +8381,41 @@ namespace Trakx.Circle.ApiClient
         /// Status information of the related payment. This property is only present on refund or cancel items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("originalPayment", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BasicPayment OriginalPayment { get; set; }
+        public BasicPayment OriginalPayment { get; init; }
 
         /// <summary>
         /// Status information of the related cancel. This property is only present on canceled payment or refund items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("cancel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BasicCancel Cancel { get; set; }
+        public BasicCancel Cancel { get; init; }
 
         [Newtonsoft.Json.JsonProperty("fees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Fees { get; set; }
+        public Money Fees { get; init; }
 
         /// <summary>
         /// Payment tracking reference. Will be present once known.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
+        public string TrackingRef { get; init; }
 
         [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public PaymentErrorCode? ErrorCode { get; set; }
 
         [Newtonsoft.Json.JsonProperty("metadata", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MetadataPhoneEmail Metadata { get; set; }
+        public MetadataPhoneEmail Metadata { get; init; }
 
         /// <summary>
         /// Results of risk evaluation. Only present if the payment is denied by Circle's risk service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("riskEvaluation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RiskEvaluation RiskEvaluation { get; set; }
+        public RiskEvaluation RiskEvaluation { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UpdateDate { get; set; }
+        public string UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -8450,7 +8429,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MockWirePaymentRequest
+    public partial record MockWirePaymentRequest
     {
         /// <summary>
         /// Wire tracking reference that needs to be set in the wire reference to beneficiary field. This field is retrievable through the response during wire creation or via the bank instruction endpoint.
@@ -8482,22 +8461,11 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MockWirePaymentResponse
+    public partial record MockWirePaymentResponse
     {
-        /// <summary>
-        /// Wire tracking reference that needs to be set in the wire reference to beneficiary field. This field is retrievable through the response during wire creation or via the bank instruction endpoint.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Amount { get; set; }
-
-        /// <summary>
-        /// Enumerated status of the wire payment. Status `pending` indicates that the wire payment is in process; `complete` indicates it finished successfully; `failed` indicates it failed.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Status { get; set; }
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Data2 Data { get; set; } = new Data2();
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -8568,7 +8536,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Card
+    public partial record CardResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Card Data { get; set; } = new Card();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record Card
     {
         /// <summary>
         /// Unique system generated identifier for the card.
@@ -8588,13 +8574,13 @@ namespace Trakx.Circle.ApiClient
         /// Two digit number representing the card's expiration month.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("expMonth", Required = Newtonsoft.Json.Required.Always)]
-        public int ExpMonth { get; set; }
+        public int ExpMonth { get; init; }
 
         /// <summary>
         /// Four digit number representing the card's expiration year.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("expYear", Required = Newtonsoft.Json.Required.Always)]
-        public int ExpYear { get; set; }
+        public int ExpYear { get; init; }
 
         /// <summary>
         /// The network of the card.
@@ -8636,7 +8622,7 @@ namespace Trakx.Circle.ApiClient
         /// Results of risk evaluation. Only present if the card is denied by Circle's risk service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("riskEvaluation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RiskEvaluation RiskEvaluation { get; set; }
+        public RiskEvaluation RiskEvaluation { get; init; }
 
         [Newtonsoft.Json.JsonProperty("metadata", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -8676,7 +8662,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SimpleBillingDetails
+    public partial record SimpleBillingDetails
     {
         /// <summary>
         /// Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.
@@ -8706,7 +8692,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SimpleCard
+    public partial record SimpleCardResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.List<SimpleCard> Data { get; set; } = new System.Collections.Generic.List<SimpleCard>();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record SimpleCard
     {
         /// <summary>
         /// Unique system generated identifier for the card.
@@ -8726,13 +8730,13 @@ namespace Trakx.Circle.ApiClient
         /// Two digit number representing the card's expiration month.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("expMonth", Required = Newtonsoft.Json.Required.Always)]
-        public int ExpMonth { get; set; }
+        public int ExpMonth { get; init; }
 
         /// <summary>
         /// Four digit number representing the card's expiration year.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("expYear", Required = Newtonsoft.Json.Required.Always)]
-        public int ExpYear { get; set; }
+        public int ExpYear { get; init; }
 
         /// <summary>
         /// The network of the card.
@@ -8760,7 +8764,7 @@ namespace Trakx.Circle.ApiClient
         /// Results of risk evaluation. Only present if the card is denied by Circle's risk service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("riskEvaluation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RiskEvaluation RiskEvaluation { get; set; }
+        public RiskEvaluation RiskEvaluation { get; init; }
 
         /// <summary>
         /// Datetime when the card was created. ISO-8601.
@@ -8791,7 +8795,7 @@ namespace Trakx.Circle.ApiClient
     /// PGP encrypted json string. The object format given here needs to be stringified and PGP encrypted before it is sent to the server, so `encryptedData` will end up as a string, rather than an object.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class EncryptedCardUpdateData
+    public partial record EncryptedCardUpdateData
     {
         /// <summary>
         /// Card Verification Number. Three or four digit security code.
@@ -8812,7 +8816,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CardUpdate
+    public partial record CardUpdate
     {
         /// <summary>
         /// Unique identifier of the public key used in encryption.
@@ -8851,7 +8855,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BankAddressIbanSupported
+    public partial record BankAddressIbanSupported
     {
         /// <summary>
         /// Name of the bank. This property is required for bank accounts outside of the US that do not support IBAN
@@ -8909,7 +8913,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BankAddressNonIban
+    public partial record BankAddressNonIban
     {
         /// <summary>
         /// Name of the bank. This property is required for bank accounts outside of the US that do not support IBAN
@@ -8968,7 +8972,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BankAddress
+    public partial record BankAddress
     {
         /// <summary>
         /// Name of the bank. This property is required for bank accounts outside of the US that do not support IBAN
@@ -9028,7 +9032,7 @@ namespace Trakx.Circle.ApiClient
     /// Relevant fields for U.S. bank accounts.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class WireCreationRequest_US
+    public partial record WireCreationRequest_US
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -9077,7 +9081,7 @@ namespace Trakx.Circle.ApiClient
     /// Relevant fields for non-U.S. bank accounts that support IBAN.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class WireCreationRequest_iban
+    public partial record WireCreationRequest_iban
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -9119,7 +9123,7 @@ namespace Trakx.Circle.ApiClient
     /// Relevant fields for non-U.S. banks that do NOT support IBAN.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class WireCreationRequest_accountNumber
+    public partial record WireCreationRequest_accountNumber
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -9165,46 +9169,64 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Wire
+    public partial record WireResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Wire Data { get; set; } = new Wire();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record Wire
     {
         /// <summary>
         /// Unique system generated identifier for the bank account (wires).
         /// </summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid? Id { get; set; }
+        public System.Guid? Id { get; init; }
 
         /// <summary>
         /// Bank name plus last four digits of the bank account number or IBAN.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string Description { get; init; }
 
         /// <summary>
         /// Wire tracking ref that needs to be set in the wire reference to beneficiary field.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
+        public string TrackingRef { get; init; }
 
         /// <summary>
         /// A UUID that uniquely identifies the bank account. If the same bank account is used more than once, each account object will have a different id, but the fingerprint will stay the same.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("fingerprint", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Fingerprint { get; set; }
+        public string Fingerprint { get; init; }
 
         [Newtonsoft.Json.JsonProperty("billingDetails", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BillingDetails BillingDetails { get; set; }
+        public BillingDetails BillingDetails { get; init; }
 
         /// <summary>
         /// The address details for the bank, as provided during bank account creation.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("bankAddress", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BankAddress BankAddress { get; set; }
+        public BankAddress BankAddress { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UpdateDate { get; set; }
+        public string UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9218,25 +9240,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class WireInstructionBeneficiary
+    public partial record WireInstructionBeneficiary
     {
         /// <summary>
         /// Name of the beneficiary.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         /// <summary>
         /// Address line 1 of the beneficiary's address.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("address1", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Address1 { get; set; }
+        public string Address1 { get; init; }
 
         /// <summary>
         /// Address line 2 of the beneficiary's address.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("address2", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Address2 { get; set; }
+        public string Address2 { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9250,55 +9272,55 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class WireInstructionBeneficiaryBank
+    public partial record WireInstructionBeneficiaryBank
     {
         /// <summary>
         /// Name of the beneficiary's bank.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         /// <summary>
         /// SWIFT code of the beneficiary's bank account.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("swiftCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SwiftCode { get; set; }
+        public string SwiftCode { get; init; }
 
         /// <summary>
         /// ABA Routing number of the beneficiary's bank account.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("routingNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string RoutingNumber { get; set; }
+        public string RoutingNumber { get; init; }
 
         /// <summary>
         /// Account number of the beneficiary's bank account.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("accountNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AccountNumber { get; set; }
+        public string AccountNumber { get; init; }
 
         /// <summary>
         /// Address of the beneficiary's bank.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Address { get; set; }
+        public string Address { get; init; }
 
         /// <summary>
         /// City of the beneficiary's bank.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("city", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string City { get; set; }
+        public string City { get; init; }
 
         /// <summary>
         /// Postal code of the beneficiary's bank.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("postalCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PostalCode { get; set; }
+        public string PostalCode { get; init; }
 
         /// <summary>
         /// Country code of the beneficiary's bank
         /// </summary>
         [Newtonsoft.Json.JsonProperty("country", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Country { get; set; }
+        public string Country { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9312,19 +9334,37 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class WireInstruction
+    public partial record WireInstructionResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public WireInstruction Data { get; set; } = new WireInstruction();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record WireInstruction
     {
         /// <summary>
         /// Wire tracking ref that needs to be set in the wire reference field.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrackingRef { get; set; }
+        public string TrackingRef { get; init; }
 
         [Newtonsoft.Json.JsonProperty("beneficiary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public WireInstructionBeneficiary Beneficiary { get; set; }
+        public WireInstructionBeneficiary Beneficiary { get; init; }
 
         [Newtonsoft.Json.JsonProperty("beneficiaryBank", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public WireInstructionBeneficiaryBank BeneficiaryBank { get; set; }
+        public WireInstructionBeneficiaryBank BeneficiaryBank { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9338,7 +9378,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ACHCreationRequest
+    public partial record ACHCreationRequest
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -9370,7 +9410,25 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ACH
+    public partial record ACHResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public ACH Data { get; set; } = new ACH();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record ACH
     {
         /// <summary>
         /// Unique system generated identifier for the ACH account.
@@ -9426,7 +9484,7 @@ namespace Trakx.Circle.ApiClient
         /// Results of risk evaluation. Only present if the ACH account is denied by Circle's risk service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("riskEvaluation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RiskEvaluation RiskEvaluation { get; set; }
+        public RiskEvaluation RiskEvaluation { get; init; }
 
         /// <summary>
         /// Datetime when the ACH account was created. ISO-8601.
@@ -9454,7 +9512,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MockAchAccount
+    public partial record MockAchAccount
     {
         /// <summary>
         /// The account number of the ACH account.
@@ -9492,7 +9550,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MockAchAccountCreationRequest
+    public partial record MockAchAccountCreationRequest
     {
         [Newtonsoft.Json.JsonProperty("account", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -9517,22 +9575,11 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MockAchAccountResponse
+    public partial record MockAchAccountResponse
     {
-        /// <summary>
-        /// The processor token needs to be provided when linking an ACH account against this mock.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("processorToken", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ProcessorToken { get; set; }
-
-        /// <summary>
-        /// The balance of the mocked account
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("balance", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Balance { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("account", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MockAchAccount Account { get; set; }
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Data3 Data { get; set; } = new Data3();
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9546,7 +9593,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class WalletCreationRequest
+    public partial record WalletCreationRequest
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -9571,19 +9618,37 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Wallet
+    public partial record WalletResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Wire Data { get; set; } = new Wire();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record Wallet
     {
         /// <summary>
         /// Wallet identifier. Numeric value but should be treated as a string as format may change in the future
         /// </summary>
         [Newtonsoft.Json.JsonProperty("walletId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string WalletId { get; set; }
+        public string WalletId { get; init; }
 
         /// <summary>
         /// Unique identifier of the entity that owns the wallet
         /// </summary>
         [Newtonsoft.Json.JsonProperty("entityId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EntityId { get; set; }
+        public string EntityId { get; init; }
 
         /// <summary>
         /// Wallet type.
@@ -9603,7 +9668,7 @@ namespace Trakx.Circle.ApiClient
         /// A list of balances for currencies owned by the wallet.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("balances", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Money> Balances { get; set; }
+        public System.Collections.Generic.List<Money> Balances { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9647,7 +9712,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GenerateAddressRequest
+    public partial record GenerateAddressRequest
     {
         [Newtonsoft.Json.JsonProperty("idempotencyKey", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -9675,10 +9740,46 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AddressObject
+    public partial record AddressResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.List<string> Data { get; set; } = new System.Collections.Generic.List<string>();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record AddressObjectResponse
+    {
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public AddressObject Data { get; set; } = new AddressObject();
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record AddressObject
     {
         [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Address { get; set; }
+        public string Address { get; init; }
 
         [Newtonsoft.Json.JsonProperty("currency", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
@@ -9700,61 +9801,61 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Settlement
+    public partial record Settlement
     {
         /// <summary>
         /// Unique system generated identifier for the settlement.  Can be used to filter for payments settled by this settlement.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid? Id { get; set; }
+        public System.Guid? Id { get; init; }
 
         /// <summary>
         /// The merchant wallet (master wallet) to which settlement funds were deposited.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("merchantWalletId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string MerchantWalletId { get; set; }
+        public string MerchantWalletId { get; init; }
 
         /// <summary>
         /// If this settlement was used for a marketplace payment, the wallet involved in the settlement. Not included for standard merchant settlements.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("walletId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string WalletId { get; set; }
+        public string WalletId { get; init; }
 
         /// <summary>
         /// The total debits (charges) added to this settlement.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("totalDebits", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money TotalDebits { get; set; }
+        public Money TotalDebits { get; init; }
 
         /// <summary>
         /// The total credits (refunds) subtracted from this settlement.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("totalCredits", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money TotalCredits { get; set; }
+        public Money TotalCredits { get; init; }
 
         /// <summary>
         /// The total fees for payments charged in this settlement.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("paymentFees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money PaymentFees { get; set; }
+        public Money PaymentFees { get; init; }
 
         /// <summary>
         /// The total fees for chargebacks incurred in this settlement.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("chargebackFees", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money ChargebackFees { get; set; }
+        public Money ChargebackFees { get; init; }
 
         /// <summary>
         /// Datetime when the settlement was created. ISO-8061.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? CreateDate { get; set; }
+        public System.DateTimeOffset? CreateDate { get; init; }
 
         /// <summary>
         /// Datetime when the settlement was updated. ISO-8061.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("updateDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? UpdateDate { get; set; }
+        public System.DateTimeOffset? UpdateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9768,7 +9869,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BasicChargebackHistory
+    public partial record BasicChargebackHistory
     {
         /// <summary>
         /// Enumerated type of the chargeback history event. `1st Chargeback` represents the first stage of the dispute procedure initiated by the cardholder’s issuing bank. `2nd Chargeback` represents the second stage of the dispute procedure initiated by the cardholder’s issuing bank (This stage is MasterCard only). `Chargeback Reversal` represents when 1st Chargeback or 2nd Chargeback is withdrawn by the issuer. `Representment` represents the stage when merchants decided to dispute 1st Chargeback or 2nd Chargeback. `Chargeback Settlement` can imply one of the two: 1) If merchant or marketplace is taking the lost of the chargeback, money will be debit from the wallet during this stage. 2) If merchant of marketplace successfully dispute the chargeback, money will be credit back to the wallet during this stage.
@@ -9789,7 +9890,7 @@ namespace Trakx.Circle.ApiClient
         /// Fee associated with processing this chargeback status. Note that fee for each item in the history list is seperated.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("fee", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Money Fee { get; set; }
+        public Money Fee { get; init; }
 
         /// <summary>
         /// The reason the chargeback was created.
@@ -9802,10 +9903,10 @@ namespace Trakx.Circle.ApiClient
         /// Unique system generated identifier for the settlement related to the chargeback history.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("settlementId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid? SettlementId { get; set; }
+        public System.Guid? SettlementId { get; init; }
 
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreateDate { get; set; }
+        public string CreateDate { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -9819,7 +9920,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BasicChargeback
+    public partial record BasicChargeback
     {
         /// <summary>
         /// Unique system generated identifier for the chargeback item.
@@ -9862,7 +9963,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MockChargebackCreationRequest
+    public partial record MockChargebackCreationRequest
     {
         /// <summary>
         /// The id of the payment to be charged back.  Each payment can only be charged back once.
@@ -9883,7 +9984,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class MockChargeback
+    public partial record MockChargeback
     {
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
@@ -9898,7 +9999,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Reversal
+    public partial record Reversal
     {
         /// <summary>
         /// Unique system generated identifier for the reversal item.
@@ -9998,10 +10099,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response
+    public partial record Response
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<BasicPayment> Data { get; set; }
+        public Wallet Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10015,10 +10116,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response2
+    public partial record Response2
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DetailedPayment Data { get; set; }
+        public System.Collections.Generic.List<Wallet> Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10032,10 +10133,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response3
+    public partial record Response3
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DetailedPaymentPolymorphic Data { get; set; }
+        public AddressObject Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10049,10 +10150,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response4
+    public partial record Response4
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DetailedCancel Data { get; set; }
+        public System.Collections.Generic.List<AddressObject> Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10066,10 +10167,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response5
+    public partial record Response5
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DetailedRefund Data { get; set; }
+        public System.Collections.Generic.List<Settlement> Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10083,10 +10184,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response6
+    public partial record Response6
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MockWirePaymentResponse Data { get; set; }
+        public Settlement Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10100,10 +10201,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response7
+    public partial record Response7
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Wallet Data { get; set; }
+        public System.Collections.Generic.List<BasicChargeback> Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10117,10 +10218,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response8
+    public partial record Response8
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Wallet> Data { get; set; }
+        public BasicChargeback Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10134,10 +10235,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response9
+    public partial record Response9
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Wallet Data { get; set; }
+        public MockChargeback Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10151,10 +10252,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response10
+    public partial record Response10
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressObject Data { get; set; }
+        public System.Collections.Generic.List<Reversal> Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10168,10 +10269,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response11
+    public partial record Response11
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Card Data { get; set; }
+        public System.Collections.Generic.List<SignetBank> Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10185,10 +10286,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response12
+    public partial record Response12
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<SimpleCard> Data { get; set; }
+        public SignetBank Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10202,10 +10303,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response13
+    public partial record Response13
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Card Data { get; set; }
+        public SignetBank Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10219,10 +10320,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response14
+    public partial record Response14
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Card Data { get; set; }
+        public SignetBank Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10236,10 +10337,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response15
+    public partial record Response15
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Wire Data { get; set; }
+        public SilverGateSenBankResponse Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10253,10 +10354,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response16
+    public partial record Response16
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Wire Data { get; set; }
+        public SilverGateSenBankResponse Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10270,10 +10371,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response17
+    public partial record Response17
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Wire Data { get; set; }
+        public System.Collections.Generic.List<SilverGateSenBankResponse> Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10287,10 +10388,10 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response18
+    public partial record Response18
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public WireInstruction Data { get; set; }
+        public SilverGateBankInstructionResponse Data { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10304,10 +10405,23 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response19
+    public partial record Data
     {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ACH Data { get; set; }
+        /// <summary>
+        /// Circle tracking reference that needs to be set in the memo filed. This field is retrievable through the response during SEN account creation or via the bank instruction endpoint.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TrackingRef { get; init; }
+
+        [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Money Amount { get; init; }
+
+        [Newtonsoft.Json.JsonProperty("beneficiaryBank", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public BeneficiaryBank2 BeneficiaryBank { get; init; }
+
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public DataStatus? Status { get; set; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10321,456 +10435,13 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response20
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ACH Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response21
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MockAchAccountResponse Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response22
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<AddressObject> Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response23
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Settlement> Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response24
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Settlement Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response25
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<BasicChargeback> Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response26
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public BasicChargeback Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response27
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MockChargeback Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response28
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Reversal> Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response29
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<SignetBank> Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response30
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public SignetBank Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response31
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public SignetBank Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response32
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public SignetBank Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response33
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public SilverGateSenBankResponse Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response34
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public SilverGateSenBankResponse Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response35
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<SilverGateSenBankResponse> Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response36
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public SilverGateSenPaymentResponse Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response37
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public SilverGateSenPaymentResponse Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response38
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public SilverGateBankInstructionResponse Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response39
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressObject Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response40
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response41
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Transfer Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response42
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Transfer> Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Response43
-    {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DetailedTransfer Data { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BeneficiaryBank
+    public partial record BeneficiaryBank
     {
         /// <summary>
         /// Circle corporate Silvergate SEN account number that needs to be set as destination.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("accountNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AccountNumber { get; set; }
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum SilverGateSenPaymentResponseStatus
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"pending")]
-        Pending = 0,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"processed")]
-        Processed = 1,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"failed")]
-        Failed = 2,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BeneficiaryBank2
-    {
-        /// <summary>
-        /// Circle corporate Silvergate SEN account number that needs to be set as destination.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("accountNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AccountNumber { get; set; }
+        public string AccountNumber { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -10883,7 +10554,7 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Destination2
+    public partial record Destination2
     {
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
@@ -10893,19 +10564,19 @@ namespace Trakx.Circle.ApiClient
         /// The id of the wallet.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Id { get; set; }
+        public string Id { get; init; }
 
         /// <summary>
         /// An alphanumeric string which indicates the wallet address used to receive the transfer. Will only be set when the transfer source is a blockchain address.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Address { get; set; }
+        public string Address { get; init; }
 
         /// <summary>
         /// An alphanumeric string which indicates the wallet address tag used to receive the transfer. Will only be set when the transfer source is a blockchain address.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("addressTag", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AddressTag { get; set; }
+        public string AddressTag { get; init; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -11156,6 +10827,35 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record Data2
+    {
+        /// <summary>
+        /// Wire tracking reference that needs to be set in the wire reference to beneficiary field. This field is retrievable through the response during wire creation or via the bank instruction endpoint.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("trackingRef", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TrackingRef { get; init; }
+
+        [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Money Amount { get; init; }
+
+        /// <summary>
+        /// Enumerated status of the wire payment. Status `pending` indicates that the wire payment is in process; `complete` indicates it finished successfully; `failed` indicates it failed.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Status { get; init; }
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum CardStatus
     {
 
@@ -11186,6 +10886,35 @@ namespace Trakx.Circle.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record Data3
+    {
+        /// <summary>
+        /// The processor token needs to be provided when linking an ACH account against this mock.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("processorToken", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ProcessorToken { get; init; }
+
+        /// <summary>
+        /// The balance of the mocked account
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("balance", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Money Balance { get; init; }
+
+        [Newtonsoft.Json.JsonProperty("account", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MockAchAccount Account { get; init; }
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum WalletType
     {
 
@@ -11212,6 +10941,41 @@ namespace Trakx.Circle.ApiClient
 
         [System.Runtime.Serialization.EnumMember(Value = @"Chargeback Settlement")]
         Chargeback_Settlement = 4,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial record BeneficiaryBank2
+    {
+        /// <summary>
+        /// Circle corporate Silvergate SEN account number that needs to be set as destination.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("accountNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AccountNumber { get; init; }
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum DataStatus
+    {
+
+        [System.Runtime.Serialization.EnumMember(Value = @"pending")]
+        Pending = 0,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"processed")]
+        Processed = 1,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"failed")]
+        Failed = 2,
 
     }
 

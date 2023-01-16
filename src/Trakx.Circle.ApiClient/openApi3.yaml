@@ -2,14 +2,36 @@
 info:
   title: Circle API
   version: '1.0.0'
+  contact:
+    name: trakx.io
+    email: support@trakx.io
+    url: https://trakx.io
 servers:
   - url: 'https://api-sandbox.circle.com'
-    description: Circle production base url
+    description: Circle sandbox base url
 security:
   - ApiKeyAuth: []
 tags:
   - name: Accounts
     description: "Endpoints related to getting details about trading accounts"
+  - name: Payments
+    description: "Endpoints for payments"
+  - name: Cards
+    description: "Endpoints for cards"
+  - name: BankAccounts
+    description: "Endpoints for bankaccount"
+  - name: Settlements
+    description: "Endpoint for Settlements"
+  - name: Chargebacks 
+    description: "Endpoint for Chargebacks"
+  - name: Reversals
+    description: "Endpoints for Reversals"
+  - name: BusinessAccount
+    description: "Endpoint for BusinessAccount"
+  - name: Wallets
+    description: "Endpoints for  Wallets"
+  - name: Transfers
+    description: "Endpoints for  Transfers"
 paths:
   /v1/businessAccount/balances:
     get:
@@ -65,20 +87,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    type: array
-                    items:
-                      oneOf:
-                        - $ref: "#/components/schemas/BasicPayment"
-                        - $ref: "#/components/schemas/BasicCancel"
-                        - $ref: "#/components/schemas/BasicRefund"
-                      discriminator:
-                        propertyName: type
-                        mapping:
-                          payment: "#/components/schemas/BasicPayment"
-                          cancel: "#/components/schemas/BasicCancel"
-                          refund: "#/components/schemas/BasicRefund"
+                $ref: "#/components/schemas/PaymentResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
     post:
@@ -102,9 +111,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/DetailedPayment"
+                $ref: "#/components/schemas/DetailedPaymentResponse"
         '400':
           $ref: "#/components/responses/BadRequest"
         '401':
@@ -135,9 +142,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/DetailedPaymentPolymorphic"
+                $ref: "#/components/schemas/DetailedPaymentPolymorphicResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
         '404':
@@ -177,9 +182,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/DetailedCancel"
+                $ref: "#/components/schemas/DetailedCancelResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
         '404':
@@ -217,9 +220,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/DetailedRefund"
+                $ref: "#/components/schemas/DetailedRefundResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
         '404':
@@ -247,9 +248,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/MockWirePaymentResponse"
+                $ref: "#/components/schemas/MockWirePaymentResponse"
         '400':
           $ref: "#/components/responses/BadRequest"
         '401':
@@ -276,9 +275,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Card"
+                $ref: "#/components/schemas/CardResponse"
         '400':
           $ref: "#/components/responses/BadRequest"
         '401':
@@ -303,11 +300,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/SimpleCard"
+                $ref: "#/components/schemas/SimpleCardResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
   /v1/cards/{id}:
@@ -334,9 +327,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Card"
+                $ref: "#/components/schemas/CardResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
         '404':
@@ -369,9 +360,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Card"
+                $ref: "#/components/schemas/CardResponse"
   /v1/banks/wires:
     post:
       security:
@@ -395,9 +384,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Wire"
+                 $ref: "#/components/schemas/WireResponse"
         '201':
           description: Successfully created a bank account for wire transfers.
           headers:
@@ -406,9 +393,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Wire"
+                $ref: "#/components/schemas/WireResponse"
         '400':
           $ref: "#/components/responses/BadRequest"
         '401':
@@ -438,9 +423,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Wire"
+                $ref: "#/components/schemas/WireResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
         '404':
@@ -470,9 +453,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/WireInstruction"
+                $ref: "#/components/schemas/WireInstructionResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
         '404':
@@ -501,9 +482,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/ACH"
+                $ref: "#/components/schemas/ACHResponse"
         '400':
           $ref: "#/components/responses/BadRequest"
         '401':
@@ -534,9 +513,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/ACH"
+                $ref: "#/components/schemas/ACHResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
         '404':
@@ -564,9 +541,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/MockAchAccountResponse"
+                $ref: "#/components/schemas/MockAchAccountResponse"
         '400':
           $ref: "#/components/responses/BadRequest"
         '401':
@@ -597,7 +572,6 @@ paths:
                 properties:
                   data:
                     $ref: "#/components/schemas/Wallet"
-
     get:
       security:
         - bearerAuth: [ ]
@@ -652,9 +626,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Wallet"
+                $ref: "#/components/schemas/WalletResponse"
         '404':
           $ref: "#/components/responses/NotFound"
   /v1/wallets/{id}/addresses:
@@ -716,7 +688,7 @@ paths:
       description: Retrieves a list of addresses associated with a wallet.
       operationId: getAddresses
       tags:
-        - On-chain payments
+        - Payments
       responses:
         '200':
           description: Successfully retrieved a list of addresses.
@@ -1103,7 +1075,6 @@ paths:
           $ref: "#/components/responses/BadRequest"
         '401':
           $ref: "#/components/responses/NotAuthorized"
-    
   /v1/mocks/payments/sen:
     post:
       security:
@@ -1127,9 +1098,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/SilverGateSenPaymentResponse"
+                $ref: "#/components/schemas/SilverGateSenPaymentResponse"
         '200':
           description: "Successfully created a SilverGate payment"
           headers:
@@ -1138,9 +1107,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/SilverGateSenPaymentResponse"
+                $ref: "#/components/schemas/SilverGateSenPaymentResponse"
         '400':
           $ref: "#/components/responses/BadRequest"
         '401':
@@ -1182,7 +1149,6 @@ paths:
           $ref: "#/components/responses/NotAuthorized"
         '404':
           $ref: "#/components/responses/NotFound"
-  
   /v1/wallets/{walletId}/addresses:
     post:
       parameters:
@@ -1214,9 +1180,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/AddressObject"
+                $ref: "#/components/schemas/AddressObjectResponse"
         '400':
           $ref: "#/components/responses/BadRequest"
         '409':
@@ -1252,11 +1216,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Address"
+                $ref: "#/components/schemas/AddressResponse"
         '400':
           $ref: "#/components/responses/BadRequest"
         '404':
@@ -1284,9 +1244,8 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Transfer"
+                $ref: "#/components/schemas/TransferResponse"
+                    
     get:
       security:
         - bearerAuth: [ ]
@@ -1328,11 +1287,9 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Transfer"
+                type: array
+                items:
+                  $ref: "#/components/schemas/TransferResponse"
         '401':
           $ref: "#/components/responses/NotAuthorized"
   /v1/transfers/{id}:
@@ -1359,9 +1316,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/DetailedTransfer"
+                $ref: "#/components/schemas/DetailedTransferResponse"
 
 components:
   securitySchemes:
@@ -1376,26 +1331,49 @@ components:
         type: string
         example: "2adba88e-9d63-44bc-b975-9b6ae3440dde"
   schemas:
+    PaymentResponse:
+      type: object
+      required: 
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/BasicPayment"
+              - $ref: "#/components/schemas/BasicCancel"
+              - $ref: "#/components/schemas/BasicRefund"
+            discriminator:
+              propertyName: type
+              mapping:
+                payment: "#/components/schemas/BasicPayment"
+                cancel: "#/components/schemas/BasicCancel"
+                refund: "#/components/schemas/BasicRefund"
     SilverGateSenPaymentResponse:
       type: object
+      required: 
+        - data
       properties:
-        trackingRef:
-          description: Circle tracking reference that needs to be set in the memo filed. This field is retrievable through the response during SEN account creation or via the bank instruction endpoint.
-          type: string
-        amount:
-          $ref: "#/components/schemas/Money"
-        beneficiaryBank:
+        data:
           type: object
           properties:
-            accountNumber:
+            trackingRef:
+              description: Circle tracking reference that needs to be set in the memo filed. This field is retrievable through the response during SEN account creation or via the bank instruction endpoint.
               type: string
-              description: Circle corporate Silvergate SEN account number that needs to be set as destination.
-        status:
-          type: string
-          enum:
-            - pending
-            - processed
-            - failed
+            amount:
+              $ref: "#/components/schemas/Money"
+            beneficiaryBank:
+              type: object
+              properties:
+                accountNumber:
+                  type: string
+                  description: Circle corporate Silvergate SEN account number that needs to be set as destination.
+            status:
+              type: string
+              enum:
+                - pending
+                - processed
+                - failed
     
     SilverGateSenBankTransferRequest:
       type: object
@@ -1634,6 +1612,13 @@ components:
             - "blockchain"
         chain:
           $ref: "#/components/schemas/Chain"
+    TransferResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data: 
+          $ref: "#/components/schemas/Transfer"
     Transfer:
       type: object
       description: "A transfer of funds."
@@ -1727,6 +1712,13 @@ components:
         - $ref: "#/components/schemas/DestinationBlockchainLocation"
       discriminator:
         propertyName: type
+    DetailedTransferResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data:
+          $ref: "#/components/schemas/DetailedTransfer"        
     DetailedTransfer:
       type: object
       description: "A transfer of funds."
@@ -2073,6 +2065,13 @@ components:
         - card_cvv_required
         - credit_card_not_allowed
         - card_account_ineligible
+    DetailedPaymentResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+         data:
+           $ref: "#/components/schemas/DetailedPayment"
     DetailedPayment:
       type: object
       required:
@@ -2301,6 +2300,14 @@ components:
           $ref: "#/components/schemas/UTCTimestamp"
         updateDate:
           $ref: "#/components/schemas/UTCTimestamp"
+    DetailedPaymentPolymorphicResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data:
+          $ref: "#/components/schemas/DetailedPaymentPolymorphic"
+            
     DetailedPaymentPolymorphic:
       type: object
       required:
@@ -2379,6 +2386,13 @@ components:
           $ref: "#/components/schemas/UTCTimestamp"
         updateDate:
           $ref: "#/components/schemas/UTCTimestamp"
+    DetailedCancelResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data:
+          $ref: "#/components/schemas/DetailedCancel"
     DetailedCancel:
       type: object
       required:
@@ -2578,6 +2592,13 @@ components:
           $ref: "#/components/schemas/Money"
         reason:
           $ref: "#/components/schemas/ReversalReason"
+    DetailedRefundResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data: 
+          $ref: "#/components/schemas/DetailedRefund"
     DetailedRefund:
       type: object
       required:
@@ -2663,17 +2684,24 @@ components:
           example: "123456789"
     MockWirePaymentResponse:
       type: object
-      properties:
-        trackingRef:
-          description: "Wire tracking reference that needs to be set in the wire reference to beneficiary field. This field is retrievable through the response during wire creation or via the bank instruction endpoint."
-          type: string
-          example: "CIR13FB13A"
-        amount:
-          $ref: "#/components/schemas/Money"
-        status:
-          description: "Enumerated status of the wire payment. Status `pending` indicates that the wire payment is in process; `complete` indicates it finished successfully; `failed` indicates it failed."
-          type: string
-          example: "pending"
+      required: 
+        - data
+      properties: 
+        data: 
+          type: object
+          properties:
+            trackingRef:
+              description: "Wire tracking reference that needs to be set in the wire reference to beneficiary field. This field is retrievable through the response during wire creation or via the bank instruction endpoint."
+              type: string
+              example: "CIR13FB13A"
+            amount:
+              $ref: "#/components/schemas/Money"
+            status:
+              description: "Enumerated status of the wire payment. Status `pending` indicates that the wire payment is in process; `complete` indicates it finished successfully; `failed` indicates it failed."
+              type: string
+              example: "pending"
+    
+      
     VerificationErrorCode:
       type: string
       description: "Indicates the failure reason of the card verification. Only present on cards with failed verification. Possible values are [verification_failed, verification_fraud_detected, verification_denied, verification_not_supported_by_issuer, verification_stopped_by_issuer, card_failed, card_invalid, card_address_mismatch, card_zip_mismatch, card_cvv_invalid, card_expired, card_limit_violated, card_not_honored, card_cvv_required, credit_card_not_allowed, card_account_ineligible]"
@@ -2694,6 +2722,14 @@ components:
         - card_cvv_required
         - credit_card_not_allowed
         - card_account_ineligible
+    CardResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data:
+          $ref: "#/components/schemas/Card"
+        
     Card:
       type: object
       required:
@@ -2784,6 +2820,15 @@ components:
           type: "string"
           maxLength: 16
           example: "MA"
+    SimpleCardResponse:
+        type: object
+        required:
+          - data
+        properties:
+          data:
+            type: array
+            items:
+              $ref: "#/components/schemas/SimpleCard"
     SimpleCard:
       # Card with no sensitive fields
       type: object
@@ -3062,9 +3107,16 @@ components:
       description: "Request object used to create a bank account (wires). Different fields are required depending on the bank country, see the guide documentation for the list of supported bank countries along with which ones support IBAN."
       type: object
       oneOf:
-        - $ref: "#/components/schemas/WireCreationRequest_US"
         - $ref: "#/components/schemas/WireCreationRequest_iban"
         - $ref: "#/components/schemas/WireCreationRequest_accountNumber"
+        - $ref: "#/components/schemas/WireCreationRequest_US"
+    WireResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data: 
+          $ref: "#/components/schemas/Wire"
     Wire:
       type: object
       properties:
@@ -3144,6 +3196,13 @@ components:
           description: "Country code of the beneficiary's bank"
           type: string
           example: "US"
+    WireInstructionResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data: 
+          $ref: "#/components/schemas/WireInstruction"
     WireInstruction:
       type: object
       properties:
@@ -3170,6 +3229,13 @@ components:
           billingDetails:
             description: "Billing details of the card holder."
             $ref: "#/components/schemas/BillingDetails"
+    ACHResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data: 
+          $ref: "#/components/schemas/ACH"
     ACH:
       type: object
       required:
@@ -3262,16 +3328,21 @@ components:
           $ref: "#/components/schemas/Money"
     MockAchAccountResponse:
       type: object
-      properties:
-        processorToken:
-          description: "The processor token needs to be provided when linking an ACH account against this mock."
-          type: string
-          example: "processor-sandbox-circle-82cf95bb-43f8-4191-8d30-2c9f42853621"
-        balance:
-          description: The balance of the mocked account
-          $ref: "#/components/schemas/Money"
-        account:
-          $ref: "#/components/schemas/MockAchAccount"
+      required: 
+        - data
+      properties: 
+        data: 
+          type: object
+          properties:
+            processorToken:
+              description: "The processor token needs to be provided when linking an ACH account against this mock."
+              type: string
+              example: "processor-sandbox-circle-82cf95bb-43f8-4191-8d30-2c9f42853621"
+            balance:
+              description: The balance of the mocked account
+              $ref: "#/components/schemas/Money"
+            account:
+              $ref: "#/components/schemas/MockAchAccount"
     WalletCreationRequest:
         type: object
         required:
@@ -3284,6 +3355,13 @@ components:
             type: string
             example: "Treasury Wallet"
             maxLength: 255
+    WalletResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data:
+          $ref: "#/components/schemas/Wire"
     Wallet:
       type: object
       properties:
@@ -3333,10 +3411,26 @@ components:
             $ref: "#/components/schemas/Currency"
           chain:
             $ref: "#/components/schemas/Chain"
+    AddressResponse:
+      type: object
+      required: 
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
     Address:
       type: string
       description: "An alphanumeric string representing a blockchain address. Will be in different formats for different chains. It is important to preserve the exact formatting and capitalization of the address."
       example: "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
+    AddressObjectResponse:
+      type: object
+      required: 
+        - data
+      properties: 
+        data: 
+          $ref: "#/components/schemas/AddressObject"
     AddressObject:
       type: object
       properties:
