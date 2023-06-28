@@ -27,7 +27,7 @@ public class PaymentsClientTests : CircleClientTestsBase
         const int pageSize = 10;
         const int minCount = 0;
         var payment = await _paymentsClient.GetPaymentsAsync(pageSize: pageSize);
-        payment.Result.Data.Should().HaveCountGreaterThanOrEqualTo(minCount);
+        payment.Content.Data.Should().HaveCountGreaterThanOrEqualTo(minCount);
         Logger.Information("The call to retrieve  returned with status code {PaymentStatusCode}", payment.StatusCode);
         payment.StatusCode.Should().Be(StatusCodes.Status200OK);
 

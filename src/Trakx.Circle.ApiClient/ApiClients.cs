@@ -6,7 +6,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
-using Trakx.Utils.Apis;
+using Trakx.Common.ApiClient;
 
 #pragma warning disable CS0618
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
@@ -32,7 +32,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved balances.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<BalancesResponse>> GetBalancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<BalancesResponse>> GetBalancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -69,7 +69,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved balances.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<BalancesResponse>> GetBalancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<BalancesResponse>> GetBalancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/businessAccount/balances");
@@ -111,7 +111,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<BalancesResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<BalancesResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -287,7 +287,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="status">Queries items with the specified status. Matches any status if unspecified.</param>
         /// <returns>Successfully retrieved a list of payments.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<PaymentResponse>> GetPaymentsAsync(System.Guid? settlementId = null, System.Collections.Generic.List<Anonymous> type = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, Status? status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<PaymentResponse>> GetPaymentsAsync(System.Guid? settlementId = null, System.Collections.Generic.List<Anonymous> type = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, Status? status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -295,7 +295,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedPaymentResponse>> CreatePaymentAsync(CardPaymentCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedPaymentResponse>> CreatePaymentAsync(CardPaymentCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -304,7 +304,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Successfully retrieved a payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedPaymentPolymorphicResponse>> GetPaymentAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedPaymentPolymorphicResponse>> GetPaymentAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -313,7 +313,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Payment cancellation successfully initiated.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedCancelResponse>> CancelPaymentAsync(string id, CancelCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedCancelResponse>> CancelPaymentAsync(string id, CancelCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -322,7 +322,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Payment refund successfully initiated.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedRefundResponse>> RefundPaymentAsync(string id, RefundCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedRefundResponse>> RefundPaymentAsync(string id, RefundCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -330,7 +330,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock wire payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<MockWirePaymentResponse>> CreateWirePaymentAsync(MockWirePaymentRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<MockWirePaymentResponse>> CreateWirePaymentAsync(MockWirePaymentRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -338,7 +338,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a wallet.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response>> CreateWalletAsync(WalletCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response>> CreateWalletAsync(WalletCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -374,7 +374,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of wallets.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response2>> GetWalletsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response2>> GetWalletsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -383,7 +383,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the wallet.</param>
         /// <returns>Successfully retrieved a wallet.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WalletResponse>> GetWalletAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<WalletResponse>> GetWalletAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -392,7 +392,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response3>> GenerateAddressAsync(string id, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response3>> GenerateAddressAsync(string id, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -429,7 +429,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of addresses.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response4>> GetAddressesAsync(string id, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response4>> GetAddressesAsync(string id, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -497,7 +497,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="status">Queries items with the specified status. Matches any status if unspecified.</param>
         /// <returns>Successfully retrieved a list of payments.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<PaymentResponse>> GetPaymentsAsync(System.Guid? settlementId = null, System.Collections.Generic.List<Anonymous> type = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, Status? status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<PaymentResponse>> GetPaymentsAsync(System.Guid? settlementId = null, System.Collections.Generic.List<Anonymous> type = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, Status? status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/payments?");
@@ -572,7 +572,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<PaymentResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<PaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -610,7 +610,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedPaymentResponse>> CreatePaymentAsync(CardPaymentCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedPaymentResponse>> CreatePaymentAsync(CardPaymentCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/payments");
@@ -655,7 +655,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<DetailedPaymentResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<DetailedPaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -714,7 +714,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Successfully retrieved a payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedPaymentPolymorphicResponse>> GetPaymentAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedPaymentPolymorphicResponse>> GetPaymentAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -760,7 +760,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<DetailedPaymentPolymorphicResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<DetailedPaymentPolymorphicResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -809,7 +809,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Payment cancellation successfully initiated.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedCancelResponse>> CancelPaymentAsync(string id, CancelCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedCancelResponse>> CancelPaymentAsync(string id, CancelCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -858,7 +858,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<DetailedCancelResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<DetailedCancelResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -907,7 +907,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the payment.</param>
         /// <returns>Payment refund successfully initiated.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedRefundResponse>> RefundPaymentAsync(string id, RefundCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedRefundResponse>> RefundPaymentAsync(string id, RefundCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -956,7 +956,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<DetailedRefundResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<DetailedRefundResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -1004,7 +1004,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock wire payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<MockWirePaymentResponse>> CreateWirePaymentAsync(MockWirePaymentRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<MockWirePaymentResponse>> CreateWirePaymentAsync(MockWirePaymentRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/mocks/payments/wire");
@@ -1049,7 +1049,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<MockWirePaymentResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<MockWirePaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -1097,7 +1097,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a wallet.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response>> CreateWalletAsync(WalletCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response>> CreateWalletAsync(WalletCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/wallets");
@@ -1142,7 +1142,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {
@@ -1198,7 +1198,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of wallets.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response2>> GetWalletsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response2>> GetWalletsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/wallets?");
@@ -1261,7 +1261,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response2>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response2>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -1300,7 +1300,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the wallet.</param>
         /// <returns>Successfully retrieved a wallet.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WalletResponse>> GetWalletAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<WalletResponse>> GetWalletAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1346,7 +1346,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<WalletResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<WalletResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 404)
@@ -1385,7 +1385,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response3>> GenerateAddressAsync(string id, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response3>> GenerateAddressAsync(string id, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1434,7 +1434,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response3>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response3>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -1521,7 +1521,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of addresses.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response4>> GetAddressesAsync(string id, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response4>> GetAddressesAsync(string id, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1588,7 +1588,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response4>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response4>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -1743,7 +1743,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> CreateCardAsync(CardCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<CardResponse>> CreateCardAsync(CardCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1777,7 +1777,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of cards.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<SimpleCardResponse>> GetCardsAsync(string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<SimpleCardResponse>> GetCardsAsync(string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1786,7 +1786,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the card.</param>
         /// <returns>Successfully retrieved a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> GetCardAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<CardResponse>> GetCardAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1795,7 +1795,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the card.</param>
         /// <returns>Successfully modified a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> UpdateCardAsync(string id, CardUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<CardResponse>> UpdateCardAsync(string id, CardUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -1832,7 +1832,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> CreateCardAsync(CardCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<CardResponse>> CreateCardAsync(CardCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/cards");
@@ -1877,7 +1877,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<CardResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<CardResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -1951,7 +1951,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of cards.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<SimpleCardResponse>> GetCardsAsync(string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<SimpleCardResponse>> GetCardsAsync(string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/cards?");
@@ -2006,7 +2006,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<SimpleCardResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<SimpleCardResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -2045,7 +2045,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the card.</param>
         /// <returns>Successfully retrieved a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> GetCardAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<CardResponse>> GetCardAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2091,7 +2091,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<CardResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<CardResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -2140,7 +2140,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the card.</param>
         /// <returns>Successfully modified a card.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<CardResponse>> UpdateCardAsync(string id, CardUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<CardResponse>> UpdateCardAsync(string id, CardUpdate body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2189,7 +2189,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<CardResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<CardResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {
@@ -2324,7 +2324,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a bank account for wire transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireResponse>> CreateWireBankAccountAsync(WireCreationRequest_iban body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<WireResponse>> CreateWireBankAccountAsync(WireCreationRequest_iban body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2333,7 +2333,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for wire transfers.</param>
         /// <returns>Successfully retrieved a bank account for wire transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireResponse>> GetWireBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<WireResponse>> GetWireBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2342,7 +2342,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for wire transfers.</param>
         /// <returns>Successfully retrieved wire transfer instructions for the bank account.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireInstructionResponse>> GetWireInstructionsBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<WireInstructionResponse>> GetWireInstructionsBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2350,7 +2350,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a bank account for ACH transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<ACHResponse>> CreateACHBankAccountAsync(ACHCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<ACHResponse>> CreateACHBankAccountAsync(ACHCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2359,7 +2359,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for ACH transfers.</param>
         /// <returns>Successfully retrieved a bank account for ACH transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<ACHResponse>> GetACHBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<ACHResponse>> GetACHBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -2367,7 +2367,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock ach payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<MockAchAccountResponse>> CreateAchAccountAsync(MockAchAccountCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<MockAchAccountResponse>> CreateAchAccountAsync(MockAchAccountCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -2404,7 +2404,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a bank account for wire transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireResponse>> CreateWireBankAccountAsync(WireCreationRequest_iban body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<WireResponse>> CreateWireBankAccountAsync(WireCreationRequest_iban body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/banks/wires");
@@ -2449,7 +2449,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<WireResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<WireResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 201)
@@ -2459,7 +2459,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<WireResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<WireResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -2508,7 +2508,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for wire transfers.</param>
         /// <returns>Successfully retrieved a bank account for wire transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireResponse>> GetWireBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<WireResponse>> GetWireBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2554,7 +2554,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<WireResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<WireResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -2603,7 +2603,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for wire transfers.</param>
         /// <returns>Successfully retrieved wire transfer instructions for the bank account.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<WireInstructionResponse>> GetWireInstructionsBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<WireInstructionResponse>> GetWireInstructionsBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2649,7 +2649,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<WireInstructionResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<WireInstructionResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -2697,7 +2697,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a bank account for ACH transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<ACHResponse>> CreateACHBankAccountAsync(ACHCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<ACHResponse>> CreateACHBankAccountAsync(ACHCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/banks/ach");
@@ -2742,7 +2742,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<ACHResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<ACHResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -2791,7 +2791,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the bank account for ACH transfers.</param>
         /// <returns>Successfully retrieved a bank account for ACH transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<ACHResponse>> GetACHBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<ACHResponse>> GetACHBankAccountAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2837,7 +2837,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<ACHResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<ACHResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -2885,7 +2885,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock ach payment.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<MockAchAccountResponse>> CreateAchAccountAsync(MockAchAccountCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<MockAchAccountResponse>> CreateAchAccountAsync(MockAchAccountCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/mocks/ach/accounts");
@@ -2930,7 +2930,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<MockAchAccountResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<MockAchAccountResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -3113,7 +3113,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of settlements.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response5>> GetSettlementsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response5>> GetSettlementsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3122,7 +3122,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the settlement.</param>
         /// <returns>Successfully retrieved a settlement.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response6>> GetSettlementAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response6>> GetSettlementAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -3187,7 +3187,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of settlements.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response5>> GetSettlementsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response5>> GetSettlementsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/settlements?");
@@ -3250,7 +3250,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response5>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response5>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -3289,7 +3289,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the settlement.</param>
         /// <returns>Successfully retrieved a settlement.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response6>> GetSettlementAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response6>> GetSettlementAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3335,7 +3335,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response6>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response6>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -3518,7 +3518,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of chargebacks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response7>> GetChargebacksAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response7>> GetChargebacksAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3527,7 +3527,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the chargeback.</param>
         /// <returns>Successfully retrieved a chargeback.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response8>> GetChargebackAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response8>> GetChargebackAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -3535,7 +3535,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock chargeback.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response9>> CreateMockChargebackAsync(MockChargebackCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response9>> CreateMockChargebackAsync(MockChargebackCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -3600,7 +3600,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of chargebacks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response7>> GetChargebacksAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response7>> GetChargebacksAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/chargebacks?");
@@ -3663,7 +3663,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response7>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response7>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -3712,7 +3712,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier of the chargeback.</param>
         /// <returns>Successfully retrieved a chargeback.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response8>> GetChargebackAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response8>> GetChargebackAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3758,7 +3758,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response8>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response8>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -3806,7 +3806,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a mock chargeback.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response9>> CreateMockChargebackAsync(MockChargebackCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response9>> CreateMockChargebackAsync(MockChargebackCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/mocks/cards/chargebacks");
@@ -3851,7 +3851,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response9>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response9>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4054,7 +4054,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of ACH payment reversals.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response10>> GetReversalsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response10>> GetReversalsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -4119,7 +4119,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of ACH payment reversals.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response10>> GetReversalsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response10>> GetReversalsAsync(System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/reversals?");
@@ -4182,7 +4182,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response10>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response10>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4337,7 +4337,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved a list of signet banks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response11>> GetSignetBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response11>> GetSignetBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4345,7 +4345,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response12>> CreateSignetBankAsync(SignetBankCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response12>> CreateSignetBankAsync(SignetBankCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4354,7 +4354,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response14>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response14>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4362,7 +4362,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a SilverGate bank</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response15>> CreateSilverGateBankAsync(SilverGateSenBankRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response15>> CreateSilverGateBankAsync(SilverGateSenBankRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4370,7 +4370,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved a list of silver gate banks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response17>> GetSilverGateBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response17>> GetSilverGateBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4378,7 +4378,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a SilverGate payment</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<SilverGateSenPaymentResponse>> CreateSilverGateMockTransferAsync(SilverGateSenBankTransferRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<SilverGateSenPaymentResponse>> CreateSilverGateMockTransferAsync(SilverGateSenBankTransferRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -4387,7 +4387,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a SilverGate bank instruction.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response18>> GetSilverGateBankInstructionAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response18>> GetSilverGateBankInstructionAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -4424,7 +4424,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved a list of signet banks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response11>> GetSignetBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response11>> GetSignetBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/businessAccount/banks/signet");
@@ -4466,7 +4466,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response11>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response11>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4514,7 +4514,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response12>> CreateSignetBankAsync(SignetBankCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response12>> CreateSignetBankAsync(SignetBankCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/businessAccount/banks/signet");
@@ -4569,7 +4569,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response12>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response12>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4628,7 +4628,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a signet bank.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response14>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response14>> GetSignetBankAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -4674,7 +4674,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response14>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response14>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4732,7 +4732,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a SilverGate bank</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response15>> CreateSilverGateBankAsync(SilverGateSenBankRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response15>> CreateSilverGateBankAsync(SilverGateSenBankRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/businessAccount/banks/sen");
@@ -4787,7 +4787,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response15>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response15>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4845,7 +4845,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully retrieved a list of silver gate banks.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response17>> GetSilverGateBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response17>> GetSilverGateBanksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/businessAccount/banks/sen");
@@ -4887,7 +4887,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response17>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response17>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -4935,7 +4935,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a SilverGate payment</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<SilverGateSenPaymentResponse>> CreateSilverGateMockTransferAsync(SilverGateSenBankTransferRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<SilverGateSenPaymentResponse>> CreateSilverGateMockTransferAsync(SilverGateSenBankTransferRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/mocks/payments/sen");
@@ -4980,7 +4980,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<SilverGateSenPaymentResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<SilverGateSenPaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 200)
@@ -4990,7 +4990,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<SilverGateSenPaymentResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<SilverGateSenPaymentResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5049,7 +5049,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Universally unique identifier (UUID v4) of a resource.</param>
         /// <returns>Successfully retrieved a SilverGate bank instruction.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<Response18>> GetSilverGateBankInstructionAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<Response18>> GetSilverGateBankInstructionAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -5095,7 +5095,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<Response18>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<Response18>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5261,7 +5261,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="walletId">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<AddressObjectResponse>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<AddressObjectResponse>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5298,7 +5298,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of addresses.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<AddressResponse>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<AddressResponse>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -5336,7 +5336,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="walletId">Unique id of a wallet.</param>
         /// <returns>Successfully generated a new address.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<AddressObjectResponse>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<AddressObjectResponse>> GenerateWalletAddressAsync(string walletId, GenerateAddressRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (walletId == null)
                 throw new System.ArgumentNullException("walletId");
@@ -5385,7 +5385,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<AddressObjectResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<AddressObjectResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5472,7 +5472,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of addresses.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<AddressResponse>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<AddressResponse>> GetWalletAddressesAsync(string walletId, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (walletId == null)
                 throw new System.ArgumentNullException("walletId");
@@ -5539,7 +5539,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<AddressResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<AddressResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 400)
@@ -5694,7 +5694,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<TransferResponse>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<TransferResponse>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5733,7 +5733,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<System.Collections.Generic.List<TransferResponse>>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<System.Collections.Generic.List<TransferResponse>>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -5742,7 +5742,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the transfer.</param>
         /// <returns>Successfully retrieved a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedTransferResponse>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedTransferResponse>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -5779,7 +5779,7 @@ namespace Trakx.Circle.ApiClient
         /// </summary>
         /// <returns>Successfully created a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<TransferResponse>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<TransferResponse>> CreateTransferAsync(TransferCreationRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/transfers");
@@ -5824,7 +5824,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<TransferResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<TransferResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {
@@ -5883,7 +5883,7 @@ namespace Trakx.Circle.ApiClient
         /// <br/>If avoided, the collection will determine the page size itself.</param>
         /// <returns>Successfully retrieved a list of transfers.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<System.Collections.Generic.List<TransferResponse>>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<System.Collections.Generic.List<TransferResponse>>> SearchTransfersAsync(string walletId = null, string sourceWalletId = null, string destinationWalletId = null, System.DateTimeOffset? from = null, System.DateTimeOffset? to = null, string pageBefore = null, string pageAfter = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/transfers?");
@@ -5958,7 +5958,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<System.Collections.Generic.List<TransferResponse>>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<System.Collections.Generic.List<TransferResponse>>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         if (status_ == 401)
@@ -5997,7 +5997,7 @@ namespace Trakx.Circle.ApiClient
         /// <param name="id">Unique identifier for the transfer.</param>
         /// <returns>Successfully retrieved a transfer.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Trakx.Utils.Apis.Response<DetailedTransferResponse>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Trakx.Common.ApiClient.Response<DetailedTransferResponse>> GetTransferAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -6043,7 +6043,7 @@ namespace Trakx.Circle.ApiClient
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new Trakx.Utils.Apis.Response<DetailedTransferResponse>(status_, headers_, objectResponse_.Object);
+                            return new Trakx.Common.ApiClient.Response<DetailedTransferResponse>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {

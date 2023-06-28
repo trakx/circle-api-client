@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Trakx.Circle.ApiClient.Utils;
+﻿using Trakx.Circle.ApiClient.Utils;
 
 namespace Trakx.Circle.ApiClient;
 
