@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using Trakx.Utils.Testing;
+using Trakx.Common.Testing.Configuration;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -34,7 +34,7 @@ public class CircleApiFixture : IDisposable
 
     public CircleApiFixture()
     {
-        var configuration = ConfigurationHelper.GetConfigurationFromAws<CircleApiConfiguration>()
+        var configuration = AwsConfigurationHelper.GetConfigurationFromAws<CircleApiConfiguration>()
             with {
                 BaseUrl = "https://api-sandbox.circle.com"
             };

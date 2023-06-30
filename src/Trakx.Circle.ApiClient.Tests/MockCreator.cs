@@ -3,7 +3,7 @@ using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests;
 
-public class MockCreator: Trakx.Utils.Testing.MockCreator
+public class MockCreator: Common.Testing.Mocks.MockCreator
 {
     private const int StringSize = 10;
     private const int RandomGenerateMin = 10_000_000;

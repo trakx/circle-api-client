@@ -1,9 +1,8 @@
-﻿using Trakx.Utils.Extensions;
+﻿using Trakx.Common.Infrastructure.Environment.Env;
 using Xunit.Abstractions;
-using Trakx.Utils.Testing;
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
-public class OpenApiGeneratedCodeModifiers : OpenApiGeneratedCodeModifier
+public class OpenApiGeneratedCodeModifiers : Common.Testing.Documentation.OpenApiGeneratedCodeModifier
 {
     public OpenApiGeneratedCodeModifiers(ITestOutputHelper output)
         : base(output)
