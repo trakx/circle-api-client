@@ -30,7 +30,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Serilog" Version="3.0.1" />
-    <PackageReference Include="Trakx.Common" Version="0.2.5" />
+    <PackageReference Include="Trakx.Common" Version="0.3.0" />
     <PackageReference Include="Trakx.Common.ApiClient" Version="0.2.5" />
   </ItemGroup>
 
