@@ -31,7 +31,7 @@
     </PackageReference>
     <PackageReference Include="Serilog" Version="3.0.1" />
     <PackageReference Include="Trakx.Common" Version="0.4.0" />
-    <PackageReference Include="Trakx.Common.ApiClient" Version="0.3.3" />
+    <PackageReference Include="Trakx.Common.ApiClient" Version="0.4.0" />
   </ItemGroup>
 
   <ItemGroup>
