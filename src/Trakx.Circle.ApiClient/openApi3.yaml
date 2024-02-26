@@ -6,9 +6,6 @@ info:
     name: trakx.io
     email: support@trakx.io
     url: https://trakx.io
-servers:
-  - url: 'https://api-sandbox.circle.com'
-    description: Circle sandbox base url
 security:
   - ApiKeyAuth: []
 tags:
