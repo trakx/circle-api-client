@@ -119,7 +119,7 @@ public class BusinessAccountTest: CircleClientTestsBase
         var bankRequest = _mockCreator.GetSignetWireCreationRequest();
         Logger.Information("Creating a signet bank account with IdempotencyKey {IdempotencyKey}", bankRequest.IdempotencyKey);
 
-        var result =  _businessAccountClient.CreateSignetBankAsync(bankRequest).Result;
+        var result = await _businessAccountClient.CreateSignetBankAsync(bankRequest);
 
         var request = _mockCreator.GetSilverGateSenBankTransferRequest(result.Content.Data.TrackingRef);
         var transferResponse = await _businessAccountClient.CreateSilverGateMockTransferAsync(request,CancellationToken.None);
