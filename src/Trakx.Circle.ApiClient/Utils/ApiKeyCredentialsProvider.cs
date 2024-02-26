@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using Serilog;
-using Trakx.Utils.Apis;
+﻿using Serilog;
+using Trakx.Common.ApiClient;
 
 namespace Trakx.Circle.ApiClient.Utils;
 

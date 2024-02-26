@@ -25,12 +25,12 @@ public class BusinessAccountTest: CircleClientTestsBase
         var businesses = await _businessAccountClient.GetSignetBanksAsync();
         businesses.Should().NotBeNull();
 
-        if (businesses.Result.Data.Count >= 3) return;
+        if (businesses.Content.Data.Count >= 3) return;
 
         var signetBankCreationRequest = _mockCreator.GetSignetWireCreationRequest();
         var business = await _businessAccountClient.CreateSignetBankAsync(signetBankCreationRequest);
 
-        business.Result.Data.TrackingRef.Should().NotBeNullOrEmpty();
+        business.Content.Data.TrackingRef.Should().NotBeNullOrEmpty();
         business.StatusCode.Should().Be(StatusCodes.Status200OK);
 
     }
@@ -39,7 +39,7 @@ public class BusinessAccountTest: CircleClientTestsBase
     {
         var business = await _businessAccountClient.GetSignetBanksAsync();
 
-        business.Result.Data.Should().NotBeNullOrEmpty();
+        business.Content.Data.Should().NotBeNullOrEmpty();
         business.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 
@@ -51,11 +51,36 @@ public class BusinessAccountTest: CircleClientTestsBase
 
         var result = await _businessAccountClient.CreateSignetBankAsync(bankRequest);
 
-        result.Result.Data.TrackingRef.Should().NotBeNullOrEmpty();
-        result.Result.Data.WalletAddress.Should().NotBeNullOrEmpty();
+        result.Content.Data.TrackingRef.Should().NotBeNullOrEmpty();
+        result.Content.Data.WalletAddress.Should().NotBeNullOrEmpty();
         new HttpResponseMessage((HttpStatusCode)result.StatusCode).IsSuccessStatusCode.Should().BeTrue();
-        result.Result.Data.Id.Should().NotBeEmpty();
-        Logger.Information("Signet bank account created with trackingRef {TrackingRef}", result.Result.Data.TrackingRef);
+        result.Content.Data.Id.Should().NotBeEmpty();
+        Logger.Information("Signet bank account created with trackingRef {TrackingRef}", result.Content.Data.TrackingRef);
+    }
+    [Fact]
+    public async Task Create_SilverGate_Bank_Should_Be_Successful()
+    {
+        var bankRequest = _mockCreator.GetSilverGateSenBankRequest;
+        Logger.Information("Creating a silver gate bank account with IdempotencyKey {IdempotencyKey}", bankRequest.IdempotencyKey);
+
+        var result = await _businessAccountClient.CreateSilverGateBankAsync(bankRequest);
+
+        result.Content.Data.TrackingRef.Should().NotBeNullOrEmpty();
+        result.Content.Data.Description.Should().NotBeNullOrEmpty();
+        result.Content.Data.Currency.Should().NotBeNullOrEmpty();
+        result.Content.Data.Id.Should().NotBeEmpty();
+        new HttpResponseMessage((HttpStatusCode)result.StatusCode).IsSuccessStatusCode.Should().BeTrue();
+        Logger.Information("silver gate bank account created with trackingRef {TrackingRef}", result.Content.Data.TrackingRef);
+    }
+    [Fact]
+    public async Task Get_SilverGate_Bank_Should_Be_Successful()
+    {
+        var result = await _businessAccountClient.GetSilverGateBanksAsync();
+
+        result.Content.Data.Should().NotBeNullOrEmpty();
+
+        result.StatusCode.Should().Be(StatusCodes.Status200OK);
+
     }
 
     [Fact]
@@ -63,7 +88,7 @@ public class BusinessAccountTest: CircleClientTestsBase
     {
         var result = await _businessAccountClient.GetSignetBanksAsync();
 
-        result.Result.Data.Should().NotBeNullOrEmpty();
+        result.Content.Data.Should().NotBeNullOrEmpty();
 
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
 
@@ -76,7 +101,7 @@ public class BusinessAccountTest: CircleClientTestsBase
         const int minCount = 0;
         var result = await _accountsClient.GetBalancesAsync();
 
-        var availableBalance = result.Result.Data.Available;
+        var availableBalance = result.Content.Data.Available;
 
         Logger.Information("{balanceCount} account balance(s) retrieved", availableBalance.Count);
         foreach (var money in availableBalance)
@@ -85,8 +110,21 @@ public class BusinessAccountTest: CircleClientTestsBase
         }
 
         availableBalance.Should().HaveCountGreaterOrEqualTo(minCount);
-        result.Result.Data.Unsettled.Should().HaveCountGreaterOrEqualTo(minCount);
+        result.Content.Data.Unsettled.Should().HaveCountGreaterOrEqualTo(minCount);
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
+    [Fact(Skip = "Payment SilverGate payment not working now")]
+    public async Task Creating_SilverGate_Transfer_Should_Succeed()
+    {
+        var bankRequest = _mockCreator.GetSignetWireCreationRequest();
+        Logger.Information("Creating a signet bank account with IdempotencyKey {IdempotencyKey}", bankRequest.IdempotencyKey);
 
+        var result = await _businessAccountClient.CreateSignetBankAsync(bankRequest);
+
+        var request = _mockCreator.GetSilverGateSenBankTransferRequest(result.Content.Data.TrackingRef);
+        var transferResponse = await _businessAccountClient.CreateSilverGateMockTransferAsync(request,CancellationToken.None);
+
+        transferResponse.Content.Data.TrackingRef.Should().Be(result.Content.Data.TrackingRef);
+        transferResponse.StatusCode.Should().Be(StatusCodes.Status201Created);
+    }
 }

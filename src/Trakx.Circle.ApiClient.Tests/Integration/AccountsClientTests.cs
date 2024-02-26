@@ -18,7 +18,7 @@ public sealed class AccountsClientTests : CircleClientTestsBase
     {
         var balances = await _accountsClient.GetBalancesAsync();
         balances.Should().NotBeNull();
-        balances.Result.Data.Available.Should().NotBeNull();
-        balances.Result.Data.Unsettled.Should().NotBeNull();
+        balances.Content.Data.Available.Should().NotBeNull();
+        balances.Content.Data.Unsettled.Should().NotBeNull();
     }
 }

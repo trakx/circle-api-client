@@ -1,4 +1,4 @@
-﻿using Trakx.Utils.Apis;
+﻿using Trakx.Common.ApiClient;
 
 namespace Trakx.Circle.ApiClient;
 
@@ -10,6 +10,6 @@ internal abstract class AuthorisedClient
     protected AuthorisedClient(ClientConfigurator configurator)
     {
         CredentialProvider = configurator.CredentialsProvider;
-        BaseUrl = configurator.ApiConfiguration.BaseUrl;
+        BaseUrl = configurator.ApiConfiguration.BaseUrl.AbsoluteUri;
     }
 }
