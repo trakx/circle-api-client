@@ -10,6 +10,6 @@ internal abstract class AuthorisedClient
     protected AuthorisedClient(ClientConfigurator configurator)
     {
         CredentialProvider = configurator.CredentialsProvider;
-        BaseUrl = configurator.ApiConfiguration.BaseUrl;
+        BaseUrl = configurator.ApiConfiguration.BaseUrl.AbsoluteUri;
     }
 }
