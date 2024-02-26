@@ -82,7 +82,7 @@ public class BankAccountClientTest : CircleClientTestsBase
 
         Logger.Information("Creating a mock payment test");
         var bankRequest = _mockCreator.WireCreationRequestIban();
-        var bank =   _bankAccountsClient.CreateWireBankAccountAsync(bankRequest).Result;
+        var bank = await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
         var id = bank.Content.Data.Id;
         var result =  await _bankAccountsClient.GetWireInstructionsBankAccountAsync(id.GetValueOrDefault());
         var wireRequest = new MockWirePaymentRequest
