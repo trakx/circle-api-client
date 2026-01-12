@@ -1,9 +1,8 @@
-﻿
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Polly.Extensions.Http;
-using Serilog;
 
 namespace Trakx.Circle.ApiClient
 {
@@ -24,7 +23,7 @@ namespace Trakx.Circle.ApiClient
                     .WaitAndRetryAsync(delay,
                         onRetry: (result, timeSpan, retryCount, context) =>
                         {
-                            var logger = Log.Logger.ForContext<AccountsClient>();
+                            var logger = s.GetRequiredService<ILogger<AccountsClient>>();
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.AccountsClient"));
@@ -39,7 +38,7 @@ namespace Trakx.Circle.ApiClient
                     .WaitAndRetryAsync(delay,
                         onRetry: (result, timeSpan, retryCount, context) =>
                         {
-                            var logger = Log.Logger.ForContext<PaymentsClient>();
+                            var logger = s.GetRequiredService<ILogger<PaymentsClient>>();
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.PaymentsClient"));
@@ -54,7 +53,7 @@ namespace Trakx.Circle.ApiClient
                     .WaitAndRetryAsync(delay,
                         onRetry: (result, timeSpan, retryCount, context) =>
                         {
-                            var logger = Log.Logger.ForContext<CardsClient>();
+                            var logger = s.GetRequiredService<ILogger<CardsClient>>();
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.CardsClient"));
@@ -69,7 +68,7 @@ namespace Trakx.Circle.ApiClient
                     .WaitAndRetryAsync(delay,
                         onRetry: (result, timeSpan, retryCount, context) =>
                         {
-                            var logger = Log.Logger.ForContext<BankAccountsClient>();
+                            var logger = s.GetRequiredService<ILogger<BankAccountsClient>>();
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.BankAccountsClient"));
@@ -84,7 +83,7 @@ namespace Trakx.Circle.ApiClient
                     .WaitAndRetryAsync(delay,
                         onRetry: (result, timeSpan, retryCount, context) =>
                         {
-                            var logger = Log.Logger.ForContext<SettlementsClient>();
+                            var logger = s.GetRequiredService<ILogger<SettlementsClient>>();
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.SettlementsClient"));
@@ -99,7 +98,7 @@ namespace Trakx.Circle.ApiClient
                     .WaitAndRetryAsync(delay,
                         onRetry: (result, timeSpan, retryCount, context) =>
                         {
-                            var logger = Log.Logger.ForContext<ChargebacksClient>();
+                            var logger = s.GetRequiredService<ILogger<ChargebacksClient>>();
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.ChargebacksClient"));
@@ -114,7 +113,7 @@ namespace Trakx.Circle.ApiClient
                     .WaitAndRetryAsync(delay,
                         onRetry: (result, timeSpan, retryCount, context) =>
                         {
-                            var logger = Log.Logger.ForContext<ReversalsClient>();
+                            var logger = s.GetRequiredService<ILogger<ReversalsClient>>();
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.ReversalsClient"));
@@ -129,7 +128,7 @@ namespace Trakx.Circle.ApiClient
                     .WaitAndRetryAsync(delay,
                         onRetry: (result, timeSpan, retryCount, context) =>
                         {
-                            var logger = Log.Logger.ForContext<BusinessAccountClient>();
+                            var logger = s.GetRequiredService<ILogger<BusinessAccountClient>>();
                             logger.LogApiFailure(result, timeSpan, retryCount, context);
                         })
                     .WithPolicyKey("Trakx.Circle.ApiClient.BusinessAccountClient"));

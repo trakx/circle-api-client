@@ -1,5 +1,5 @@
+using Microsoft.Extensions.Logging;
 using Polly;
-using Serilog;
 
 namespace Trakx.Circle.ApiClient;
 
@@ -20,12 +20,12 @@ public static class PollyLoggingExtensions
     {
         if (result.Exception != null)
         {
-            logger.Warning(result.Exception, "An exception occurred on retry {RetryAttempt} for {PolicyKey} - Retrying in {SleepDuration}ms",
+            logger.LogWarning(result.Exception, "An exception occurred on retry {RetryAttempt} for {PolicyKey} - Retrying in {SleepDuration}ms",
                 retryCount, context.PolicyKey, timeSpan.TotalMilliseconds);
         }
         else
         {
-            logger.Warning("A non success code {StatusCode} with reason {Reason} and content {Content} was received on retry {RetryAttempt} for {PolicyKey} - Retrying in {SleepDuration}ms",
+            logger.LogWarning("A non success code {StatusCode} with reason {Reason} and content {Content} was received on retry {RetryAttempt} for {PolicyKey} - Retrying in {SleepDuration}ms",
                 (int)result.Result.StatusCode, result.Result.ReasonPhrase,
                 result.Result.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
                 retryCount, context.PolicyKey, timeSpan.TotalMilliseconds);
