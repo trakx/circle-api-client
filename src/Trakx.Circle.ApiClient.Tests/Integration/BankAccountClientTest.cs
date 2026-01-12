@@ -1,8 +1,4 @@
-
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using Xunit.Abstractions;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
@@ -13,8 +9,8 @@ namespace Trakx.Circle.ApiClient.Tests.Integration;
 /// </summary>
 public class BankAccountClientTest : CircleClientTestsBase
 {
-    private readonly IBankAccountsClient _bankAccountsClient;
-    private readonly IPaymentsClient _paymentsClient;
+    private readonly ICircleBankAccountsClient _bankAccountsClient;
+    private readonly ICirclePaymentsClient _paymentsClient;
     private readonly MockCreator _mockCreator;
     
     /// <summary>
@@ -24,8 +20,8 @@ public class BankAccountClientTest : CircleClientTestsBase
     /// <param name="output"></param>
     public BankAccountClientTest(CircleApiFixture apiFixture, ITestOutputHelper output) : base(apiFixture, output)
     {
-        _bankAccountsClient = ServiceProvider.GetRequiredService<IBankAccountsClient>();
-        _paymentsClient = ServiceProvider.GetRequiredService<IPaymentsClient>();
+        _bankAccountsClient = ServiceProvider.GetRequiredService<ICircleBankAccountsClient>();
+        _paymentsClient = ServiceProvider.GetRequiredService<ICirclePaymentsClient>();
         _mockCreator = new MockCreator(output);
     }
 

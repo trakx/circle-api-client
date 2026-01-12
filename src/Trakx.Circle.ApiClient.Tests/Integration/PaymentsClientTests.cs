@@ -1,21 +1,18 @@
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using Xunit.Abstractions;
+using Trakx.Common.ApiClient.Exceptions;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
 public class PaymentsClientTests : CircleClientTestsBase
 {
-    private readonly IPaymentsClient _paymentsClient;
+    private readonly ICirclePaymentsClient _paymentsClient;
     private readonly MockCreator _mockCreator;
     public PaymentsClientTests(CircleApiFixture apiFixture, ITestOutputHelper output) : base(apiFixture, output)
     {
-        _paymentsClient = ServiceProvider.GetRequiredService<IPaymentsClient>();
+        _paymentsClient = ServiceProvider.GetRequiredService<ICirclePaymentsClient>();
         _mockCreator = new MockCreator(output);
     }
-
 
     /// <summary>
     /// retrieving payment list with valid url should return status code 200
@@ -33,8 +30,6 @@ public class PaymentsClientTests : CircleClientTestsBase
 
     }
 
-
-
     /// <summary>
     /// when payment is not found with invalid id should throw not found exception
     /// </summary>
@@ -42,11 +37,7 @@ public class PaymentsClientTests : CircleClientTestsBase
     public async Task Get_Payment_by_InValid_Id_Should_Throw_404()
     {
         var id = _mockCreator.GetUid();
-
         var error = await  Assert.ThrowsAsync<ApiException<Error>>(async () => await _paymentsClient.GetPaymentAsync(id));
-
         error.StatusCode.Should().Be(StatusCodes.Status404NotFound);
     }
-
-
 }

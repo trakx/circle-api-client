@@ -1,8 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Trakx.Common.Testing.Configuration;
-using Xunit;
-using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 

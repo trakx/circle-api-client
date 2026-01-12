@@ -1,5 +1,4 @@
 using System.Text;
-using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests;
 

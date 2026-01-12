@@ -1,5 +1,4 @@
 ﻿using Trakx.Common.Testing.Documentation.ReadmeUpdater;
-using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 

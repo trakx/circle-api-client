@@ -1,16 +1,13 @@
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
 public sealed class AccountsClientTests : CircleClientTestsBase
 {
-    private readonly IAccountsClient _accountsClient;
+    private readonly ICircleAccountsClient _accountsClient;
     public AccountsClientTests(CircleApiFixture apiFixture, ITestOutputHelper output) : base(apiFixture, output)
     {
-        _accountsClient = ServiceProvider.GetRequiredService<IAccountsClient>();
+        _accountsClient = ServiceProvider.GetRequiredService<ICircleAccountsClient>();
     }
 
     [Fact]
