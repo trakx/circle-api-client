@@ -1,8 +1,4 @@
-
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using Xunit.Abstractions;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
@@ -13,10 +9,10 @@ namespace Trakx.Circle.ApiClient.Tests.Integration;
 /// </summary>
 public class BankAccountClientTest : CircleClientTestsBase
 {
-    private readonly IBankAccountsClient _bankAccountsClient;
-    private readonly IPaymentsClient _paymentsClient;
+    private readonly ICircleBankAccountsClient _bankAccountsClient;
+    private readonly ICirclePaymentsClient _paymentsClient;
     private readonly MockCreator _mockCreator;
-    
+
     /// <summary>
     /// constructor for <see cref="BankAccountClientTest"/>
     /// </summary>
@@ -24,8 +20,8 @@ public class BankAccountClientTest : CircleClientTestsBase
     /// <param name="output"></param>
     public BankAccountClientTest(CircleApiFixture apiFixture, ITestOutputHelper output) : base(apiFixture, output)
     {
-        _bankAccountsClient = ServiceProvider.GetRequiredService<IBankAccountsClient>();
-        _paymentsClient = ServiceProvider.GetRequiredService<IPaymentsClient>();
+        _bankAccountsClient = ServiceProvider.GetRequiredService<ICircleBankAccountsClient>();
+        _paymentsClient = ServiceProvider.GetRequiredService<ICirclePaymentsClient>();
         _mockCreator = new MockCreator(output);
     }
 
@@ -41,7 +37,7 @@ public class BankAccountClientTest : CircleClientTestsBase
     {
         Logger.Information("Running test for creating new IBAN Bank");
         var bankRequest = _mockCreator.WireCreationRequestIban();
-        var bankCreated =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
+        var bankCreated = await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
 
         bankCreated.Should().NotBeNull();
         bankCreated?.Content.Data.Id.Should().NotBeEmpty();
@@ -61,10 +57,10 @@ public class BankAccountClientTest : CircleClientTestsBase
     {
 
         var bankRequest = _mockCreator.WireCreationRequestIban();
-        var bank =  await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
+        var bank = await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
         var id = bank.Content.Data.Id;
         Logger.Information("Retrieving back account for wire transfer with id {Id}", id);
-        var result =  await _bankAccountsClient.GetWireBankAccountAsync(id.GetValueOrDefault());
+        var result = await _bankAccountsClient.GetWireBankAccountAsync(id.GetValueOrDefault());
 
         result.Should().NotBeNull();
         result?.Content.Data.Id.Should().Be(id);
@@ -84,7 +80,7 @@ public class BankAccountClientTest : CircleClientTestsBase
         var bankRequest = _mockCreator.WireCreationRequestIban();
         var bank = await _bankAccountsClient.CreateWireBankAccountAsync(bankRequest);
         var id = bank.Content.Data.Id;
-        var result =  await _bankAccountsClient.GetWireInstructionsBankAccountAsync(id.GetValueOrDefault());
+        var result = await _bankAccountsClient.GetWireInstructionsBankAccountAsync(id.GetValueOrDefault());
         var wireRequest = new MockWirePaymentRequest
         {
             Amount = _mockCreator.GetMoney(),
@@ -102,8 +98,8 @@ public class BankAccountClientTest : CircleClientTestsBase
         Logger.Information("The mock wire payment was initiated successfully with TrackingRef {DataTrackingRef}", wirePayment.Content.Data.TrackingRef);
         wirePayment.StatusCode.Should().Be(StatusCodes.Status201Created);
     }
-    
-    
-    
+
+
+
 
 }

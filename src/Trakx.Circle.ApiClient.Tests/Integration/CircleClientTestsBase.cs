@@ -1,8 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Trakx.Common.Testing.Configuration;
-using Xunit;
-using Xunit.Abstractions;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
@@ -35,9 +33,10 @@ public class CircleApiFixture : IDisposable
     public CircleApiFixture()
     {
         var configuration = AwsConfigurationHelper.GetConfigurationFromAws<CircleApiConfiguration>()
-            with {
-                BaseUrl = new Uri("https://api-sandbox.circle.com")
-            };
+            with
+        {
+            BaseUrl = new Uri("https://api-sandbox.circle.com")
+        };
 
         var serviceCollection = new ServiceCollection();
 

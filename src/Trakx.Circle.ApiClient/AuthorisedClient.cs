@@ -4,12 +4,29 @@ namespace Trakx.Circle.ApiClient;
 
 internal abstract class AuthorisedClient
 {
-    protected readonly ICredentialsProvider CredentialProvider;
-    protected string BaseUrl { get; }
+    private readonly ICredentialsProvider _credentialProvider;
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly string _httpClientName;
 
     protected AuthorisedClient(ClientConfigurator configurator)
     {
-        CredentialProvider = configurator.CredentialsProvider;
-        BaseUrl = configurator.ApiConfiguration.BaseUrl.AbsoluteUri;
+        _credentialProvider = configurator.CredentialsProvider;
+        _httpClientFactory = configurator.HttpClientFactory;
+        _httpClientName = GetType().FullName!;
+    }
+
+    protected async Task<HttpClient> CreateHttpClientAsync(CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask;
+        var httpClient = _httpClientFactory.CreateClient(_httpClientName);
+        return httpClient;
+    }
+
+    protected async Task<HttpRequestMessage> CreateHttpRequestMessageAsync(CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask;
+        HttpRequestMessage httpRequestMessage = new();
+        await _credentialProvider.AddCredentialsAsync(httpRequestMessage);
+        return httpRequestMessage;
     }
 }
