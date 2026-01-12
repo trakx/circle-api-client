@@ -14,7 +14,7 @@ namespace Trakx.Circle.ApiClient
                 medianFirstRetryDelay: TimeSpan.FromMilliseconds(configuration.InitialRetryDelayInMilliseconds ?? 100),
                 retryCount: configuration.MaxRetryCount ?? 10, fastFirst: true);
             
-            services.AddHttpClient<IAccountsClient, AccountsClient>("Trakx.Circle.ApiClient.AccountsClient")
+            services.AddHttpClient<IAccountsClient, AccountsClient>("Trakx.Circle.ApiClient.AccountsClient", client => client.BaseAddress = configuration.BaseUrl)
                 .AddPolicyHandler((s, request) =>
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()
@@ -29,7 +29,7 @@ namespace Trakx.Circle.ApiClient
                     .WithPolicyKey("Trakx.Circle.ApiClient.AccountsClient"));
 
         
-            services.AddHttpClient<IPaymentsClient, PaymentsClient>("Trakx.Circle.ApiClient.PaymentsClient")
+            services.AddHttpClient<IPaymentsClient, PaymentsClient>("Trakx.Circle.ApiClient.PaymentsClient", client => client.BaseAddress = configuration.BaseUrl)
                 .AddPolicyHandler((s, request) =>
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()
@@ -44,7 +44,7 @@ namespace Trakx.Circle.ApiClient
                     .WithPolicyKey("Trakx.Circle.ApiClient.PaymentsClient"));
 
         
-            services.AddHttpClient<ICardsClient, CardsClient>("Trakx.Circle.ApiClient.CardsClient")
+            services.AddHttpClient<ICardsClient, CardsClient>("Trakx.Circle.ApiClient.CardsClient", client => client.BaseAddress = configuration.BaseUrl)
                 .AddPolicyHandler((s, request) =>
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()
@@ -59,7 +59,7 @@ namespace Trakx.Circle.ApiClient
                     .WithPolicyKey("Trakx.Circle.ApiClient.CardsClient"));
 
         
-            services.AddHttpClient<IBankAccountsClient, BankAccountsClient>("Trakx.Circle.ApiClient.BankAccountsClient")
+            services.AddHttpClient<IBankAccountsClient, BankAccountsClient>("Trakx.Circle.ApiClient.BankAccountsClient", client => client.BaseAddress = configuration.BaseUrl)
                 .AddPolicyHandler((s, request) =>
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()
@@ -74,7 +74,7 @@ namespace Trakx.Circle.ApiClient
                     .WithPolicyKey("Trakx.Circle.ApiClient.BankAccountsClient"));
 
         
-            services.AddHttpClient<ISettlementsClient, SettlementsClient>("Trakx.Circle.ApiClient.SettlementsClient")
+            services.AddHttpClient<ISettlementsClient, SettlementsClient>("Trakx.Circle.ApiClient.SettlementsClient", client => client.BaseAddress = configuration.BaseUrl)
                 .AddPolicyHandler((s, request) =>
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()
@@ -89,7 +89,7 @@ namespace Trakx.Circle.ApiClient
                     .WithPolicyKey("Trakx.Circle.ApiClient.SettlementsClient"));
 
         
-            services.AddHttpClient<IChargebacksClient, ChargebacksClient>("Trakx.Circle.ApiClient.ChargebacksClient")
+            services.AddHttpClient<IChargebacksClient, ChargebacksClient>("Trakx.Circle.ApiClient.ChargebacksClient", client => client.BaseAddress = configuration.BaseUrl)
                 .AddPolicyHandler((s, request) =>
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()
@@ -104,7 +104,7 @@ namespace Trakx.Circle.ApiClient
                     .WithPolicyKey("Trakx.Circle.ApiClient.ChargebacksClient"));
 
         
-            services.AddHttpClient<IReversalsClient, ReversalsClient>("Trakx.Circle.ApiClient.ReversalsClient")
+            services.AddHttpClient<IReversalsClient, ReversalsClient>("Trakx.Circle.ApiClient.ReversalsClient", client => client.BaseAddress = configuration.BaseUrl)
                 .AddPolicyHandler((s, request) =>
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()
@@ -119,7 +119,7 @@ namespace Trakx.Circle.ApiClient
                     .WithPolicyKey("Trakx.Circle.ApiClient.ReversalsClient"));
 
         
-            services.AddHttpClient<IBusinessAccountClient, BusinessAccountClient>("Trakx.Circle.ApiClient.BusinessAccountClient")
+            services.AddHttpClient<IBusinessAccountClient, BusinessAccountClient>("Trakx.Circle.ApiClient.BusinessAccountClient", client => client.BaseAddress = configuration.BaseUrl)
                 .AddPolicyHandler((s, request) =>
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()

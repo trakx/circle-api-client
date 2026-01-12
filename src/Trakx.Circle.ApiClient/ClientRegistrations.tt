@@ -36,7 +36,7 @@ namespace <#= nameSpace #>
             {
             #>
 
-            services.AddHttpClient<I<#= name #>, <#= name #>>("<#= nameSpace #>.<#= name #>")
+            services.AddHttpClient<I<#= name #>, <#= name #>>("<#= nameSpace #>.<#= name #>", client => client.BaseAddress = configuration.BaseUrl)
                 .AddPolicyHandler((s, request) =>
                     Policy<HttpResponseMessage>
                     .Handle<ApiException>()
