@@ -2,7 +2,7 @@ using System.Text;
 
 namespace Trakx.Circle.ApiClient.Tests;
 
-public class MockCreator: Common.Testing.Mocks.MockCreator
+public class MockCreator : Common.Testing.Mocks.MockCreator
 {
     private const int StringSize = 10;
     private const int RandomGenerateMin = 10_000_000;
@@ -67,9 +67,9 @@ public class MockCreator: Common.Testing.Mocks.MockCreator
 
     public Money GetMoney() => new()
     {
-            Amount = $"{GetDecimals()}.00",
-            Currency = "USD"
-        };
+        Amount = $"{GetDecimals()}.00",
+        Currency = "USD"
+    };
 
     /// <summary>
     /// Create Us Wire Bank account payload
@@ -80,7 +80,7 @@ public class MockCreator: Common.Testing.Mocks.MockCreator
         BankAddress = BankAddress,
         BillingDetails = BillingDetails,
         IdempotencyKey = Guid.NewGuid(),
-       
+
     };
 
     private static BillingDetails BillingDetails =>
@@ -136,10 +136,10 @@ public class MockCreator: Common.Testing.Mocks.MockCreator
         new()
         {
             IdempotencyKey = Guid.NewGuid().ToString(),
-           Currency = Currency.USD.ToString(),
-           AccountNumber =  $"{Random.Next(RandomGenerateMin,RandomGenerateMax)}"
+            Currency = Currency.USD.ToString(),
+            AccountNumber = $"{Random.Next(RandomGenerateMin, RandomGenerateMax)}"
         };
-    public  SilverGateSenBankTransferRequest GetSilverGateSenBankTransferRequest(string trackingRef) =>
+    public SilverGateSenBankTransferRequest GetSilverGateSenBankTransferRequest(string trackingRef) =>
         new()
         {
             Amount = GetMoney(),

@@ -7,7 +7,7 @@ public class OpenApiGeneratedCodeModifiers : Common.Testing.Documentation.OpenAp
     public OpenApiGeneratedCodeModifiers(ITestOutputHelper output)
         : base(output)
     {
-        var foundRoot = default(DirectoryInfo).TryWalkBackToRepositoryRoot(out var rootDirectory)!; 
+        var foundRoot = default(DirectoryInfo).TryWalkBackToRepositoryRoot(out var rootDirectory)!;
         FilePaths.Add(Path.Combine(rootDirectory!.FullName, "src",
             "Trakx.Circle.ApiClient", "CircleApiClients.cs"));
     }

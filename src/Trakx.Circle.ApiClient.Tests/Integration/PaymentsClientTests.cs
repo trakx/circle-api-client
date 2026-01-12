@@ -37,7 +37,7 @@ public class PaymentsClientTests : CircleClientTestsBase
     public async Task Get_Payment_by_InValid_Id_Should_Throw_404()
     {
         var id = _mockCreator.GetUid();
-        var error = await  Assert.ThrowsAsync<ApiException<Error>>(async () => await _paymentsClient.GetPaymentAsync(id));
+        var error = await Assert.ThrowsAsync<ApiException<Error>>(async () => await _paymentsClient.GetPaymentAsync(id));
         error.StatusCode.Should().Be(StatusCodes.Status404NotFound);
     }
 }

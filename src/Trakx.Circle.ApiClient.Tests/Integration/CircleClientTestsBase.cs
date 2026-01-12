@@ -33,9 +33,10 @@ public class CircleApiFixture : IDisposable
     public CircleApiFixture()
     {
         var configuration = AwsConfigurationHelper.GetConfigurationFromAws<CircleApiConfiguration>()
-            with {
-                BaseUrl = new Uri("https://api-sandbox.circle.com")
-            };
+            with
+        {
+            BaseUrl = new Uri("https://api-sandbox.circle.com")
+        };
 
         var serviceCollection = new ServiceCollection();
 

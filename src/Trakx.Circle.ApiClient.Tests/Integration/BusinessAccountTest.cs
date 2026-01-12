@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Trakx.Circle.ApiClient.Tests.Integration;
 
-public class BusinessAccountTest: CircleClientTestsBase
+public class BusinessAccountTest : CircleClientTestsBase
 {
-    private readonly  ICircleBusinessAccountClient _businessAccountClient;
+    private readonly ICircleBusinessAccountClient _businessAccountClient;
     private readonly ICircleAccountsClient _accountsClient;
     private readonly MockCreator _mockCreator;
     public BusinessAccountTest(CircleApiFixture apiFixture, ITestOutputHelper output) : base(apiFixture, output)
@@ -115,7 +115,7 @@ public class BusinessAccountTest: CircleClientTestsBase
         var result = await _businessAccountClient.CreateSignetBankAsync(bankRequest);
 
         var request = _mockCreator.GetSilverGateSenBankTransferRequest(result.Content.Data.TrackingRef);
-        var transferResponse = await _businessAccountClient.CreateSilverGateMockTransferAsync(request,CancellationToken.None);
+        var transferResponse = await _businessAccountClient.CreateSilverGateMockTransferAsync(request, CancellationToken.None);
 
         transferResponse.Content.Data.TrackingRef.Should().Be(result.Content.Data.TrackingRef);
         transferResponse.StatusCode.Should().Be(StatusCodes.Status201Created);
