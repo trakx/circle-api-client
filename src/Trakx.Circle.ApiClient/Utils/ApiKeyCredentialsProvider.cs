@@ -1,5 +1,6 @@
-﻿using Serilog;
+﻿using Microsoft.Extensions.Logging;
 using Trakx.Common.ApiClient;
+using Trakx.Common.Logging;
 
 namespace Trakx.Circle.ApiClient.Utils;
 
@@ -9,7 +10,7 @@ public sealed class ApiKeyCredentialsProvider : ICircleCredentialsProvider, IDis
     private readonly CircleApiConfiguration _configuration;
     private readonly CancellationTokenSource _tokenSource;
 
-    private static readonly ILogger Logger = Log.Logger.ForContext<ApiKeyCredentialsProvider>();
+    private static readonly ILogger Logger = LoggerProvider.Create<ApiKeyCredentialsProvider>();
 
     public ApiKeyCredentialsProvider(CircleApiConfiguration configuration)
     {
@@ -24,7 +25,7 @@ public sealed class ApiKeyCredentialsProvider : ICircleCredentialsProvider, IDis
     public void AddCredentials(HttpRequestMessage msg)
     {
         msg.Headers.Add("Authorization", $"Bearer {_configuration.ApiKey}");
-        Logger.Verbose("Headers added");
+        Logger.LogTrace("Headers added");
     }
 
     public Task AddCredentialsAsync(HttpRequestMessage msg)

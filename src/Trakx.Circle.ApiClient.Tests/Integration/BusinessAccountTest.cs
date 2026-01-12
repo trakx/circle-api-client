@@ -109,8 +109,8 @@ public class BusinessAccountTest: CircleClientTestsBase
             Logger.Information("{Amount} {Currency}", money.Amount, money.Currency);
         }
 
-        availableBalance.Should().HaveCountGreaterOrEqualTo(minCount);
-        result.Content.Data.Unsettled.Should().HaveCountGreaterOrEqualTo(minCount);
+        availableBalance.Should().HaveCountGreaterThanOrEqualTo(minCount);
+        result.Content.Data.Unsettled.Should().HaveCountGreaterThanOrEqualTo(minCount);
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
     [Fact(Skip = "Payment SilverGate payment not working now")]
