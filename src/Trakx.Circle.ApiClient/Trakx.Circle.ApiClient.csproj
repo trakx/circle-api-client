@@ -12,8 +12,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Trakx.Common.ApiClient" Version="2.0.0" />
-    <PackageReference Include="Trakx.Common.Configuration" Version="2.0.0" />
+    <PackageReference Include="Trakx.Common.ApiClient" Version="2.0.3" />
+    <PackageReference Include="Trakx.Common.Configuration" Version="2.0.3" />
   </ItemGroup>
 
   <Target Name="NSwag" BeforeTargets="Build" Condition="'$(GenerateApiClient)'=='True' ">
